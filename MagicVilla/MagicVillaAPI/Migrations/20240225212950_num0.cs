@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace MagicVillaAPI.Migrations
 {
     /// <inheritdoc />
-    public partial class aa : Migration
+    public partial class num0 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
