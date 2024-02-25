@@ -7,6 +7,8 @@
 # Compiled class file
 /bin/
 *.class
+*.settings
+
 
 # Log file
 *.log
