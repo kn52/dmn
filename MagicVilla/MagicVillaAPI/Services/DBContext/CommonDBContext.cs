@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MagicVillaAPI.Services.DBContext
 {
-    public class ApplicationDbContext : DbContext
+    public class CommonDBContext : DbContext
     {
-        public ApplicationDbContext(DbContextOptions options) : base(options)
+        public CommonDBContext(DbContextOptions options) : base(options)
         {
         }
 
