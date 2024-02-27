@@ -2,7 +2,7 @@ package Day54;
 
 import java.util.*;
 
-public class RightViewOfBinaryTree {
+public class LeftViewOfBinaryTree {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub

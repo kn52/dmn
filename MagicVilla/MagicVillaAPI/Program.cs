@@ -7,7 +7,8 @@ var _builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 _builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
-    options.UseSqlServer(_builder.Configuration["ConnectionStrings:MySqlConnection"]);
+    var _connect = _builder.Configuration["ConnectionStrings:MySqlConnection"];
+    options.UseMySql(_connect, ServerVersion.AutoDetect(_connect));
 });
 _builder.Services.AddControllers(op => {
     //op.ReturnHttpNotAcceptable = true
