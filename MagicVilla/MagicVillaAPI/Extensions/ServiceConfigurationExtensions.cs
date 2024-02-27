@@ -13,10 +13,12 @@ namespace MagicVillaAPI.Extensions
                 var _connect = _builder.Configuration["ConnectionStrings:MySqlConnection"];
                 options.UseMySql(_connect, ServerVersion.AutoDetect(_connect));
             });
+
             _builder.Services.AddControllers()
             .AddNewtonsoftJson()
             .AddXmlDataContractSerializerFormatters();
             _builder.Services.AddEndpointsApiExplorer();
+            
             _builder.Services.AddSwaggerGen();
             _builder.Services.AddSingleton<ILogging, Logging>();
 
