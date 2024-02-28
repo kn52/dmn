@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MagicVillaAPI.Models.DAO;
 
-namespace MagicVillaAPI.Services.DBContext
+namespace MagicVillaAPI.EntityContext.DBContext
 {
     public class CommonDBContext : DbContext
     {

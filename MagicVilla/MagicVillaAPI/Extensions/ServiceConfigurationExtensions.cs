@@ -1,5 +1,6 @@
-﻿using MagicVillaAPI.Logger;
-using MagicVillaAPI.Services.DBContext;
+﻿using MagicVillaAPI.EntityContext.DBContext;
+using MagicVillaAPI.Logger;
+using MagicVillaAPI.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace MagicVillaAPI.Extensions
@@ -21,6 +22,8 @@ namespace MagicVillaAPI.Extensions
             
             _builder.Services.AddSwaggerGen();
             _builder.Services.AddSingleton<ILogging, Logging>();
+            //_builder.Services.AddSingleton<MagicVIllaService>();
+            _builder.Services.AddScoped<MagicVIllaService>();
 
             return _builder;
         }
