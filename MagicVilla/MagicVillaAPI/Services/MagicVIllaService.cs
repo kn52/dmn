@@ -45,8 +45,12 @@ namespace MagicVillaAPI.Services
                 return null;
             }
             var insertModel = _mapper.Map<Villa>(villaDto);
+            var newId = Guid.NewGuid();
+            insertModel.Id = newId;
+            insertModel.CreatedDateTime = DateTime.Now.ToString();
+            insertModel.UpdatedDateTime = DateTime.Now.ToString();           
             await _magicVillaRepository.Create(insertModel).ConfigureAwait(false);
-            return villaDto;
+            return await GetVilla(newId.ToString()).ConfigureAwait(false);
         }
         public async Task<VillaDTO> DeleteVilla(string id)
         {
@@ -61,6 +65,7 @@ namespace MagicVillaAPI.Services
         public async Task<VillaDTO> UpdateVilla(string id, [FromBody] VillaDTO villaDto)
         {
             var updatedModel = _mapper.Map<Villa>(villaDto); ;
+            updatedModel.UpdatedDateTime = DateTime.Now.ToString();
             await _magicVillaRepository.Update(id, updatedModel).ConfigureAwait(false);
             return villaDto;
         }
@@ -74,6 +79,7 @@ namespace MagicVillaAPI.Services
             VillaDTO model = _mapper.Map<VillaDTO>(villa);
             patchVillaDto.ApplyTo(model);
             var updatedModel = _mapper.Map<Villa>(model); ;
+            updatedModel.UpdatedDateTime = DateTime.Now.ToString();
             await _magicVillaRepository.Update(id, updatedModel).ConfigureAwait(false);
             return model;
         }
