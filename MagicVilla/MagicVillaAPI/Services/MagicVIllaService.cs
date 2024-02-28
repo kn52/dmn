@@ -54,7 +54,7 @@ namespace MagicVillaAPI.Services
         }
         public async Task<VillaDTO> DeleteVilla(string id)
         {
-            var villa = await _magicVillaRepository.Remove(id).ConfigureAwait(false);
+            var villa = await _magicVillaRepository.Delete(id).ConfigureAwait(false);
             VillaDTO model = null;
             if (villa != null)
             {

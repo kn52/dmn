@@ -3,7 +3,8 @@ using MagicVillaAPI.Extensions;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.AddServiceConfigurationExtensions();
+builder.AddBasicServiceConfigurationExtensions();
+builder.AddOtherServiceConfigurationExtensions();
 
 // Configuration object for the HTTP request pipeline.
 var app = builder.Build();

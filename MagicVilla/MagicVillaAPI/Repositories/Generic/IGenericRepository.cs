@@ -10,7 +10,7 @@
 
         Task UpdateEntity(string id, TEntity entity);
 
-        Task<TEntity> DeleteEntity(string id);
+        Task DeleteEntity(TEntity entity);
 
         Task SaveEntity();
     }

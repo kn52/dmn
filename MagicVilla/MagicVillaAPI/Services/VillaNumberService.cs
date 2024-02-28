@@ -37,7 +37,7 @@ namespace MagicVillaAPI.Services
             var model = _mapper.Map<VillaNumberDTO>(villa);
             return model;
         }
-        public async Task<VillaNumberDTO> CreateVilla([FromBody] VillaNumberDTO villaDto)
+        public async Task<VillaNumberDTO> CreateVillaNumber([FromBody] VillaNumberDTO villaDto)
         {
             var checkVilla = await _villaNumberRepository.checkVillaNumber(villaDto).ConfigureAwait(false);
             if (checkVilla != null)
@@ -48,7 +48,7 @@ namespace MagicVillaAPI.Services
             await _villaNumberRepository.Create(insertModel).ConfigureAwait(false);
             return villaDto;
         }
-        public async Task<VillaNumberDTO> DeleteVilla(string id)
+        public async Task<VillaNumberDTO> DeleteVillaNumber(int id)
         {
             var villa = await _villaNumberRepository.Delete(id).ConfigureAwait(false);
             VillaNumberDTO model = null;
@@ -58,15 +58,15 @@ namespace MagicVillaAPI.Services
             }
             return model;
         }
-        public async Task<VillaNumberDTO> UpdateVillaNumber(string id, [FromBody] VillaNumberDTO villaDto)
+        public async Task<VillaNumberDTO> UpdateVillaNumber(int id, [FromBody] VillaNumberDTO villaDto)
         {
-            var updatedModel = _mapper.Map<VillaNumber>(villaDto); ;
+            var updatedModel = _mapper.Map<VillaNumber>(villaDto);
             await _villaNumberRepository.Update(id, updatedModel).ConfigureAwait(false);
             return villaDto;
         }
-        public async Task<VillaNumberDTO> UpdatePartialVillaNumber(string id, [FromBody] JsonPatchDocument<VillaNumberDTO> patchVillaDto)
+        public async Task<VillaNumberDTO> UpdatePartialVillaNumber(int id, [FromBody] JsonPatchDocument<VillaNumberDTO> patchVillaDto)
         {
-            var villa = await _villaNumberRepository.GetById(id).ConfigureAwait(false);
+            var villa = await _villaNumberRepository.GetVillaNumberId(id).ConfigureAwait(false);
             if (villa == null)
             {
                 return null;

@@ -18,9 +18,10 @@ namespace MagicVillaAPI.Repositories
         {
             return await GetEntityById(id);
         }
-        public async Task<Villa> Remove(string id)
+        public async Task<Villa> Delete(string id)
         {
-            var villa = await DeleteEntity(id);
+            var villa = await GetEntityById(id);
+            await DeleteEntity(villa);
             return villa;
         }
         public async Task Create(Villa entity)

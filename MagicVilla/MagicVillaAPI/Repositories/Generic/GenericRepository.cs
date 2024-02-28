@@ -26,12 +26,10 @@ namespace MagicVillaAPI.Repositories.Generic
             await _db.Set<TEntity>().AddAsync(entity);
             await SaveEntity();
         }
-        public async Task<TEntity> DeleteEntity(string id)
+        public async Task DeleteEntity(TEntity entity)
         {
-            var entity = await GetEntityById(id);
             _db.Set<TEntity>().Remove(entity);
             await SaveEntity();
-            return entity;
         }
         public async Task UpdateEntity(string id, TEntity entity)
         {
