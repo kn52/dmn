@@ -2,8 +2,6 @@ package Day48;
 
 import java.util.HashMap;
 
-import Day45.ListNode;
-
 public class CopyList {
 
 	public static void main(String[] args) {
