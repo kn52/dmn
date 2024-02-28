@@ -50,7 +50,7 @@ namespace MagicVillaAPI.Controllers
             {
                 _response.IsSuccess = false;
                 _response.StatusCode = HttpStatusCode.BadRequest;
-                _response.Message = ConstantValues.ERROR;
+                _response.Message = "Invalid villa number.";
             }
             _response.Result = _result;
             return _response;
@@ -67,9 +67,10 @@ namespace MagicVillaAPI.Controllers
             {
                 _response.IsSuccess = false;
                 _response.StatusCode = HttpStatusCode.BadRequest;
-                _response.Message = ConstantValues.ERROR;
+                _response.Message = "Invalid request.";
                 _response.Result = villa;
             }
+
             var _result = await _villaNumberService.CreateVillaNumber(villa).ConfigureAwait(false);
             if (_result == null)
             {
@@ -93,7 +94,7 @@ namespace MagicVillaAPI.Controllers
             {
                 _response.IsSuccess = false;
                 _response.StatusCode = HttpStatusCode.BadRequest;
-                _response.Message = ConstantValues.ERROR;
+                _response.Message = "Invalid request.";
                 _response.Result = new VillaNumberDTO() { VillaNo = id };
             }
             var _result = await _villaNumberService.DeleteVillaNumber(id).ConfigureAwait(false);
@@ -101,7 +102,7 @@ namespace MagicVillaAPI.Controllers
             {
                 _response.IsSuccess = false;
                 _response.StatusCode = HttpStatusCode.BadRequest;
-                _response.Message = ConstantValues.ERROR;
+                _response.Message = "Invalid villa number.";
                 _response.Result = new VillaNumberDTO() { VillaNo = id };
             }
             _response.Result = _result;
@@ -119,7 +120,7 @@ namespace MagicVillaAPI.Controllers
             {
                 _response.IsSuccess = false;
                 _response.StatusCode = HttpStatusCode.BadRequest;
-                _response.Message = ConstantValues.ERROR;
+                _response.Message = "Invalid villa number or request.";
                 _response.Result = villaDto;
             }
             var _result = await _villaNumberService.UpdateVillaNumber(id, villaDto).ConfigureAwait(false);
@@ -127,7 +128,7 @@ namespace MagicVillaAPI.Controllers
             {
                 _response.IsSuccess = false;
                 _response.StatusCode = HttpStatusCode.BadRequest;
-                _response.Message = ConstantValues.ERROR;
+                _response.Message = "Invalid villa number.";
                 _response.Result = villaDto;
             }
             _response.Result = _result;
@@ -145,7 +146,7 @@ namespace MagicVillaAPI.Controllers
             {
                 _response.IsSuccess = false;
                 _response.StatusCode = HttpStatusCode.BadRequest;
-                _response.Message = ConstantValues.ERROR;
+                _response.Message = "Invalid villa number or request";
                 _response.Result = null;
             }
             var _result = await _villaNumberService.UpdatePartialVillaNumber(id, patchVillaDto).ConfigureAwait(false);
@@ -153,7 +154,7 @@ namespace MagicVillaAPI.Controllers
             {
                 _response.IsSuccess = false;
                 _response.StatusCode = HttpStatusCode.BadRequest;
-                _response.Message = ConstantValues.ERROR;
+                _response.Message = "Invalid villa number.";
                 _response.Result = null;
             }
             _response.Result = _result;

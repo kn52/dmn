@@ -14,5 +14,9 @@ namespace MagicVillaAPI.Models.DAO
         public string SpecialDetails { get; set; }
         public string CreatedDateTime { get; set; }
         public string UpdatedDateTime { get; set; }
+
+        [ForeignKey("Villa")]
+        public Guid VillaId { get; set; }   
+        public Villa Villa { get; set; }   
     }
 }
