@@ -1,41 +1,35 @@
 ﻿using MagicVillaAPI.EntityContext.DBContext;
-using MagicVillaAPI.EntityContext.DBContext.Common;
 using MagicVillaAPI.Models.DAO;
 using MagicVillaAPI.Models.DTO;
+using MagicVillaAPI.Repositories.Generic;
 
 namespace MagicVillaAPI.Repositories
 {
-    public class MagicVillaRepository : CommonContextIns
+    public class MagicVillaRepository : GenericRepository<Villa>
     {
         public MagicVillaRepository(CommonDBContext db) : base(db)
         {
         }
         public async Task<List<Villa>> GetVillas()
         {
-            return _db.Villas.ToList();
+            return GetAllEntity().ToList();
         }
         public async Task<Villa> GetVilla(string id)
         {
-            return _db.Villas.FirstOrDefault(x => x.Id == new Guid(id));
+            return await GetEntityById(id);
         }
-        public async Task Remove(Villa entity)
+        public async Task<Villa> Remove(string id)
         {
-            _db.Villas.Remove(entity);
-            await save();
+            var villa = await DeleteEntity(id);
+            return villa;
         }
         public async Task Create(Villa entity)
         {
-            _db.Villas.Add(entity);
-            await save();
+           await CreateEntity(entity);
         }
-        public async Task Update(Villa entity)
+        public async Task Update(string id, Villa entity)
         {
-            _db.Villas.Update(entity);
-            await save();
-        }
-        private async Task save()
-        {
-            _db.SaveChanges();
+            await UpdateEntity(id, entity);
         }
         public async Task<Villa> checkVilla(VillaDTO villaDto)
         {

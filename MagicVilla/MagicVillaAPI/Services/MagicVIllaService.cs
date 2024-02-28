@@ -4,7 +4,6 @@ using MagicVillaAPI.Models.DTO;
 using MagicVillaAPI.Repositories;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace MagicVillaAPI.Services
 {
@@ -51,20 +50,18 @@ namespace MagicVillaAPI.Services
         }
         public async Task<VillaDTO> DeleteVilla(string id)
         {
-            var villa = await _magicVillaRepository.GetVilla(id).ConfigureAwait(false);
-            if (villa == null)
+            var villa = await _magicVillaRepository.Remove(id).ConfigureAwait(false);
+            VillaDTO model = null;
+            if (villa != null)
             {
-                return null;
+                _mapper.Map<VillaDTO>(villa);
             }
-            await _magicVillaRepository.Remove(villa).ConfigureAwait(false);
-
-            var model = _mapper.Map<VillaDTO>(villa); 
             return model;
         }
         public async Task<VillaDTO> UpdateVilla(string id, [FromBody] VillaDTO villaDto)
         {
             var updatedModel = _mapper.Map<Villa>(villaDto); ;
-            await _magicVillaRepository.Update(updatedModel).ConfigureAwait(false);
+            await _magicVillaRepository.Update(id, updatedModel).ConfigureAwait(false);
             return villaDto;
         }
         public async Task<VillaDTO> UpdatePartialVilla(string id, [FromBody] JsonPatchDocument<VillaDTO> patchVillaDto)
@@ -77,7 +74,7 @@ namespace MagicVillaAPI.Services
             VillaDTO model = _mapper.Map<VillaDTO>(villa);
             patchVillaDto.ApplyTo(model);
             var updatedModel = _mapper.Map<Villa>(model); ;
-            await _magicVillaRepository.Update(updatedModel).ConfigureAwait(false);
+            await _magicVillaRepository.Update(id, updatedModel).ConfigureAwait(false);
             return model;
         }
     }

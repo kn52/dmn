@@ -4,19 +4,14 @@ using MagicVillaAPI.Models.Model;
 
 namespace MagicVillaAPI.Models.DAO
 {
-    [Table("Villa")]
-    public class Villa : IEntity
+    [Table("villa_numbers")]
+    public class VillaNumber: IEntity
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
-        public string Name { get; set; }
-        public string Details { get; set; }
-        public int Rate { get; set; }
-        public int Sqft { get; set; }
-        public int Occupancy { get; set; }
-        public string ImageUrl { get; set; }
-        public string Amenity { get; set; }
+        public int VillaNo { get; set; }
+        public string SpecialDetails { get; set; }
         public string CreatedDateTime { get; set; }
         public string UpdatedDateTime { get; set; }
     }

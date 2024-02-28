@@ -7,14 +7,14 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace VillaAPI.Controllers
 {
-    [ApiController]
     [Route("api/[controller]")]
-    public class VillaAPIController : ControllerBase
+    [ApiController]
+    public class VillaController : ControllerBase
     {
         private readonly ILogging _logging;
         private readonly MagicVillaService _magicVillaService;
 
-        public VillaAPIController(ILogging logging, MagicVillaService magicVillaService)
+        public VillaController(ILogging logging, MagicVillaService magicVillaService)
         {
             _logging = logging;
             _magicVillaService = magicVillaService;
