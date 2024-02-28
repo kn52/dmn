@@ -4,20 +4,21 @@ using MagicVillaAPI.Models.DAO;
 using MagicVillaAPI.Models.DTO;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
 
 namespace MagicVillaAPI.Services
 {
-    public class MagicVIllaService : CommonContextIns
+    public class MagicVillaService : CommonContextIns
     {
-        public MagicVIllaService(CommonDBContext _db) : base(_db) { }
+        public MagicVillaService(CommonDBContext _db) : base(_db) { }
 
         public async Task<List<VillaDTO>> GetVillas()
         {
             var villas = _db.Villas;
             if (villas == null)
             {
-                return new List<VillaDTO>();
+                return null;
             }
             var model = villas.Select(villa => new VillaDTO()
             {
@@ -58,6 +59,10 @@ namespace MagicVillaAPI.Services
         }
         public async Task<VillaDTO> CreateVilla([FromBody] VillaDTO villaDTO)
         {
+            if (_db.Villas.FirstOrDefault(x => x.Name == villaDTO.Name) != null)
+            {
+                return null;
+            }
             var insertModel = new Villa()
             {
                 Id = villaDTO.Id,
@@ -78,12 +83,13 @@ namespace MagicVillaAPI.Services
         public async Task<VillaDTO> DeleteVilla(string id)
         {
             var villa = _db.Villas.FirstOrDefault(x => x.Id == new Guid(id));
-            if (villa != null)
+            if (villa == null)
             {
-                _db.Villas.Remove(villa);
-                _db.SaveChanges();
+                return null;
             }
-            
+            _db.Villas.Remove(villa);
+            _db.SaveChanges();
+
             var model = new VillaDTO()
             {
                 Id = villa.Id,
@@ -118,8 +124,13 @@ namespace MagicVillaAPI.Services
             _db.SaveChanges();
             return villaDto;
         }
-        public async Task<VillaDTO> UpdatePartialVilla(Villa villa, [FromBody] JsonPatchDocument<VillaDTO> patchVillaDto)
+        public async Task<VillaDTO> UpdatePartialVilla(string id, [FromBody] JsonPatchDocument<VillaDTO> patchVillaDto)
         {
+            var villa = _db.Villas.AsNoTracking().OrderByDescending(x => x.Id == new Guid(id)).FirstOrDefault();
+            if (villa == null)
+            {
+                return null;
+            }
             VillaDTO model = new()
             {
                 Id = villa.Id,

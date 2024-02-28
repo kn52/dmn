@@ -1,12 +1,9 @@
 ﻿using MagicVillaAPI.Constants;
-using MagicVillaAPI.EntityContext.DBContext;
-using MagicVillaAPI.EntityContext.DBContext.Common;
 using MagicVillaAPI.Logger;
 using MagicVillaAPI.Models.DTO;
 using MagicVillaAPI.Services;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace VillaAPI.Controllers
 {
@@ -15,22 +12,24 @@ namespace VillaAPI.Controllers
     public class VillaAPIController : ControllerBase
     {
         private readonly ILogging _logging;
-        private readonly CommonDBContext _db;
-        private readonly MagicVIllaService _magicVillaService;
+        private readonly MagicVillaService _magicVillaService;
 
-        public VillaAPIController(ILogging logging, CommonDBContext db, MagicVIllaService magicVIllaService)
+        public VillaAPIController(ILogging logging, MagicVillaService magicVillaService)
         {
             _logging = logging;
-            _db = db;
-            _magicVillaService = magicVIllaService;
+            _magicVillaService = magicVillaService;
         }
 
         [HttpGet("GetVillaList", Name = "GetVillaList")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<IEnumerable<VillaDTO>>> GetVillas()
+        public async Task<ActionResult<List<VillaDTO>>> GetVillas()
         {
             _logging.Log(ConstantValues.INFO, "Get all villas");
             var _result = await _magicVillaService.GetVillas().ConfigureAwait(false);
+            if (_result == null)
+            {
+                return BadRequest(_result);
+            }
             return Ok(_result);
         }
         [HttpGet("GetVillaById/id:string", Name = "GetVillaById")]
@@ -41,6 +40,10 @@ namespace VillaAPI.Controllers
         {
             _logging.Log(ConstantValues.INFO, "Get specific villas" + id);
             var _result = await _magicVillaService.GetVilla(id).ConfigureAwait(false);
+            if (_result == null)
+            {
+                return BadRequest(_result);
+            }
             return Ok(_result);
         }
 
@@ -50,10 +53,6 @@ namespace VillaAPI.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<VillaDTO>> CreateVilla([FromBody] VillaDTO villa)
         {
-            if (_db.Villas.FirstOrDefault(x => x.Name == villa.Name) != null)
-            {
-                return BadRequest("Villa already exists");
-            }
             if (villa == null)
             {
                 return BadRequest(villa);
@@ -63,6 +62,10 @@ namespace VillaAPI.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
             var _result = await _magicVillaService.CreateVilla(villa).ConfigureAwait(false);
+            if (_result == null)
+            {
+                return BadRequest(villa);
+            }
             return Ok(_result);
         }
 
@@ -77,6 +80,10 @@ namespace VillaAPI.Controllers
                 return BadRequest();
             }
             var _result = await _magicVillaService.DeleteVilla(id).ConfigureAwait(false);
+            if (_result == null)
+            {
+                return BadRequest(id);
+            }
             return Ok(_result);
         }
 
@@ -84,13 +91,17 @@ namespace VillaAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult<VillaDTO> UpdateVilla(string id, [FromBody] VillaDTO villaDto)
+        public async Task<ActionResult<VillaDTO>> UpdateVilla(string id, [FromBody] VillaDTO villaDto)
         {
             if (villaDto == null || string.IsNullOrEmpty(id))
             {
                 return BadRequest(villaDto);
             }
-            var _result = _magicVillaService.UpdateVilla(id, villaDto);
+            var _result = await _magicVillaService.UpdateVilla(id, villaDto).ConfigureAwait(false);
+            if (_result == null)
+            {
+                return BadRequest(villaDto);
+            }
             return Ok(_result);
         }
 
@@ -104,12 +115,11 @@ namespace VillaAPI.Controllers
             {
                 return BadRequest(patchVillaDto);
             }
-            var villa = _db.Villas.AsNoTracking().OrderByDescending(x => x.Id == new Guid(id)).FirstOrDefault();
-            if (villa == null)
+            var _result = await _magicVillaService.UpdatePartialVilla(id, patchVillaDto).ConfigureAwait(false);
+            if (_result == null)
             {
-                return BadRequest();
+                return BadRequest(patchVillaDto);
             }
-            var _result = await _magicVillaService.UpdatePartialVilla(villa, patchVillaDto).ConfigureAwait(false);
             return Ok(_result);
         }
     }
