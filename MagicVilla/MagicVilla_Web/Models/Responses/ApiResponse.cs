@@ -2,7 +2,7 @@
 
 namespace MagicVilla_Web.Models.Responses
 {
-    public class ApiResponse<T>
+    public class APIResponse<T>
     {
         public HttpStatusCode StatusCode { get; set; } = HttpStatusCode.OK;
         public bool IsSuccess { get; set; } = true;

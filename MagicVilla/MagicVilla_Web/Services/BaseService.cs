@@ -11,18 +11,15 @@ using static MagicVilla_Uitility.SD;
 
 namespace MagicVilla_Web.Services
 {
-    public class BaseService<TEntity> : IBasicService<TEntity> where TEntity: class
+    public class BaseService : IBasicService
     {
+        private IHttpClientFactory _httpClientFactory { get; set; }
+
         public BaseService(IHttpClientFactory httpClientFactory)
         {
-            ApiResponse = new();
             _httpClientFactory = httpClientFactory;
         }
-
-        public ApiResponse<TEntity> ApiResponse { get; set; }
-        public IHttpClientFactory _httpClientFactory { get; set; }
-
-        public async Task<TEntity> SendAsync<TEntity>(ApiRequest _apiRequest)
+        public async Task<T> SendAsync<T>(APIRequest _apiRequest)
         {
             try
             {
@@ -36,35 +33,23 @@ namespace MagicVilla_Web.Services
                     _message.Content = new StringContent(JsonConvert.SerializeObject(_apiRequest.Data),
                         Encoding.UTF8, "application/json");
                 }
-                _message.Method = GetMethodType(_apiRequest.ApiType);
+                _message.Method = _apiRequest.HttpMethodType;
                 var _apiResponse = await _client.SendAsync(_message);
-                var _apiContent = _apiResponse.Content.ReadAsStringAsync(); 
-                var APIResponse = JsonConvert.DeserializeObject<TEntity>(_apiContent.Result);
+                var _apiContent = _apiResponse.Content.ReadAsStringAsync();
+                var APIResponse = JsonConvert.DeserializeObject<T>(_apiContent.Result);
                 //var returnResponse = (TEntity)APIResponse;
                 return APIResponse;
             }
-            catch (Exception ex) {
-                var _res = JsonConvert.SerializeObject(new ApiResponse<TEntity>()
+            catch (Exception ex)
+            {
+                var _res = JsonConvert.SerializeObject(new APIResponse<T>()
                 {
                     IsSuccess = false,
                     Message = ex.Message,
                 });
-                var APIResponse = JsonConvert.DeserializeObject<TEntity>(_res);
+                var APIResponse = JsonConvert.DeserializeObject<T>(_res);
                 return APIResponse;
             }
-            throw new NotImplementedException();
-        }
-        public HttpMethod GetMethodType(ApiType _apiType)
-        {
-            return _apiType  switch
-            {
-                ApiType.GET => HttpMethod.Get,
-                ApiType.POST => HttpMethod.Post,
-                ApiType.PUT => HttpMethod.Put,
-                ApiType.DELETE => HttpMethod.Delete,
-                ApiType.PATCH => HttpMethod.Patch,
-                _ => HttpMethod.Get,
-            };
         }
     }
 }

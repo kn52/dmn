@@ -26,44 +26,62 @@ namespace MagicVilla_Web.Controllers
         {
             List<VillaDTO> villas = new();
 
-            var response = await _service.GetAllAsync<ApiResponse<List<VillaDTO>>>();
+            var response = await _service.GetAllAsync<APIResponse<List<VillaDTO>>>();
             if (response != null && response.Result != null && response.IsSuccess)
             {
-                villas = JsonSerializer.Deserialize<List<VillaDTO>>(Convert.ToString(response.Result));
+                villas = response.Result;
             }
             return View(villas);
+        }
+        public async Task<IActionResult> ViewCreate(VillaDTO model)
+        {
+            return View("Create", model);
         }
         public async Task<IActionResult> Create(VillaDTO model)
         {
-            var response = await _service.CreateAsync<ApiResponse<VillaDTO>>(model);
+            var response = await _service.CreateAsync<APIResponse<VillaDTO>>(model);
             if (response != null && response.IsSuccess)
             {
-                return RedirectToAction("./Index");
+                return RedirectToAction("Index", "Villa");
             }
             return View(model);
         }
-        public async Task<IActionResult> Details()
+        public async Task<IActionResult> Details(string Id)
         {
-            List<VillaDTO> villas = new();
-            ApiResponse<IEntity> response = await _service.GetAllAsync<ApiResponse<IEntity>>();
+            VillaDTO villas = new();
+            var response = await _service.GetAsync<APIResponse<VillaDTO>>(Id);
             if (response != null && response.IsSuccess)
             {
-                villas = JsonSerializer.Deserialize<List<VillaDTO>>(Convert.ToString(response.Result));
+                villas = response.Result;
             }
             return View(villas);
         }
-        public async Task<IActionResult> Delete()
+        public async Task<IActionResult> Delete(string Id)
         {
-            List<VillaDTO> villas = new();
-
+            VillaDTO villas = new();
+            var response = await _service.DeleteAsync<APIResponse<VillaDTO>>(Id);
+            if (response != null && response.IsSuccess)
+            {
+                villas = response.Result;
+                return RedirectToAction("Index", "Villa");
+            }
             return View(villas);
+        }
+        public async Task<IActionResult> ViewUpdate(VillaDTO model)
+        {
+            var response = await _service.GetAsync<APIResponse<VillaDTO>>(model.Id);
+            if (response != null && response.IsSuccess)
+            {
+                model = response.Result;
+            }
+            return View("Update", model);
         }
         public async Task<IActionResult> Update(VillaDTO model)
         {
-            ApiResponse<IEntity> response = await _service.CreateAsync<ApiResponse<IEntity>>(model);
+            var response = await _service.UpdateAsync<APIResponse<VillaDTO>>(model);
             if (response != null && response.IsSuccess)
             {
-                return RedirectToAction("./Index");
+                return RedirectToAction("Index", "Villa");
             }
             return View(model);
         }

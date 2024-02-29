@@ -1,4 +1,5 @@
 ﻿using MagicVilla_Web.Models.DTO;
+using MagicVilla_Web.Models.Responses;
 using System.Threading.Tasks;
 
 namespace MagicVilla_Web.Services.IServices

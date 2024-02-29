@@ -1,98 +1,97 @@
-﻿@model IEnumerable<MagicVilla_Web.Models.DTO.VillaDTO>
+﻿@model MagicVilla_Web.Models.DTO.VillaDTO
 
 @{
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
 <div class="container p-4 border">
+    <div class="row pb-3">
+        <a asp-action="Index">Back</a>
+    </div>
+   
     <div class="row pb-2">
-        <div class="text-primary">
-            <h1 class="text-primary">Villa List</h1>
+        <div class="col-4">
+            @Html.ActionLink("Edit", "Update", new { controller = "Villa", id = Model.Id }, new { @class = "btn btn-outline-primary" }) |
+            @Html.ActionLink("Delete", "Delete", new { controller = "Villa", id = Model.Id }, new { @class = "btn btn-outline-danger" })
         </div>
-        <div class="col text-end pt-1">
-            <a asp-controller="Villa" asp-action="Create" class="btn btn-outline-primary"><i class="bi bi-plus-square-fill"></i>Create New Villa</a>
+        <div class="col-8 text-end pt-1">
+            <h2 class="text-primary">Villa Details</h2>
         </div>
     </div>
+
     <table class="table">
         <thead>
             <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Id)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Name)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Details)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Rate)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Sqft)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Occupancy)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ImageUrl)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Amenity)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.CreatedDateTime)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.UpdatedDateTime)
-                </th>
                 <th></th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Id)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Details)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Rate)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Sqft)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Occupancy)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ImageUrl)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Amenity)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.CreatedDateTime)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.UpdatedDateTime)
-                    </td>
-                    <td>
-                        <a asp-controller="Villa" asp-action="Update" class="btn btn-outline-primary"><i class="bi bi-pencil-square-fill"></i>Update Villa</a>
-                        <a asp-controller="Villa" asp-action="Delete" class="btn btn-outline-primary"><i class="bi bi-trash-fill"></i>Delete Villa</a>
-                    </td>
-                </tr>
-            }
+            <tr>
+                <td>
+                    <dl class="row">
+                        <dt class="col-sm-2">
+                            Vill Id
+                        </dt>
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(model => model.Id)
+                        </dd>
+                        <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.Name)
+                        </dt>
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(model => model.Name)
+                        </dd>
+                        <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.Details)
+                        </dt>
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(model => model.Details)
+                        </dd>
+                        <dt class="col-sm-2">
+                            Price
+                        </dt>
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(model => model.Rate)
+                        </dd>
+                        <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.Sqft)
+                        </dt>
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(model => model.Sqft)
+                        </dd>
+                        <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.Occupancy)
+                        </dt>
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(model => model.Occupancy)
+                        </dd>
+                        <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.ImageUrl)
+                        </dt>
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(model => model.ImageUrl)
+                        </dd>
+                        <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.Amenity)
+                        </dt>
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(model => model.Amenity)
+                        </dd>
+                        <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.CreatedDateTime)
+                        </dt>
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(model => model.CreatedDateTime)
+                        </dd>
+                        <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.UpdatedDateTime)
+                        </dt>
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(model => model.UpdatedDateTime)
+                        </dd>
+                    </dl>
+                </td>
+            </tr>
         </tbody>
     </table>
-</div>
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>

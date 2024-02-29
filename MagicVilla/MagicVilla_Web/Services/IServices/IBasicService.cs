@@ -4,9 +4,9 @@ using System.Threading.Tasks;
 
 namespace MagicVilla_Web.Services.IServices
 {
-    public interface IBasicService<TEntity> where TEntity : class
+    public interface IBasicService
     {
-        ApiResponse<TEntity> ApiResponse { get; set; }
-        Task<TEntity> SendAsync<TEntity>(ApiRequest _apiRequest);
+        //APIResponse responseModel { get; set; }
+        Task<T> SendAsync<T>(APIRequest _apiRequest);
     }
 }

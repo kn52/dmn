@@ -1,0 +1,83 @@
+﻿@model MagicVilla_Web.Models.DTO.VillaDTO
+
+@{
+    ViewData["Title"] = "Update";
+}
+
+<div class="container p-4 border">
+    <div class="row pb-3">
+        <a asp-action="Index">Back</a>
+    </div>
+    <div class="row">
+        <div class="col text-start pt-1">
+            <h4 class="text-primary">Update Villa</h4>
+        </div>
+    </div>
+    <hr class="mt-0" />
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="Update">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Id" class="control-label"></label>
+                    <input asp-for="Id" class="form-control" />
+                    <span asp-validation-for="Id" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Name" class="control-label"></label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Details" class="control-label"></label>
+                    <input asp-for="Details" class="form-control" />
+                    <span asp-validation-for="Details" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Rate" class="control-label"></label>
+                    <input asp-for="Rate" class="form-control" />
+                    <span asp-validation-for="Rate" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Sqft" class="control-label"></label>
+                    <input asp-for="Sqft" class="form-control" />
+                    <span asp-validation-for="Sqft" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Occupancy" class="control-label"></label>
+                    <input asp-for="Occupancy" class="form-control" />
+                    <span asp-validation-for="Occupancy" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ImageUrl" class="control-label"></label>
+                    <input asp-for="ImageUrl" class="form-control" />
+                    <span asp-validation-for="ImageUrl" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Amenity" class="control-label"></label>
+                    <input asp-for="Amenity" class="form-control" />
+                    <span asp-validation-for="Amenity" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="CreatedDateTime" class="control-label"></label>
+                    <input asp-for="CreatedDateTime" class="form-control" />
+                    <span asp-validation-for="CreatedDateTime" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="UpdatedDateTime" class="control-label"></label>
+                    <input asp-for="UpdatedDateTime" class="form-control" />
+                    <span asp-validation-for="UpdatedDateTime" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
