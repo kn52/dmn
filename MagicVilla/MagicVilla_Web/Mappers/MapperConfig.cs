@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
-using MagicVillaAPI.Models.DAO;
-using MagicVillaAPI.Models.DTO;
+using MagicVilla_Web.Models.DAO;
+using MagicVilla_Web.Models.DTO;
+using System;
 
 namespace MagicVilla_Web.Mappers
 {

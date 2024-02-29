@@ -2,11 +2,11 @@
 
 namespace MagicVilla_Web.Models.Responses
 {
-    public class ApiResponse
+    public class ApiResponse<T>
     {
         public HttpStatusCode StatusCode { get; set; } = HttpStatusCode.OK;
         public bool IsSuccess { get; set; } = true;
         public string Message { get; set; } = "Success!";
-        public object Result { get; set; }
+        public T Result { get; set; }
     }
 }

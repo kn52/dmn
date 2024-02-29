@@ -1,4 +1,5 @@
 ﻿using MagicVilla_Web.Mappers;
+using MagicVilla_Web.Models.Responses;
 using MagicVilla_Web.Services;
 using MagicVilla_Web.Services.IServices;
 
@@ -11,8 +12,9 @@ namespace MagicVilla_Web.Extensions
             _builder.Services.AddControllersWithViews();
             _builder.Services.AddAutoMapper(typeof(MapperConfig));
             
-            _builder.Services.AddHttpClient<IVillaService, VillaService>();
-            _builder.Services.AddScoped<IVillaService, VillaService>();
+            _builder.Services.AddHttpClient<IVillaService, VillaService<T>>();
+            _builder.Services.AddScoped(typeof(IVillaService), typeof(VillaService<ApiResponse<T>>));
+
 
 
             return _builder;

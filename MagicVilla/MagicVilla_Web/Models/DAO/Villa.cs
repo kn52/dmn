@@ -4,11 +4,8 @@ using MagicVilla_Web.Models.Model;
 
 namespace MagicVilla_Web.Models.DAO
 {
-    [Table("Villa")]
     public class Villa : IEntity
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
         public string Name { get; set; }
         public string Details { get; set; }

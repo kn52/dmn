@@ -1,11 +1,12 @@
 ﻿using MagicVilla_Web.Models.Requests;
 using MagicVilla_Web.Models.Responses;
+using System.Threading.Tasks;
 
 namespace MagicVilla_Web.Services.IServices
 {
-    public interface IBasicService
+    public interface IBasicService<TEntity> where TEntity : class
     {
-        ApiResponse ApiResponse { get; set; }
-        Task<T> GetAsync<T>(ApiRequest<T> _apiRequest);
+        ApiResponse<TEntity> ApiResponse { get; set; }
+        Task<TEntity> SendAsync<TEntity>(ApiRequest _apiRequest);
     }
 }
