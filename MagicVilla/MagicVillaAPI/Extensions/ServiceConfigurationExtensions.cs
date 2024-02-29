@@ -1,5 +1,4 @@
 ﻿using MagicVillaAPI.EntityContext.DBContext;
-using MagicVillaAPI.EntityContext.DBContext.Common;
 using MagicVillaAPI.Logger;
 using MagicVillaAPI.Mappers;
 using MagicVillaAPI.Repositories;
