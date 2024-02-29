@@ -1,13 +1,9 @@
-﻿using MagicVilla_Web.Models.Model;
-using MagicVilla_Web.Models.Requests;
+﻿using MagicVilla_Web.Models.Requests;
 using MagicVilla_Web.Models.Responses;
 using MagicVilla_Web.Services.IServices;
 using Newtonsoft.Json;
 using System;
-using System.Net.Http;
 using System.Text;
-using System.Threading.Tasks;
-using static MagicVilla_Uitility.SD;
 
 namespace MagicVilla_Web.Services
 {
@@ -37,7 +33,6 @@ namespace MagicVilla_Web.Services
                 var _apiResponse = await _client.SendAsync(_message);
                 var _apiContent = _apiResponse.Content.ReadAsStringAsync();
                 var APIResponse = JsonConvert.DeserializeObject<T>(_apiContent.Result);
-                //var returnResponse = (TEntity)APIResponse;
                 return APIResponse;
             }
             catch (Exception ex)

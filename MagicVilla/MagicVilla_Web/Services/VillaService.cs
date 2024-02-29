@@ -11,17 +11,17 @@ namespace MagicVilla_Web.Services
 {
     public class VillaService : BaseService, IVillaService
     {
-        private readonly VillaApiUrls villaUrls;
+        private readonly VillaApiUrls urls;
         public VillaService(IConfiguration configuration, IHttpClientFactory httpClientFactory) : base(httpClientFactory)
         {
-            villaUrls = configuration.GetSection("ServiceUrls:VillaUrls").Get<VillaApiUrls>();
+            urls = configuration.GetSection("ServiceUrls:VillaUrls").Get<VillaApiUrls>();
         }
         public async Task<T> GetAllAsync<T>()
         {
             var _req = new APIRequest()
             {
                 HttpMethodType = HttpMethodType.GetMethodType(ApiType.GET),
-                Url = villaUrls.GetAllUrl
+                Url = urls.GetAllUrl
             };
             var _response = await SendAsync<T>(_req);
             return _response;
@@ -31,18 +31,18 @@ namespace MagicVilla_Web.Services
             var _req = new APIRequest()
             {
                 HttpMethodType = HttpMethodType.GetMethodType(ApiType.GET),
-                Url = string.Format(villaUrls.GetUrl, id)
+                Url = string.Format(urls.GetUrl, id)
             };
             var _response = await SendAsync<T>(_req);
             return _response;
         }
-        public async Task<T> CreateAsync<T>(VillaDTO villaDTO)
+        public async Task<T> CreateAsync<T>(VillaDTO model)
         {
             var _req = new APIRequest()
             {
                 HttpMethodType = HttpMethodType.GetMethodType(ApiType.POST),
-                Data = villaDTO,
-                Url = villaUrls.CreateUrl
+                Data = model,
+                Url = urls.CreateUrl
             };
             var _response = await SendAsync<T>(_req);
             return _response;
@@ -52,18 +52,18 @@ namespace MagicVilla_Web.Services
             var _req = new APIRequest()
             {
                 HttpMethodType = HttpMethodType.GetMethodType(ApiType.DELETE),
-                Url = string.Format(villaUrls.DeleteUrl, id)
+                Url = string.Format(urls.DeleteUrl, id)
             };
             var _response = await SendAsync<T>(_req);
             return _response;
         }
-        public async Task<T> UpdateAsync<T>(VillaDTO villaDTO)
+        public async Task<T> UpdateAsync<T>(VillaDTO model)
         {
             var _req = new APIRequest()
             {
                 HttpMethodType = HttpMethodType.GetMethodType(ApiType.PUT),
-                Data = villaDTO,
-                Url = string.Format(villaUrls.UpdateUrl, villaDTO.Id)
+                Data = model,
+                Url = string.Format(urls.UpdateUrl, model.Id)
             };
             var _response = await SendAsync<T>(_req);
             return _response;
