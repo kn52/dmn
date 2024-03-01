@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using MagicVilla_Web.Models.DAO;
+using System.ComponentModel.DataAnnotations;
 
 namespace MagicVilla_Web.Models.DTO
 {
@@ -11,5 +12,6 @@ namespace MagicVilla_Web.Models.DTO
         public string SpecialDetails { get; set; }
         public string CreatedDateTime { get; set; }
         public string UpdatedDateTime { get; set; }
+        public Villa Villa { get; set; }
     }
 }

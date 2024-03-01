@@ -1,8 +1,6 @@
 ﻿using MagicVilla_Web.Mappers;
-using MagicVilla_Web.Models.Responses;
 using MagicVilla_Web.Services;
 using MagicVilla_Web.Services.IServices;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace MagicVilla_Web.Extensions
 {
@@ -19,7 +17,11 @@ namespace MagicVilla_Web.Extensions
             //});
             
             _builder.Services.AddHttpClient<IVillaService, VillaService>();
+            _builder.Services.AddHttpClient<IVillaNumberService, VillaNumberService>();
+
+
             _builder.Services.AddScoped<IVillaService, VillaService>();
+            _builder.Services.AddScoped<IVillaNumberService, VillaNumberService>();
 
             return _builder;
         }

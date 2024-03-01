@@ -40,7 +40,7 @@ namespace MagicVillaAPI.Services
         }
         public async Task<VillaNumberDTO> CreateVillaNumber([FromBody] VillaNumberDTO villaDto)
         {
-            var checkVillaNumber = await _villaNumberRepository.checkVillaNumber(villaDto).ConfigureAwait(false);
+            var checkVillaNumber = await _villaNumberRepository.GetVillaNumberId(villaDto.VillaNo).ConfigureAwait(false);
             var checkVilla = await _magicVillaRepository.GetVilla(villaDto.Id).ConfigureAwait(false);
             if (checkVillaNumber != null || checkVilla == null)
             {

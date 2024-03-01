@@ -6,13 +6,13 @@
 
 <div class="container p-4 border">
     <div class="row pb-3">
-        <a asp-action="Index">Back</a>
+        @Html.ActionLink("Back", "Index", new { controller = "Villa" })
     </div>
    
     <div class="row pb-2">
         <div class="col-4">
-            @Html.ActionLink("Edit", "Update", new { controller = "Villa", id = Model.Id }, new { @class = "btn btn-outline-primary" }) |
-            @Html.ActionLink("Delete", "Delete", new { controller = "Villa", id = Model.Id }, new { @class = "btn btn-outline-danger" })
+            @Html.ActionLink("Edit", "Update", new { controller = "Villa", id = Model.Id }, new { @class = "btn btn-primary" }) |
+            @Html.ActionLink("Delete", "Delete", new { controller = "Villa", id = Model.Id }, new { @class = "btn btn-danger" })
         </div>
         <div class="col-8 text-end pt-1">
             <h2 class="text-primary">Villa Details</h2>

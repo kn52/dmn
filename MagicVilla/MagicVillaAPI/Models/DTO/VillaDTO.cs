@@ -1,4 +1,6 @@
-﻿namespace MagicVillaAPI.Models.DTO
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace MagicVillaAPI.Models.DTO
 {
     public class CNO
     {

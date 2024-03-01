@@ -13,14 +13,14 @@ namespace MagicVilla_Web.Services
         private readonly VillaNumberApiUrls urls;
         public VillaNumberService(IConfiguration configuration, IHttpClientFactory httpClientFactory) : base(httpClientFactory)
         {
-            urls = configuration.GetSection("ServiceUrls:VillNumberaUrls").Get<VillaNumberApiUrls>();
+            urls = configuration.GetSection("ServiceUrls").Get<VillaNumberApiUrls>();
         }
         public async Task<T> GetAllAsync<T>()
         {
             var _req = new APIRequest()
             {
                 HttpMethodType = HttpMethodType.GetMethodType(ApiType.GET),
-                Url = urls.GetAllUrl
+                Url = string.Format(urls.VillaNumberUrls.GetAllUrl, urls.BaseUrl)
             };
             var _response = await SendAsync<T>(_req);
             return _response;
@@ -30,7 +30,7 @@ namespace MagicVilla_Web.Services
             var _req = new APIRequest()
             {
                 HttpMethodType = HttpMethodType.GetMethodType(ApiType.GET),
-                Url = string.Format(urls.GetUrl, id)
+                Url = string.Format(urls.VillaNumberUrls.GetUrl, urls.BaseUrl, id)
             };
             var _response = await SendAsync<T>(_req);
             return _response;
@@ -41,7 +41,7 @@ namespace MagicVilla_Web.Services
             {
                 HttpMethodType = HttpMethodType.GetMethodType(ApiType.POST),
                 Data = model,
-                Url = urls.CreateUrl
+                Url = string.Format(urls.VillaNumberUrls.CreateUrl, urls.BaseUrl)
             };
             var _response = await SendAsync<T>(_req);
             return _response;
@@ -51,7 +51,7 @@ namespace MagicVilla_Web.Services
             var _req = new APIRequest()
             {
                 HttpMethodType = HttpMethodType.GetMethodType(ApiType.DELETE),
-                Url = string.Format(urls.DeleteUrl, id)
+                Url = string.Format(urls.VillaNumberUrls.DeleteUrl, urls.BaseUrl, id)
             };
             var _response = await SendAsync<T>(_req);
             return _response;
@@ -62,7 +62,7 @@ namespace MagicVilla_Web.Services
             {
                 HttpMethodType = HttpMethodType.GetMethodType(ApiType.PUT),
                 Data = model,
-                Url = string.Format(urls.UpdateUrl, model.Id)
+                Url = string.Format(urls.VillaNumberUrls.UpdateUrl, urls.BaseUrl, model.Id)
             };
             var _response = await SendAsync<T>(_req);
             return _response;
