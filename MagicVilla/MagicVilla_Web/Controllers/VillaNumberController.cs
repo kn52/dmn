@@ -36,7 +36,7 @@ namespace MagicVilla_Web.Controllers
             var response = await _service.CreateAsync<APIResponse<VillaNumberDTO>>(model);
             if (response != null && response.IsSuccess)
             {
-                return RedirectToAction("Index", "VillaNumber");
+                return Redirect("/VillaNumber");
             }
             return View(model);
         }
@@ -57,7 +57,7 @@ namespace MagicVilla_Web.Controllers
             if (response != null && response.IsSuccess)
             {
                 villas = response.Result;
-                return RedirectToAction("Index", "VillaNumber");
+                return Redirect("/VillaNumber");
             }
             return View(villas);
         }
@@ -75,7 +75,7 @@ namespace MagicVilla_Web.Controllers
             var response = await _service.UpdateAsync<APIResponse<VillaNumberDTO>>(model);
             if (response != null && response.IsSuccess)
             {
-                return RedirectToAction("Index", "VillaNumber");
+                return Redirect("/VillaNumber");
             }
             return View(model);
         }

@@ -11,32 +11,32 @@ namespace MagicVillaAPI.Repositories
         }
         public async Task<List<VillaNumber>> GetAll()
         {
-            return GetAllEntity().ToList();
+            return GetAllEntity(includeProperties: "villa").ToList();
         }
         public async Task<VillaNumber> GetById(string id)
         {
-            return await GetVillaNumberId(Convert.ToUInt16(id));
+            return await GetEntityByPropety(filter: e => e.Id == new Guid(id), includeProperties: "villa");
         }
         public async Task Create(VillaNumber entity)
         {
             await CreateEntity(entity);
         }
-        public async Task<VillaNumber> Delete(int id)
+        public async Task<VillaNumber> Delete(string id)
         {
-            var _villa = await GetVillaNumberId(id);
+            var _villa = await GetEntityByPropety(filter: e => e.Id == new Guid(id));
             if (_villa != null)
             {
                 await DeleteEntity(_villa);
             }
             return _villa;
         }
-        public async Task Update(int id, VillaNumber entity)
+        public async Task Update(string id, VillaNumber entity)
         {
-            await UpdateEntity(entity.Id.ToString(), entity);
+            await UpdateEntity(id, entity);
         }
         public async Task<VillaNumber> GetVillaNumberId(int villaNo)
         {
-            return await GetEntityByPropety(e => e.VillaNo == villaNo);
+            return await GetEntityByPropety(filter: e => e.VillaNo == villaNo);
         }
     }
 }

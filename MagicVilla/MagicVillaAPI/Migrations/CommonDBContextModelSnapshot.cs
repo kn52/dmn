@@ -26,36 +26,30 @@ namespace MagicVillaAPI.Migrations
                         .HasColumnType("char(36)");
 
                     b.Property<string>("Amenity")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("CreatedDateTime")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("Details")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("ImageUrl")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<int>("Occupancy")
+                    b.Property<int?>("Occupancy")
                         .HasColumnType("int");
 
-                    b.Property<int>("Rate")
+                    b.Property<int?>("Rate")
                         .HasColumnType("int");
 
-                    b.Property<int>("Sqft")
+                    b.Property<int?>("Sqft")
                         .HasColumnType("int");
 
                     b.Property<string>("UpdatedDateTime")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.HasKey("Id");
@@ -65,68 +59,68 @@ namespace MagicVillaAPI.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("048ea2b2-5bd2-4537-b098-11034e29693e"),
+                            Id = new Guid("f382c7b1-efdc-4c60-ad52-405d9a745568"),
                             Amenity = "",
-                            CreatedDateTime = "28-02-2024 23:57:34",
+                            CreatedDateTime = "03-03-2024 02:44:47",
                             Details = "Fusce 11 tincidunt maximus leo, sed scelerisque massa auctor sit amet. Donec ex mauris, hendrerit quis nibh ac, efficitur fringilla enim.",
                             ImageUrl = "https://dotnetmasteryimages.blob.core.windows.net/bluevillaimages/villa3.jpg",
                             Name = "Royal Villa",
                             Occupancy = 4,
                             Rate = 200,
                             Sqft = 550,
-                            UpdatedDateTime = "28-02-2024 23:57:34"
+                            UpdatedDateTime = "03-03-2024 02:44:47"
                         },
                         new
                         {
-                            Id = new Guid("bd4bdc2f-07b1-4207-a070-5e94ba331abc"),
+                            Id = new Guid("42fa1e57-8c3a-4a04-8406-961c371d12b8"),
                             Amenity = "",
-                            CreatedDateTime = "28-02-2024 23:57:34",
+                            CreatedDateTime = "03-03-2024 02:44:47",
                             Details = "Fusce 11 tincidunt maximus leo, sed scelerisque massa auctor sit amet. Donec ex mauris, hendrerit quis nibh ac, efficitur fringilla enim.",
                             ImageUrl = "https://dotnetmasteryimages.blob.core.windows.net/bluevillaimages/villa1.jpg",
                             Name = "Premium Pool Villa",
                             Occupancy = 4,
                             Rate = 300,
                             Sqft = 550,
-                            UpdatedDateTime = "28-02-2024 23:57:34"
+                            UpdatedDateTime = "03-03-2024 02:44:47"
                         },
                         new
                         {
-                            Id = new Guid("1527385c-290d-4635-9216-52b18704bdb8"),
+                            Id = new Guid("93c0e67b-e793-4c4a-871e-64ba34346442"),
                             Amenity = "",
-                            CreatedDateTime = "28-02-2024 23:57:34",
+                            CreatedDateTime = "03-03-2024 02:44:47",
                             Details = "Fusce 11 tincidunt maximus leo, sed scelerisque massa auctor sit amet. Donec ex mauris, hendrerit quis nibh ac, efficitur fringilla enim.",
                             ImageUrl = "https://dotnetmasteryimages.blob.core.windows.net/bluevillaimages/villa4.jpg",
                             Name = "Luxury Pool Villa",
                             Occupancy = 4,
                             Rate = 400,
                             Sqft = 750,
-                            UpdatedDateTime = "28-02-2024 23:57:34"
+                            UpdatedDateTime = "03-03-2024 02:44:47"
                         },
                         new
                         {
-                            Id = new Guid("279b0ce2-0166-4845-9231-6250e98dffb9"),
+                            Id = new Guid("8cf35f3e-b1ab-45ba-aa37-991c5510ae3e"),
                             Amenity = "",
-                            CreatedDateTime = "28-02-2024 23:57:34",
+                            CreatedDateTime = "03-03-2024 02:44:47",
                             Details = "Fusce 11 tincidunt maximus leo, sed scelerisque massa auctor sit amet. Donec ex mauris, hendrerit quis nibh ac, efficitur fringilla enim.",
                             ImageUrl = "https://dotnetmasteryimages.blob.core.windows.net/bluevillaimages/villa5.jpg",
                             Name = "Diamond Villa",
                             Occupancy = 4,
                             Rate = 550,
                             Sqft = 900,
-                            UpdatedDateTime = "28-02-2024 23:57:34"
+                            UpdatedDateTime = "03-03-2024 02:44:47"
                         },
                         new
                         {
-                            Id = new Guid("92d48d8c-0494-4350-afa1-342a720f3348"),
+                            Id = new Guid("59732f91-7c2b-4212-bf20-b75559ee5ed2"),
                             Amenity = "",
-                            CreatedDateTime = "28-02-2024 23:57:34",
+                            CreatedDateTime = "03-03-2024 02:44:47",
                             Details = "Fusce 11 tincidunt maximus leo, sed scelerisque massa auctor sit amet. Donec ex mauris, hendrerit quis nibh ac, efficitur fringilla enim.",
                             ImageUrl = "https://dotnetmasteryimages.blob.core.windows.net/bluevillaimages/villa2.jpg",
                             Name = "Diamond Pool Villa",
                             Occupancy = 4,
                             Rate = 600,
                             Sqft = 1100,
-                            UpdatedDateTime = "28-02-2024 23:57:34"
+                            UpdatedDateTime = "03-03-2024 02:44:47"
                         });
                 });
 
@@ -137,15 +131,12 @@ namespace MagicVillaAPI.Migrations
                         .HasColumnType("char(36)");
 
                     b.Property<string>("CreatedDateTime")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("SpecialDetails")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("UpdatedDateTime")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<Guid>("VillaId")

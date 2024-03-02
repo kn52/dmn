@@ -17,22 +17,10 @@
         <thead>
             <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.Id)
-                </th>
-                <th>
                     @Html.DisplayNameFor(model => model.VillaNo)
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.VillaId)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.SpecialDetails)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.CreatedDateTime)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.UpdatedDateTime)
                 </th>
                 <th></th>
             </tr>
@@ -42,22 +30,10 @@
             {
                 <tr>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Id)
-                    </td>
-                    <td>
                         @Html.DisplayFor(modelItem => item.VillaNo)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.VillaId)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.SpecialDetails)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.CreatedDateTime)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.UpdatedDateTime)
                     </td>
                     <td>
                         @Html.ActionLink("View", "Details", new { controller = "VillaNumber", Id = item.Id }, new { @class = "btn btn-info" }) |

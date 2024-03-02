@@ -17,6 +17,11 @@ namespace MagicVillaAPI.Extensions
                 var _connect = _builder.Configuration["ConnectionStrings:MySqlConnection"];
                 options.UseMySql(_connect, ServerVersion.AutoDetect(_connect));
             });
+            //_builder.Services.AddDbContext<CommonDBContext>(options =>
+            //{
+            //    var _connect = _builder.Configuration["ConnectionStrings:SqlServerConnection"];
+            //    options.UseSqlServer(_connect);
+            //});
 
             _builder.Services.AddControllers()
             .AddNewtonsoftJson()

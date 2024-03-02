@@ -10,13 +10,13 @@ namespace MagicVillaAPI.Models.DAO
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
-        public int VillaNo { get; set; }
-        public string SpecialDetails { get; set; }
-        public string CreatedDateTime { get; set; }
-        public string UpdatedDateTime { get; set; }
+        public int VillaNo { get; set; } 
+        public string? SpecialDetails { get; set; } = string.Empty;
+        public string? CreatedDateTime { get; set; } = string.Empty;
+        public string? UpdatedDateTime { get; set; } = string.Empty;
 
         [ForeignKey("Villa")]
         public Guid VillaId { get; set; }   
-        public Villa Villa { get; set; }   
+        public Villa? Villa { get; set; }           
     }
 }

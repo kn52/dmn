@@ -7,5 +7,9 @@
         public const string INFO = "INFO";
         
         public const string SUCCESS = "SUCCESS";
+
+        public const string DAO = "DAO";
+        
+        public const string DTO = "DTO";
     }
 }

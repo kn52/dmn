@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+﻿using MagicVillaAPI.Mappers;
 using MagicVillaAPI.Models.DAO;
 using MagicVillaAPI.Models.DTO;
 using MagicVillaAPI.Repositories;
@@ -9,11 +9,9 @@ namespace MagicVillaAPI.Services
 {
     public class MagicVillaService
     {
-        private IMapper _mapper;
         private readonly MagicVillaRepository _magicVillaRepository;
-        public MagicVillaService(IMapper mapper, MagicVillaRepository magicVillaRepository)
+        public MagicVillaService(MagicVillaRepository magicVillaRepository)
         {
-            _mapper = mapper;
             _magicVillaRepository = magicVillaRepository;
         }
 
@@ -24,17 +22,21 @@ namespace MagicVillaAPI.Services
             {
                 return null;
             }
-            var model = _mapper.Map<List<VillaDTO>>(villas);
+            var model = villas.Select(villa => VillaMapper.ConvertToVillaDto(villa)).ToList(); ;
             return model;
         }
         public async Task<VillaDTO> GetVilla(string id)
         {
+            if (string.IsNullOrEmpty(id))
+            {
+                return null;
+            }
             var villa = await _magicVillaRepository.GetVilla(id).ConfigureAwait(false);
             if (villa == null)
             {
                 return new VillaDTO();
             }
-            var model = _mapper.Map<VillaDTO>(villa);
+            var model = VillaMapper.ConvertToVillaDto(villa);
             return model;
         }
         public async Task<VillaDTO> CreateVilla([FromBody] VillaDTO villaDto)
@@ -44,7 +46,7 @@ namespace MagicVillaAPI.Services
             {
                 return null;
             }
-            var insertModel = _mapper.Map<Villa>(villaDto);
+            var insertModel = VillaMapper.ConvertToVilla(villaDto);
             var newId = Guid.NewGuid();
             insertModel.Id = newId;
             insertModel.CreatedDateTime = DateTime.Now.ToString();
@@ -54,32 +56,52 @@ namespace MagicVillaAPI.Services
         }
         public async Task<VillaDTO> DeleteVilla(string id)
         {
+            if (string.IsNullOrEmpty(id))
+            {
+                return null;
+            }
             var villa = await _magicVillaRepository.Delete(id).ConfigureAwait(false);
             VillaDTO model = null;
             if (villa != null)
             {
-                _mapper.Map<VillaDTO>(villa);
+                model = VillaMapper.ConvertToVillaDto(villa);
             }
             return model;
         }
         public async Task<VillaDTO> UpdateVilla(string id, [FromBody] VillaDTO villaDto)
         {
-            var updatedModel = _mapper.Map<Villa>(villaDto); ;
-            updatedModel.UpdatedDateTime = DateTime.Now.ToString();
-            await _magicVillaRepository.Update(id, updatedModel).ConfigureAwait(false);
-            return villaDto;
-        }
-        public async Task<VillaDTO> UpdatePartialVilla(string id, [FromBody] JsonPatchDocument<VillaDTO> patchVillaDto)
-        {
+            if (string.IsNullOrEmpty(id))
+            {
+                return null;
+            }
             var villa = await _magicVillaRepository.GetVilla(id).ConfigureAwait(false);
             if (villa == null)
             {
                 return null;
             }
-            VillaDTO model = _mapper.Map<VillaDTO>(villa);
-            patchVillaDto.ApplyTo(model);
-            var updatedModel = _mapper.Map<Villa>(model); ;
+            var updatedModel = VillaMapper.ConvertToVilla(villaDto);
             updatedModel.UpdatedDateTime = DateTime.Now.ToString();
+            updatedModel.CreatedDateTime = villa.CreatedDateTime;
+            updatedModel.Id = villa.Id;
+            await _magicVillaRepository.Update(id, updatedModel).ConfigureAwait(false);
+            return villaDto;
+        }
+        public async Task<VillaDTO> UpdatePartialVilla(string id, [FromBody] JsonPatchDocument<VillaDTO> patchVillaDto)
+        {
+            if (string.IsNullOrEmpty(id))
+            {
+                return null;
+            }
+            var villa = await _magicVillaRepository.GetVilla(id).ConfigureAwait(false);
+            if (villa == null)
+            {
+                return null;
+            }
+            VillaDTO model = VillaMapper.ConvertToVillaDto(villa);
+            patchVillaDto.ApplyTo(model);
+            var updatedModel = VillaMapper.ConvertToVilla(model); ;
+            updatedModel.UpdatedDateTime = DateTime.Now.ToString();
+            updatedModel.Id = villa.Id;
             await _magicVillaRepository.Update(id, updatedModel).ConfigureAwait(false);
             return model;
         }

@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+﻿using MagicVillaAPI.Mappers;
 using MagicVillaAPI.Models.DAO;
 using MagicVillaAPI.Models.DTO;
 using MagicVillaAPI.Repositories;
@@ -9,14 +9,13 @@ namespace MagicVillaAPI.Services
 {
     public class VillaNumberService
     {
-        private IMapper _mapper;
         private readonly VillaNumberRepository _villaNumberRepository;
         private readonly MagicVillaRepository _magicVillaRepository;
 
-        public VillaNumberService(IMapper mapper, VillaNumberRepository villaNumberRepository)
+        public VillaNumberService(VillaNumberRepository villaNumberRepository, MagicVillaRepository magicVillaRepository)
         {
-            _mapper = mapper;
             _villaNumberRepository = villaNumberRepository;
+            _magicVillaRepository = magicVillaRepository;
         }
         public async Task<List<VillaNumberDTO>> GetVillaNumbers()
         {
@@ -25,71 +24,98 @@ namespace MagicVillaAPI.Services
             {
                 return null;
             }
-            var model = _mapper.Map<List<VillaNumberDTO>>(villas);
+            var model = villas.Select(villa => VillaNumberMapper.ConvertToVillaNumberDto(villa)).ToList();
             return model;
         }
         public async Task<VillaNumberDTO> GetVillaNumber(string id)
         {
+            if (string.IsNullOrEmpty(id))
+            {
+                return null;
+            }
             var villa = await _villaNumberRepository.GetById(id).ConfigureAwait(false);
             if (villa == null)
             {
                 return new VillaNumberDTO();
             }
-            var model = _mapper.Map<VillaNumberDTO>(villa);
+            var model = VillaNumberMapper.ConvertToVillaNumberDto(villa);
             return model;
         }
         public async Task<VillaNumberDTO> CreateVillaNumber([FromBody] VillaNumberDTO villaDto)
         {
-            var checkVillaNumber = await _villaNumberRepository.GetVillaNumberId(villaDto.VillaNo).ConfigureAwait(false);
-            var checkVilla = await _magicVillaRepository.GetVilla(villaDto.Id).ConfigureAwait(false);
+            if (string.IsNullOrEmpty(villaDto.VillaNo) || string.IsNullOrEmpty(villaDto.VillaId))
+            {
+                return null;
+            }
+            var checkVillaNumber = await _villaNumberRepository.GetVillaNumberId(Convert.ToInt32(villaDto.VillaNo)).ConfigureAwait(false);
+            var checkVilla = await _magicVillaRepository.GetVilla(villaDto.VillaId).ConfigureAwait(false);
             if (checkVillaNumber != null || checkVilla == null)
             {
                 return null;
             }
-            var insertModel = _mapper.Map<VillaNumber>(villaDto);
+            var insertModel = VillaNumberMapper.ConvertToVillaNumber(villaDto);
             var newId = Guid.NewGuid();
             insertModel.Id = newId;
             insertModel.CreatedDateTime = DateTime.Now.ToString();
             insertModel.UpdatedDateTime = DateTime.Now.ToString();
             villaDto.Id = newId.ToString();
+            villaDto.Villa = checkVilla;
             await _villaNumberRepository.Create(insertModel).ConfigureAwait(false);
             return villaDto;
         }
-        public async Task<VillaNumberDTO> DeleteVillaNumber(int id)
+        public async Task<VillaNumberDTO> DeleteVillaNumber(string id)
         {
+            if (string.IsNullOrEmpty(id))
+            {
+                return null;
+            }
             var villa = await _villaNumberRepository.Delete(id).ConfigureAwait(false);
             VillaNumberDTO model = null;
             if (villa != null)
             {
-                _mapper.Map<VillaNumberDTO>(villa);
+                model = VillaNumberMapper.ConvertToVillaNumberDto(villa);
             }
             return model;
         }
-        public async Task<VillaNumberDTO> UpdateVillaNumber(int id, [FromBody] VillaNumberDTO villaDto)
+        public async Task<VillaNumberDTO> UpdateVillaNumber(string id, [FromBody] VillaNumberDTO villaDto)
         {
-            var villaNumber = await _villaNumberRepository.GetVillaNumberId(id).ConfigureAwait(false);
+            if (string.IsNullOrEmpty(id))
+            {
+                return null;
+            }
+            var villaNumber = await _villaNumberRepository.GetById(id).ConfigureAwait(false);
             if (villaNumber == null)
             {
                 return null;
             }
-            villaDto.VillaId = villaNumber.VillaId;
-            villaDto.UpdatedDateTime = DateTime.Now.ToString();
-            var updatedModel = _mapper.Map<VillaNumber>(villaDto);
+            if (string.IsNullOrEmpty(villaDto.VillaId))
+            {
+                villaDto.VillaId = villaNumber.VillaId.ToString();
+            }
+            var updatedModel = VillaNumberMapper.ConvertToVillaNumber(villaDto);
+            updatedModel.UpdatedDateTime = DateTime.Now.ToString();
+            updatedModel.CreatedDateTime = villaNumber.CreatedDateTime;
+            updatedModel.Id = villaNumber.Id;
             await _villaNumberRepository.Update(id, updatedModel).ConfigureAwait(false);
             return villaDto;
         }
-        public async Task<VillaNumberDTO> UpdatePartialVillaNumber(int id, [FromBody] JsonPatchDocument<VillaNumberDTO> patchVillaDto)
+        public async Task<VillaNumberDTO> UpdatePartialVillaNumber(string id, [FromBody] JsonPatchDocument<VillaNumberDTO> patchVillaDto)
         {
-            var villaNumber = await _villaNumberRepository.GetVillaNumberId(id).ConfigureAwait(false);
+            if (string.IsNullOrEmpty(id))
+            {
+                return null;
+            }
+            var villaNumber = await _villaNumberRepository.GetById(id).ConfigureAwait(false);
             if (villaNumber == null)
             {
                 return null;
             }
-            VillaNumberDTO model = _mapper.Map<VillaNumberDTO>(villaNumber);
+            VillaNumberDTO model = VillaNumberMapper.ConvertToVillaNumberDto(villaNumber);
             patchVillaDto.ApplyTo(model);
-            var updatedModel = _mapper.Map<VillaNumber>(model);
+            var updatedModel = VillaNumberMapper.ConvertToVillaNumber(model);
             updatedModel.VillaId = villaNumber.VillaId;
             updatedModel.UpdatedDateTime = DateTime.Now.ToString();
+            updatedModel.Id = villaNumber.Id;
             await _villaNumberRepository.Update(id, updatedModel).ConfigureAwait(false);
             return model;
         }

@@ -5,13 +5,13 @@ namespace MagicVilla_Web.Models.DTO
 {
     public class VillaNumberDTO
     {
-        public string Id { get; set; }
+        public string? Id { get; set; }
         [Required]
-        public int VillaNo { get; set; }
-        public Guid VillaId { get; set; }
-        public string SpecialDetails { get; set; }
-        public string CreatedDateTime { get; set; }
-        public string UpdatedDateTime { get; set; }
-        public Villa Villa { get; set; }
+        public string VillaNo { get; set; }
+        public string? SpecialDetails { get; set; }
+        public string? CreatedDateTime { get; set; }
+        public string? UpdatedDateTime { get; set; }
+        public string? VillaId { get; set; }
+        public Villa? Villa { get; set; }
     }
 }

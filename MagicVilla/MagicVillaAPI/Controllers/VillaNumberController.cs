@@ -83,14 +83,14 @@ namespace MagicVillaAPI.Controllers
             return _response;
         }
 
-        [HttpDelete("DeleteVillaNumber/id:int", Name = "DeleteVillaNumber")]
+        [HttpDelete("DeleteVillaNumber/id:string", Name = "DeleteVillaNumber")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ApiResponse<VillaNumberDTO>> DeleteVillaNumber(int id)
+        public async Task<ApiResponse<VillaNumberDTO>> DeleteVillaNumber(string id)
         {
             var _response = new ApiResponse<VillaNumberDTO>();
-            if (id == 0)
+            if (string.IsNullOrEmpty(id))
             {
                 _response.IsSuccess = false;
                 _response.StatusCode = HttpStatusCode.BadRequest;
@@ -109,14 +109,14 @@ namespace MagicVillaAPI.Controllers
             return _response;
         }
 
-        [HttpPut("UpdateVillaNumber/id:int", Name = "UpdateVillaNumber")]
+        [HttpPut("UpdateVillaNumber/string:int", Name = "UpdateVillaNumber")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ApiResponse<VillaNumberDTO>> UpdateVillaNumber(int id, [FromBody] VillaNumberDTO villaDto)
+        public async Task<ApiResponse<VillaNumberDTO>> UpdateVillaNumber(string id, [FromBody] VillaNumberDTO villaDto)
         {
             var _response = new ApiResponse<VillaNumberDTO>();
-            if (villaDto == null || id == 0)
+            if (villaDto == null || string.IsNullOrEmpty(id))
             {
                 _response.IsSuccess = false;
                 _response.StatusCode = HttpStatusCode.BadRequest;
@@ -135,14 +135,14 @@ namespace MagicVillaAPI.Controllers
             return _response;
         }
 
-        [HttpPatch("UpdatePartialVillaNumber/id:int", Name = "UpdatePartialVillaNumber")]
+        [HttpPatch("UpdatePartialVillaNumber/id:string", Name = "UpdatePartialVillaNumber")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ApiResponse<VillaNumberDTO>> UpdatePartialVillaNumber(int id, [FromBody] JsonPatchDocument<VillaNumberDTO> patchVillaDto)
+        public async Task<ApiResponse<VillaNumberDTO>> UpdatePartialVillaNumber(string id, [FromBody] JsonPatchDocument<VillaNumberDTO> patchVillaDto)
         {
             var _response = new ApiResponse<VillaNumberDTO>();
-            if (patchVillaDto == null || id == 0)
+            if (patchVillaDto == null || string.IsNullOrEmpty(id))
             {
                 _response.IsSuccess = false;
                 _response.StatusCode = HttpStatusCode.BadRequest;
