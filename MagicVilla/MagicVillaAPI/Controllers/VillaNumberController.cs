@@ -30,7 +30,7 @@ namespace MagicVillaAPI.Controllers
             var _result = await _villaNumberService.GetVillaNumbers().ConfigureAwait(false);
             if (_result == null)
             {
-                _response.IsSuccess = false;
+                _response.IsSuccess = false; 
                 _response.StatusCode = HttpStatusCode.BadRequest;
                 _response.Message = ConstantValues.ERROR;
             }
@@ -109,7 +109,7 @@ namespace MagicVillaAPI.Controllers
             return _response;
         }
 
-        [HttpPut("UpdateVillaNumber/string:int", Name = "UpdateVillaNumber")]
+        [HttpPut("UpdateVillaNumber/string:string", Name = "UpdateVillaNumber")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

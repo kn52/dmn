@@ -8,14 +8,17 @@ namespace MagicVillaAPI.Repositories.Generic
     public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class, IEntity
     {
         public readonly CommonDBContext _db;
+        public DbSet<TEntity> _dbSet;
 
         public GenericRepository(CommonDBContext db)
         {
             _db = db;
+            _db.VillaNumbers.Include(u => u.Villa).ToList();
+            this._dbSet = _db.Set<TEntity>();
         }
-        public IQueryable<TEntity> GetAllEntity(Expression<Func<TEntity, bool>>? filter = null, bool tracked = true, string? includeProperties = null)
+        public async Task<List<TEntity>> GetAllEntity(Expression<Func<TEntity, bool>>? filter = null, bool tracked = true, string? includeProperties = null)
         {
-            var query = _db.Set<TEntity>();
+            IQueryable<TEntity> query = _dbSet;
 
             if (!tracked)
             {
@@ -29,11 +32,12 @@ namespace MagicVillaAPI.Repositories.Generic
                     query.Include(incudeProp);
                 }
             }
-            return query;
+            var _list = await query.ToListAsync();
+            return _list;
         }
         public async Task<TEntity> GetEntityByPropety(Expression<Func<TEntity, bool>>? filter = null, bool tracked = true, string? includeProperties = null)
         {
-            IQueryable<TEntity> entity = _db.Set<TEntity>();
+            IQueryable<TEntity> entity = _dbSet;
             if (!tracked)
             {
                 entity.AsNoTracking();
@@ -49,22 +53,23 @@ namespace MagicVillaAPI.Repositories.Generic
                     entity.Include(incudeProp);
                 }
             }
+            var _entity = await entity.FirstOrDefaultAsync();
 
-            return await entity.FirstOrDefaultAsync();
+            return _entity;
         }
         public async Task CreateEntity(TEntity entity)
         {
-            await _db.Set<TEntity>().AddAsync(entity);
+            await _dbSet.AddAsync(entity);
             await SaveEntity();
         }
         public async Task DeleteEntity(TEntity entity)
         {
-            _db.Set<TEntity>().Remove(entity);
+            _dbSet.Remove(entity);
             await SaveEntity();
         }
         public async Task UpdateEntity(string id, TEntity entity)
         {
-            _db.Set<TEntity>().Update(entity);
+            _dbSet.Update(entity);
             await SaveEntity();
         }
         public async Task SaveEntity()

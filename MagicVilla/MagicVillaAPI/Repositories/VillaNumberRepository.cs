@@ -11,11 +11,13 @@ namespace MagicVillaAPI.Repositories
         }
         public async Task<List<VillaNumber>> GetAll()
         {
-            return GetAllEntity(includeProperties: "villa").ToList();
+            var _villaNumbers = await GetAllEntity(includeProperties: "Villa");
+            return _villaNumbers;
         }
         public async Task<VillaNumber> GetById(string id)
         {
-            return await GetEntityByPropety(filter: e => e.Id == new Guid(id), includeProperties: "villa");
+            var _entity = await GetEntityByPropety(filter: e => e.Id == new Guid(id), includeProperties: "villa");
+            return _entity;
         }
         public async Task Create(VillaNumber entity)
         {
@@ -36,7 +38,8 @@ namespace MagicVillaAPI.Repositories
         }
         public async Task<VillaNumber> GetVillaNumberId(int villaNo)
         {
-            return await GetEntityByPropety(filter: e => e.VillaNo == villaNo);
+            var _entity = await GetEntityByPropety(filter: e => e.VillaNo == villaNo);
+            return _entity;
         }
     }
 }

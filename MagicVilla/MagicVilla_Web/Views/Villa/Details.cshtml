@@ -6,16 +6,8 @@
 
 <div class="container p-4 border">
     <div class="row pb-3">
-        @Html.ActionLink("Back", "Index", new { controller = "Villa" })
-    </div>
-   
-    <div class="row pb-2">
-        <div class="col-4">
-            @Html.ActionLink("Edit", "ViewUpdate", new { controller = "Villa", id = Model.Id }, new { @class = "btn btn-primary" }) |
-            @Html.ActionLink("Delete", "Delete", new { controller = "Villa", id = Model.Id }, new { @class = "btn btn-danger" })
-        </div>
-        <div class="col-8 text-end pt-1">
-            <h2 class="text-primary">Villa Details</h2>
+        <div class="col-12 text-end pt-1">
+            <h3 class="text-primary">Villa Details</h3>
         </div>
     </div>
 
@@ -94,4 +86,14 @@
             </tr>
         </tbody>
     </table>
+    <div class="row pb-2">
+        <div class="col-4">
+            @Html.ActionLink("Back", "Index", new { controller = "Villa" }, new { @class = "btn btn-primary" })
+        </div>
+        <div class="col-8 text-end">
+            @Html.ActionLink("Update", "ViewUpdate", new { controller = "Villa", id = Model.Id }, new { @class = "btn btn-success" }) |
+            @Html.ActionLink("Delete", "Delete", new { controller = "Villa", id = Model.Id }, new { @class = "btn btn-danger" })
+        </div>
+
+    </div>
 </div>

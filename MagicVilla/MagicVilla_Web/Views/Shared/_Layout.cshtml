@@ -27,7 +27,7 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Villa" asp-action="Index">Villa</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="VillaNumber" asp-action="Index">Villa Number</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="VillaNumber" asp-action="Index">VillaNumber</a>
                         </li>
                     </ul>
                 </div>
@@ -35,6 +35,7 @@
         </nav>
     </header>
     <div class="container">
+        <partial name="_Notification" />
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
@@ -48,6 +49,7 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
