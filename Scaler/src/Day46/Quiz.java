@@ -1,9 +1,11 @@
-package Day0;
+package Day46;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
 
-public class HelloWorld {
-
+public class Quiz {
 	public static void main(String[] args) {
 		System.out.println("Hello world");
 		ArrayList<Integer> a = new ArrayList<Integer>(Arrays.asList(16,6, 18, 17,13,6,18,16,6,15,15,18,16,13,16,16,6,18,15,15 )); 
@@ -25,6 +27,10 @@ public class HelloWorld {
 		String a = A;
         String b = B;
         
+        if (a.length() == 0 || b.length() == 0) {
+        	return 0;
+        }
+        
         if (a.length() < b.length()) {
         	return 0;
         }
@@ -34,6 +40,19 @@ public class HelloWorld {
         
         for(int i = 0; i < a.length(); i++) {
             String ch = ""  + a.charAt(i);
+            if (map1.containsKey(ch)) {
+                int count = map1.get(ch);
+                count +=1;
+                map1.put(ch, count);
+            }
+            else {
+                map2.put(ch, 0);
+                map1.put(ch, 1);
+            }
+        }
+        for(int i = 0; i < b.length(); i++) {
+            String ch = "" + b.charAt(i);
+            
             if (map1.containsKey(ch)) {
             	int mapT = map2.get(ch);
                 int mapO = map1.get(ch);
@@ -48,19 +67,6 @@ public class HelloWorld {
             }
             else {
             	return 0;
-            }
-        }
-        for(int i = 0; i < b.length(); i++) {
-            String ch = "" + b.charAt(i);
-            int mapT = map2.get(ch);
-            int mapO = map1.get(ch);
-            
-            if (mapT < mapO) {
-                int count = mapT + 1;
-                map2.put(ch, count);
-            }
-            else if (mapT == mapO) {
-                return 0;
             }
         }
         return ans;
