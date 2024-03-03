@@ -35,13 +35,19 @@ public class HelloWorld {
         for(int i = 0; i < a.length(); i++) {
             String ch = ""  + a.charAt(i);
             if (map1.containsKey(ch)) {
-                int count = map1.get(ch);
-                count +=1;
-                map1.put(ch, count);
+            	int mapT = map2.get(ch);
+                int mapO = map1.get(ch);
+                
+                if (mapT < mapO) {
+                    int count = mapT + 1;
+                    map2.put(ch, count);
+                }
+                else if (mapT == mapO) {
+                    return 0;
+                }
             }
             else {
-                map2.put(ch, 0);
-                map1.put(ch, 1);
+            	return 0;
             }
         }
         for(int i = 0; i < b.length(); i++) {
