@@ -1,13 +1,8 @@
 ﻿using AutoMapper;
 using MagicVilla_Web.Models.DTO;
-using MagicVilla_Web.Models.Model;
 using MagicVilla_Web.Models.Responses;
 using MagicVilla_Web.Services.IServices;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Text.Json;
-using System.Threading.Tasks;
 
 namespace MagicVilla_Web.Controllers
 {

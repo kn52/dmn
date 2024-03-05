@@ -109,7 +109,7 @@ namespace MagicVillaAPI.Controllers
             return _response;
         }
 
-        [HttpPut("UpdateVillaNumber/string:int", Name = "UpdateVillaNumber")]
+        [HttpPut("UpdateVillaNumber/string:string", Name = "UpdateVillaNumber")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
