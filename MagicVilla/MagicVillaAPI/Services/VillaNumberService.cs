@@ -58,6 +58,7 @@ namespace MagicVillaAPI.Services
             insertModel.Id = newId;
             insertModel.CreatedDateTime = DateTime.Now.ToString();
             insertModel.UpdatedDateTime = DateTime.Now.ToString();
+            insertModel.Villa = checkVilla;
             villaDto.Id = newId.ToString();
             villaDto.Villa = checkVilla;
             await _villaNumberRepository.Create(insertModel).ConfigureAwait(false);
@@ -88,6 +89,7 @@ namespace MagicVillaAPI.Services
             {
                 return null;
             }
+            var checkVilla = await _magicVillaRepository.GetVilla(villaDto.VillaId).ConfigureAwait(false);
             if (string.IsNullOrEmpty(villaDto.VillaId))
             {
                 villaDto.VillaId = villaNumber.VillaId.ToString();
@@ -96,6 +98,7 @@ namespace MagicVillaAPI.Services
             updatedModel.UpdatedDateTime = DateTime.Now.ToString();
             updatedModel.CreatedDateTime = villaNumber.CreatedDateTime;
             updatedModel.Id = villaNumber.Id;
+            updatedModel.Villa = checkVilla;
             await _villaNumberRepository.Update(id, updatedModel).ConfigureAwait(false);
             return villaDto;
         }

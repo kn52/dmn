@@ -1,55 +1,66 @@
-﻿@model MagicVilla_Web.Models.DTO.VillaNumberDTO
+﻿@model MagicVilla_Web.Models.DTO.VillaNumberModifyDTO
 
 @{
     ViewData["Title"] = "Update";
 }
 
 <div class="container p-4 border">
-    <div class="row pb-3">
-        @Html.ActionLink("Back", "Index", new { controller = "VillaNumber" })
-    </div>
     <div class="row">
-        <div class="col text-start pt-1">
-            <h4 class="text-primary">Update Villa Number</h4>
+        <div class="col text-end pt-1">
+            <h3 class="text-primary">Update VillaNumber</h3>
         </div>
     </div>
     <hr class="mt-0" />
     <div class="row">
-        <div class="col-md-4">
+        <div class="col">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <form asp-action="Update">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <div class="form-group d-none">
-                    <label asp-for="Id" class="control-label"></label>
-                    <input asp-for="Id" class="form-control" />
-                    <span asp-validation-for="Id" class="text-danger"></span>
+                <div class="row pb-3 d-none">
+                    <div class="col-2">
+                        <label asp-for="Id" class="control-label"></label>
+                    </div>
+                    <div class="col-10">
+                        <input asp-for="Id" class="form-control" readonly/>
+                        <span asp-validation-for="Id" class="text-danger"></span>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label asp-for="VillaNo" class="control-label"></label>
-                    <input asp-for="VillaNo" class="form-control" />
-                    <span asp-validation-for="VillaNo" class="text-danger"></span>
+                <div class="row pb-3">
+                    <div class="col-2">
+                        <label asp-for="VillaNo" class="control-label"></label>
+                    </div>
+                    <div class="col-10 pb-3">
+                        <input asp-for="VillaNo" class="form-control" readonly />
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label asp-for="VillaId" class="control-label"></label>
-                    <input asp-for="VillaId" class="form-control" />
-                    <span asp-validation-for="VillaId" class="text-danger"></span>
+                <div class="row pb-3">
+                    <div class="col-2">
+                        <label asp-for="VillaId" class="control-label"></label>
+                    </div>
+                    <div class="col-10 pb-3">
+                        <select asp-for="VillaId" class="form-control" asp-items="@Model.VillaList">
+                            <option selected disabled>--Select Villa--</option>
+                        </select>
+                        <span asp-validation-for="VillaId" class="text-danger"></span>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label asp-for="SpecialDetails" class="control-label"></label>
-                    <input asp-for="SpecialDetails" class="form-control" />
-                    <span asp-validation-for="SpecialDetails" class="text-danger"></span>
+                <div class="row pb-3">
+                    <div class="col-2">
+                        <label asp-for="SpecialDetails" class="control-label"></label>
+
+                    </div>
+                    <div class="col-10">
+                        <input asp-for="SpecialDetails" class="form-control" />
+                        <span asp-validation-for="SpecialDetails" class="text-danger"></span>
+
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label asp-for="CreatedDateTime" class="control-label"></label>
-                    <input asp-for="CreatedDateTime" class="form-control" />
-                    <span asp-validation-for="CreatedDateTime" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="UpdatedDateTime" class="control-label"></label>
-                    <input asp-for="UpdatedDateTime" class="form-control" />
-                    <span asp-validation-for="UpdatedDateTime" class="text-danger"></span>
-                </div>
-                <div class="form-group mt-5">
-                    <input type="submit" value="Update" class="btn btn-primary" />
+                <div class="row pb-3">
+                    <div class="col-5 offset-2">
+                        @Html.ActionLink("Back", "Index", new { controller = "VillaNumber" }, new { @class = "btn btn-primary form-control" })
+                    </div>
+                    <div class="col-5">
+                        <input type="submit" value="Update" class="btn btn-success form-control" />
+                    </div>
                 </div>
             </form>
         </div>

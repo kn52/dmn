@@ -30,7 +30,7 @@ namespace MagicVillaAPI.Controllers
             var _result = await _villaNumberService.GetVillaNumbers().ConfigureAwait(false);
             if (_result == null)
             {
-                _response.IsSuccess = false;
+                _response.IsSuccess = false; 
                 _response.StatusCode = HttpStatusCode.BadRequest;
                 _response.Message = ConstantValues.ERROR;
             }
