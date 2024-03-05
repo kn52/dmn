@@ -41,7 +41,7 @@ namespace MagicVillaAPI.Extensions
             _builder.Services.AddScoped<VillaNumberService>();
 
             //Repositories
-            //_builder.Services.AddScoped<IGenericRepository, GenericRepository>();
+            //_builder.Services.AddScoped<MagicVillaAPI.Repositories.Generic.IGenericRepository, MagicVillaAPI.Repositories.Generic.GenericRepository>();
             _builder.Services.AddScoped<MagicVillaRepository>();
             _builder.Services.AddScoped<VillaNumberRepository>();
 

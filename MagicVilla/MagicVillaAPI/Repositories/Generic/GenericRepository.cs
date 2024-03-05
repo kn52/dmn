@@ -1,6 +1,7 @@
 ﻿using MagicVillaAPI.EntityContext.DBContext;
 using MagicVillaAPI.Models.Model;
 using Microsoft.EntityFrameworkCore;
+using System.Diagnostics;
 using System.Linq.Expressions;
 
 namespace MagicVillaAPI.Repositories.Generic
@@ -57,20 +58,53 @@ namespace MagicVillaAPI.Repositories.Generic
 
             return _entity;
         }
-        public async Task CreateEntity(TEntity entity)
+        public async Task CreateEntity(TEntity entity, bool tracked = false)
         {
-            await _dbSet.AddAsync(entity);
-            await SaveEntity();
+            try
+            {
+                if (!tracked)
+                {
+                    _dbSet.AsNoTracking();
+                }
+                await _dbSet.AddAsync(entity);
+                await SaveEntity();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
         }
-        public async Task DeleteEntity(TEntity entity)
+        public async Task DeleteEntity(TEntity entity, bool tracked = false)
         {
-            _dbSet.Remove(entity);
-            await SaveEntity();
+            try
+            {
+                if (!tracked)
+                {
+                    _dbSet.AsNoTracking();
+                }
+                _dbSet.Remove(entity);
+                await SaveEntity();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
         }
-        public async Task UpdateEntity(string id, TEntity entity)
+        public async Task UpdateEntity(string id, TEntity entity, bool tracked = false)
         {
-            _dbSet.Update(entity);
-            await SaveEntity();
+            try
+            {
+                if (!tracked)
+                {
+                    _dbSet.AsNoTracking();
+                }
+                _db.Entry(entity).State = EntityState.Modified;
+                await SaveEntity();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
         }
         public async Task SaveEntity()
         {

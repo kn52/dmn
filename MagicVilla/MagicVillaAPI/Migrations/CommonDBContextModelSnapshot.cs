@@ -55,6 +55,73 @@ namespace MagicVillaAPI.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Villa");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("9f5fbdca-c51e-45b8-9a49-8e33911e90c7"),
+                            Amenity = "",
+                            CreatedDateTime = "05-03-2024 13:18:22",
+                            Details = "Fusce 11 tincidunt maximus leo, sed scelerisque massa auctor sit amet. Donec ex mauris, hendrerit quis nibh ac, efficitur fringilla enim.",
+                            ImageUrl = "https://dotnetmasteryimages.blob.core.windows.net/bluevillaimages/villa3.jpg",
+                            Name = "Royal Villa",
+                            Occupancy = 4,
+                            Rate = 200,
+                            Sqft = 550,
+                            UpdatedDateTime = "05-03-2024 13:18:22"
+                        },
+                        new
+                        {
+                            Id = new Guid("b59c30eb-a7c9-4a64-923e-f23802965b95"),
+                            Amenity = "",
+                            CreatedDateTime = "05-03-2024 13:18:22",
+                            Details = "Fusce 11 tincidunt maximus leo, sed scelerisque massa auctor sit amet. Donec ex mauris, hendrerit quis nibh ac, efficitur fringilla enim.",
+                            ImageUrl = "https://dotnetmasteryimages.blob.core.windows.net/bluevillaimages/villa1.jpg",
+                            Name = "Premium Pool Villa",
+                            Occupancy = 4,
+                            Rate = 300,
+                            Sqft = 550,
+                            UpdatedDateTime = "05-03-2024 13:18:22"
+                        },
+                        new
+                        {
+                            Id = new Guid("26d44569-90cf-4482-a9fe-d142e0703591"),
+                            Amenity = "",
+                            CreatedDateTime = "05-03-2024 13:18:22",
+                            Details = "Fusce 11 tincidunt maximus leo, sed scelerisque massa auctor sit amet. Donec ex mauris, hendrerit quis nibh ac, efficitur fringilla enim.",
+                            ImageUrl = "https://dotnetmasteryimages.blob.core.windows.net/bluevillaimages/villa4.jpg",
+                            Name = "Luxury Pool Villa",
+                            Occupancy = 4,
+                            Rate = 400,
+                            Sqft = 750,
+                            UpdatedDateTime = "05-03-2024 13:18:22"
+                        },
+                        new
+                        {
+                            Id = new Guid("9c4f7582-5625-4ce9-8717-8d1312a97b75"),
+                            Amenity = "",
+                            CreatedDateTime = "05-03-2024 13:18:22",
+                            Details = "Fusce 11 tincidunt maximus leo, sed scelerisque massa auctor sit amet. Donec ex mauris, hendrerit quis nibh ac, efficitur fringilla enim.",
+                            ImageUrl = "https://dotnetmasteryimages.blob.core.windows.net/bluevillaimages/villa5.jpg",
+                            Name = "Diamond Villa",
+                            Occupancy = 4,
+                            Rate = 550,
+                            Sqft = 900,
+                            UpdatedDateTime = "05-03-2024 13:18:22"
+                        },
+                        new
+                        {
+                            Id = new Guid("4e51a293-8e6e-49f9-a810-c91830db312d"),
+                            Amenity = "",
+                            CreatedDateTime = "05-03-2024 13:18:22",
+                            Details = "Fusce 11 tincidunt maximus leo, sed scelerisque massa auctor sit amet. Donec ex mauris, hendrerit quis nibh ac, efficitur fringilla enim.",
+                            ImageUrl = "https://dotnetmasteryimages.blob.core.windows.net/bluevillaimages/villa2.jpg",
+                            Name = "Diamond Pool Villa",
+                            Occupancy = 4,
+                            Rate = 600,
+                            Sqft = 1100,
+                            UpdatedDateTime = "05-03-2024 13:18:22"
+                        });
                 });
 
             modelBuilder.Entity("MagicVillaAPI.Models.DAO.VillaNumber", b =>

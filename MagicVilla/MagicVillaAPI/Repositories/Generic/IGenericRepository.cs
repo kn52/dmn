@@ -8,11 +8,11 @@ namespace MagicVillaAPI.Repositories.Generic
 
         Task<TEntity> GetEntityByPropety(Expression<Func<TEntity, bool>>? filter = null, bool tracked = true, string? includeProperties = null);
 
-        Task CreateEntity(TEntity entity);
+        Task CreateEntity(TEntity entity, bool tracked = false);
 
-        Task UpdateEntity(string id, TEntity entity);
+        Task UpdateEntity(string id, TEntity entity, bool tracked = false);
 
-        Task DeleteEntity(TEntity entity);
+        Task DeleteEntity(TEntity entity, bool tracked = false);
 
         Task SaveEntity();
     }
