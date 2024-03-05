@@ -39,11 +39,13 @@ namespace MagicVillaAPI.Extensions
             //Services
             _builder.Services.AddScoped<MagicVillaService>();
             _builder.Services.AddScoped<VillaNumberService>();
+            _builder.Services.AddScoped<UserService>();
 
             //Repositories
             //_builder.Services.AddScoped<MagicVillaAPI.Repositories.Generic.IGenericRepository, MagicVillaAPI.Repositories.Generic.GenericRepository>();
             _builder.Services.AddScoped<MagicVillaRepository>();
             _builder.Services.AddScoped<VillaNumberRepository>();
+            _builder.Services.AddScoped<UserRepository>();
 
             return _builder;
         }

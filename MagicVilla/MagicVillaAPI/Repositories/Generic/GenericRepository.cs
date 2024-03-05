@@ -1,12 +1,10 @@
 ﻿using MagicVillaAPI.EntityContext.DBContext;
-using MagicVillaAPI.Models.Model;
 using Microsoft.EntityFrameworkCore;
-using System.Diagnostics;
 using System.Linq.Expressions;
 
 namespace MagicVillaAPI.Repositories.Generic
 {
-    public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class, IEntity
+    public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class
     {
         public readonly CommonDBContext _db;
         public DbSet<TEntity> _dbSet;
@@ -14,10 +12,9 @@ namespace MagicVillaAPI.Repositories.Generic
         public GenericRepository(CommonDBContext db)
         {
             _db = db;
-            _db.VillaNumbers.Include(u => u.Villa).ToList();
-            this._dbSet = _db.Set<TEntity>();
+            _dbSet = _db.Set<TEntity>();
         }
-        public async Task<List<TEntity>> GetAllEntity(Expression<Func<TEntity, bool>>? filter = null, bool tracked = true, string? includeProperties = null)
+        public async Task<IQueryable<TEntity>> GetAllEntity(Expression<Func<TEntity, bool>>? filter = null, bool tracked = false)
         {
             IQueryable<TEntity> query = _dbSet;
 
@@ -26,17 +23,9 @@ namespace MagicVillaAPI.Repositories.Generic
                 query.AsNoTracking();
             }
 
-            if (includeProperties != null)
-            {
-                foreach (var incudeProp in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
-                {
-                    query.Include(incudeProp);
-                }
-            }
-            var _list = await query.ToListAsync();
-            return _list;
+            return query;
         }
-        public async Task<TEntity> GetEntityByPropety(Expression<Func<TEntity, bool>>? filter = null, bool tracked = true, string? includeProperties = null)
+        public async Task<IQueryable<TEntity>> GetEntityByPropety(Expression<Func<TEntity, bool>>? filter = null, bool tracked = false)
         {
             IQueryable<TEntity> entity = _dbSet;
             if (!tracked)
@@ -47,16 +36,8 @@ namespace MagicVillaAPI.Repositories.Generic
             {
                 entity = entity.Where(filter);
             }
-            if (includeProperties != null)
-            {
-                foreach (var incudeProp in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
-                {
-                    entity.Include(incudeProp);
-                }
-            }
-            var _entity = await entity.FirstOrDefaultAsync();
 
-            return _entity;
+            return entity;
         }
         public async Task CreateEntity(TEntity entity, bool tracked = false)
         {

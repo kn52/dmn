@@ -1,42 +1,26 @@
-﻿using MagicVilla_Web.Models;
-using MagicVilla_Web.Models.DTO;
-using MagicVilla_Web.Models.Responses;
-using MagicVilla_Web.Services;
-using MagicVilla_Web.Services.IServices;
-using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
+﻿using Microsoft.AspNetCore.Mvc;
+using VillaService;
 
 namespace MagicVilla_Web.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly IVillaService _villaService;
-        public HomeController(IVillaService villaService)
+        private readonly VillaServiceClient _service;
+        public HomeController(VillaServiceClient service)
         {
-            _villaService = villaService;
+            _service = service;
         }
 
         public async Task<IActionResult> Index()
         {
             List<VillaDTO> villas = new();
 
-            var response = await _villaService.GetAllAsync<APIResponse<List<VillaDTO>>>();
+            var response = await _service.GetVillaListAsync().ConfigureAwait(false);
             if (response != null && response.Result != null && response.IsSuccess)
             {
-                villas = response.Result;
+                villas = response.Result.ToList();
             }
             return View(villas);
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
 }

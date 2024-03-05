@@ -5,7 +5,7 @@ using MagicVillaAPI.Models.Model;
 namespace MagicVillaAPI.Models.DAO
 {
     [Table("Villa")]
-    public class Villa : IEntity
+    public class Villa
     {
         [Key,DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }

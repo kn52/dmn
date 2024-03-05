@@ -22,4 +22,12 @@
         public VillaNumberUrls VillaNumberUrls { get; set; }
     }
     public class VillaNumberUrls : APIUrls { }
+
+    public class UserApiUrls
+    {
+        public string BaseUrl { get; set; }
+
+        public UserUrls VillaNumberUrls { get; set; }
+    }
+    public class UserUrls : APIUrls { }
 }

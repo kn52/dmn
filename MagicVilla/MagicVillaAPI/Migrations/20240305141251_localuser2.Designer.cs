@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MagicVillaAPI.Migrations
 {
     [DbContext(typeof(CommonDBContext))]
-    [Migration("20240305074822_initial")]
-    partial class initial
+    [Migration("20240305141251_localuser2")]
+    partial class localuser2
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -62,68 +62,68 @@ namespace MagicVillaAPI.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("9f5fbdca-c51e-45b8-9a49-8e33911e90c7"),
+                            Id = new Guid("28942683-a021-48f7-babf-b6660cd74d25"),
                             Amenity = "",
-                            CreatedDateTime = "05-03-2024 13:18:22",
+                            CreatedDateTime = "05-03-2024 19:42:50",
                             Details = "Fusce 11 tincidunt maximus leo, sed scelerisque massa auctor sit amet. Donec ex mauris, hendrerit quis nibh ac, efficitur fringilla enim.",
                             ImageUrl = "https://dotnetmasteryimages.blob.core.windows.net/bluevillaimages/villa3.jpg",
                             Name = "Royal Villa",
                             Occupancy = 4,
                             Rate = 200,
                             Sqft = 550,
-                            UpdatedDateTime = "05-03-2024 13:18:22"
+                            UpdatedDateTime = "05-03-2024 19:42:50"
                         },
                         new
                         {
-                            Id = new Guid("b59c30eb-a7c9-4a64-923e-f23802965b95"),
+                            Id = new Guid("6592f757-337d-4c69-ba72-1ffb9ae9a0b8"),
                             Amenity = "",
-                            CreatedDateTime = "05-03-2024 13:18:22",
+                            CreatedDateTime = "05-03-2024 19:42:50",
                             Details = "Fusce 11 tincidunt maximus leo, sed scelerisque massa auctor sit amet. Donec ex mauris, hendrerit quis nibh ac, efficitur fringilla enim.",
                             ImageUrl = "https://dotnetmasteryimages.blob.core.windows.net/bluevillaimages/villa1.jpg",
                             Name = "Premium Pool Villa",
                             Occupancy = 4,
                             Rate = 300,
                             Sqft = 550,
-                            UpdatedDateTime = "05-03-2024 13:18:22"
+                            UpdatedDateTime = "05-03-2024 19:42:50"
                         },
                         new
                         {
-                            Id = new Guid("26d44569-90cf-4482-a9fe-d142e0703591"),
+                            Id = new Guid("c4a15d50-163c-494d-a188-0b3f285f771f"),
                             Amenity = "",
-                            CreatedDateTime = "05-03-2024 13:18:22",
+                            CreatedDateTime = "05-03-2024 19:42:50",
                             Details = "Fusce 11 tincidunt maximus leo, sed scelerisque massa auctor sit amet. Donec ex mauris, hendrerit quis nibh ac, efficitur fringilla enim.",
                             ImageUrl = "https://dotnetmasteryimages.blob.core.windows.net/bluevillaimages/villa4.jpg",
                             Name = "Luxury Pool Villa",
                             Occupancy = 4,
                             Rate = 400,
                             Sqft = 750,
-                            UpdatedDateTime = "05-03-2024 13:18:22"
+                            UpdatedDateTime = "05-03-2024 19:42:50"
                         },
                         new
                         {
-                            Id = new Guid("9c4f7582-5625-4ce9-8717-8d1312a97b75"),
+                            Id = new Guid("6f7c2150-b1a7-4772-be5e-9be4860cfb66"),
                             Amenity = "",
-                            CreatedDateTime = "05-03-2024 13:18:22",
+                            CreatedDateTime = "05-03-2024 19:42:50",
                             Details = "Fusce 11 tincidunt maximus leo, sed scelerisque massa auctor sit amet. Donec ex mauris, hendrerit quis nibh ac, efficitur fringilla enim.",
                             ImageUrl = "https://dotnetmasteryimages.blob.core.windows.net/bluevillaimages/villa5.jpg",
                             Name = "Diamond Villa",
                             Occupancy = 4,
                             Rate = 550,
                             Sqft = 900,
-                            UpdatedDateTime = "05-03-2024 13:18:22"
+                            UpdatedDateTime = "05-03-2024 19:42:50"
                         },
                         new
                         {
-                            Id = new Guid("4e51a293-8e6e-49f9-a810-c91830db312d"),
+                            Id = new Guid("11b80990-7382-40cf-8318-569cd7821632"),
                             Amenity = "",
-                            CreatedDateTime = "05-03-2024 13:18:22",
+                            CreatedDateTime = "05-03-2024 19:42:50",
                             Details = "Fusce 11 tincidunt maximus leo, sed scelerisque massa auctor sit amet. Donec ex mauris, hendrerit quis nibh ac, efficitur fringilla enim.",
                             ImageUrl = "https://dotnetmasteryimages.blob.core.windows.net/bluevillaimages/villa2.jpg",
                             Name = "Diamond Pool Villa",
                             Occupancy = 4,
                             Rate = 600,
                             Sqft = 1100,
-                            UpdatedDateTime = "05-03-2024 13:18:22"
+                            UpdatedDateTime = "05-03-2024 19:42:50"
                         });
                 });
 

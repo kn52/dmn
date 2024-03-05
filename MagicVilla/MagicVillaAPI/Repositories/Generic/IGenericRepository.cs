@@ -4,9 +4,9 @@ namespace MagicVillaAPI.Repositories.Generic
 {
     public interface IGenericRepository<TEntity> where TEntity : class
     {
-        Task<List<TEntity>> GetAllEntity(Expression<Func<TEntity, bool>>? filter = null, bool tracked = true, string? includeProperties = null);
+        Task<IQueryable<TEntity>> GetAllEntity(Expression<Func<TEntity, bool>>? filter = null, bool tracked = false);
 
-        Task<TEntity> GetEntityByPropety(Expression<Func<TEntity, bool>>? filter = null, bool tracked = true, string? includeProperties = null);
+        Task<IQueryable<TEntity>> GetEntityByPropety(Expression<Func<TEntity, bool>>? filter = null, bool tracked = false);
 
         Task CreateEntity(TEntity entity, bool tracked = false);
 

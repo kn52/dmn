@@ -1,29 +1,25 @@
-﻿using AutoMapper;
-using MagicVilla_Web.Models.DTO;
-using MagicVilla_Web.Models.Responses;
-using MagicVilla_Web.Services.IServices;
+﻿using MagicVilla_Web.Models.DTO;
 using Microsoft.AspNetCore.Mvc;
+using VillaService;
 
 namespace MagicVilla_Web.Controllers
 {
     public class VillaController : Controller
     {
-        private readonly IVillaService _service;
-        private readonly IMapper _mapper;
-        public VillaController(IVillaService service, IMapper mapper)
+        private readonly VillaServiceClient _service;
+        public VillaController(VillaServiceClient service)
         {
             _service = service;
-            _mapper = mapper;
         }
 
         public async Task<IActionResult> Index()
         {
             List<VillaDTO> villas = new();
 
-            var response = await _service.GetAllAsync<APIResponse<List<VillaDTO>>>();
+            var response = await _service.GetVillaListAsync().ConfigureAwait(false);
             if (response != null && response.Result != null && response.IsSuccess)
             {
-                villas = response.Result;
+                villas = response.Result.ToList();
             }
             return View(villas);
         }
@@ -46,7 +42,7 @@ namespace MagicVilla_Web.Controllers
                 CreatedDateTime = string.Empty,
                 UpdatedDateTime = string.Empty
             };
-            var response = await _service.CreateAsync<APIResponse<VillaDTO>>(craeteModel);
+            var response = await _service.CreateVillaAsync(craeteModel).ConfigureAwait(false);
             if (response != null && response.IsSuccess)
             {
                 TempData["success"] = "Villa created successfully.";
@@ -58,30 +54,30 @@ namespace MagicVilla_Web.Controllers
         public async Task<IActionResult> Details(string Id)
         {
             VillaDTO villas = new();
-            var response = await _service.GetAsync<APIResponse<VillaDTO>>(Id);
+            var response = await _service.GetVillaByIdAsync(Id).ConfigureAwait(false);
             if (response != null && response.IsSuccess)
             {
                 villas = response.Result;
             }
             return View(villas);
         }
-        public async Task<IActionResult> Delete(string Id)
-        {
-            VillaDTO villas = new();
-            var response = await _service.DeleteAsync<APIResponse<VillaDTO>>(Id);
-            if (response != null && response.IsSuccess)
-            {
-                TempData["success"] = "Villa deleted successfully.";
-                villas = response.Result;
-                return Redirect("/Villa");
-            }
-            TempData["error"] = "Error encountered.";
-            return View(villas);
-        }
+        //public async Task<IActionResult> Delete(string Id)
+        //{
+        //    VillaDTO villas = new();
+        //    var response = await _service.DeleteVillaAsync(Id).ConfigureAwait(false);
+        //    if (response != null && response.IsSuccess)
+        //    {
+        //        TempData["success"] = "Villa deleted successfully.";
+        //        villas = response.Result;
+        //        return Redirect("/Villa");
+        //    }
+        //    TempData["error"] = "Error encountered.";
+        //    return View(villas);
+        //}
         public async Task<IActionResult> ViewUpdate(VillaDTO model)
         {
             VillaModifyDTO updateModel = null;
-            var response = await _service.GetAsync<APIResponse<VillaDTO>>(model.Id);
+            var response = await _service.GetVillaByIdAsync(model.Id).ConfigureAwait(false);
             if (response != null && response.IsSuccess)
             {
                 model = response.Result;
@@ -116,7 +112,7 @@ namespace MagicVilla_Web.Controllers
                 CreatedDateTime = string.Empty,
                 UpdatedDateTime = string.Empty
             };
-            var response = await _service.UpdateAsync<APIResponse<VillaDTO>>(updateModel);
+            var response = await _service.UpdateVillaAsync(updateModel.Id, updateModel).ConfigureAwait(false);
             if (response != null && response.IsSuccess)
             {
                 TempData["success"] = "Villa updated successfully.";

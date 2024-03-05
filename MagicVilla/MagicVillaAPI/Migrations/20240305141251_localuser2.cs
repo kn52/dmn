@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace MagicVillaAPI.Migrations
 {
     /// <inheritdoc />
-    public partial class initial : Migration
+    public partial class localuser2 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -74,11 +74,11 @@ namespace MagicVillaAPI.Migrations
                 columns: new[] { "Id", "Amenity", "CreatedDateTime", "Details", "ImageUrl", "Name", "Occupancy", "Rate", "Sqft", "UpdatedDateTime" },
                 values: new object[,]
                 {
-                    { new Guid("26d44569-90cf-4482-a9fe-d142e0703591"), "", "05-03-2024 13:18:22", "Fusce 11 tincidunt maximus leo, sed scelerisque massa auctor sit amet. Donec ex mauris, hendrerit quis nibh ac, efficitur fringilla enim.", "https://dotnetmasteryimages.blob.core.windows.net/bluevillaimages/villa4.jpg", "Luxury Pool Villa", 4, 400, 750, "05-03-2024 13:18:22" },
-                    { new Guid("4e51a293-8e6e-49f9-a810-c91830db312d"), "", "05-03-2024 13:18:22", "Fusce 11 tincidunt maximus leo, sed scelerisque massa auctor sit amet. Donec ex mauris, hendrerit quis nibh ac, efficitur fringilla enim.", "https://dotnetmasteryimages.blob.core.windows.net/bluevillaimages/villa2.jpg", "Diamond Pool Villa", 4, 600, 1100, "05-03-2024 13:18:22" },
-                    { new Guid("9c4f7582-5625-4ce9-8717-8d1312a97b75"), "", "05-03-2024 13:18:22", "Fusce 11 tincidunt maximus leo, sed scelerisque massa auctor sit amet. Donec ex mauris, hendrerit quis nibh ac, efficitur fringilla enim.", "https://dotnetmasteryimages.blob.core.windows.net/bluevillaimages/villa5.jpg", "Diamond Villa", 4, 550, 900, "05-03-2024 13:18:22" },
-                    { new Guid("9f5fbdca-c51e-45b8-9a49-8e33911e90c7"), "", "05-03-2024 13:18:22", "Fusce 11 tincidunt maximus leo, sed scelerisque massa auctor sit amet. Donec ex mauris, hendrerit quis nibh ac, efficitur fringilla enim.", "https://dotnetmasteryimages.blob.core.windows.net/bluevillaimages/villa3.jpg", "Royal Villa", 4, 200, 550, "05-03-2024 13:18:22" },
-                    { new Guid("b59c30eb-a7c9-4a64-923e-f23802965b95"), "", "05-03-2024 13:18:22", "Fusce 11 tincidunt maximus leo, sed scelerisque massa auctor sit amet. Donec ex mauris, hendrerit quis nibh ac, efficitur fringilla enim.", "https://dotnetmasteryimages.blob.core.windows.net/bluevillaimages/villa1.jpg", "Premium Pool Villa", 4, 300, 550, "05-03-2024 13:18:22" }
+                    { new Guid("11b80990-7382-40cf-8318-569cd7821632"), "", "05-03-2024 19:42:50", "Fusce 11 tincidunt maximus leo, sed scelerisque massa auctor sit amet. Donec ex mauris, hendrerit quis nibh ac, efficitur fringilla enim.", "https://dotnetmasteryimages.blob.core.windows.net/bluevillaimages/villa2.jpg", "Diamond Pool Villa", 4, 600, 1100, "05-03-2024 19:42:50" },
+                    { new Guid("28942683-a021-48f7-babf-b6660cd74d25"), "", "05-03-2024 19:42:50", "Fusce 11 tincidunt maximus leo, sed scelerisque massa auctor sit amet. Donec ex mauris, hendrerit quis nibh ac, efficitur fringilla enim.", "https://dotnetmasteryimages.blob.core.windows.net/bluevillaimages/villa3.jpg", "Royal Villa", 4, 200, 550, "05-03-2024 19:42:50" },
+                    { new Guid("6592f757-337d-4c69-ba72-1ffb9ae9a0b8"), "", "05-03-2024 19:42:50", "Fusce 11 tincidunt maximus leo, sed scelerisque massa auctor sit amet. Donec ex mauris, hendrerit quis nibh ac, efficitur fringilla enim.", "https://dotnetmasteryimages.blob.core.windows.net/bluevillaimages/villa1.jpg", "Premium Pool Villa", 4, 300, 550, "05-03-2024 19:42:50" },
+                    { new Guid("6f7c2150-b1a7-4772-be5e-9be4860cfb66"), "", "05-03-2024 19:42:50", "Fusce 11 tincidunt maximus leo, sed scelerisque massa auctor sit amet. Donec ex mauris, hendrerit quis nibh ac, efficitur fringilla enim.", "https://dotnetmasteryimages.blob.core.windows.net/bluevillaimages/villa5.jpg", "Diamond Villa", 4, 550, 900, "05-03-2024 19:42:50" },
+                    { new Guid("c4a15d50-163c-494d-a188-0b3f285f771f"), "", "05-03-2024 19:42:50", "Fusce 11 tincidunt maximus leo, sed scelerisque massa auctor sit amet. Donec ex mauris, hendrerit quis nibh ac, efficitur fringilla enim.", "https://dotnetmasteryimages.blob.core.windows.net/bluevillaimages/villa4.jpg", "Luxury Pool Villa", 4, 400, 750, "05-03-2024 19:42:50" }
                 });
 
             migrationBuilder.CreateIndex(

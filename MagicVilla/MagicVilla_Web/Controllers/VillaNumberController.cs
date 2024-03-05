@@ -1,39 +1,33 @@
-﻿using AutoMapper;
-using MagicVilla_Web.Models.DTO;
-using MagicVilla_Web.Models.Responses;
-using MagicVilla_Web.Services.IServices;
+﻿using MagicVilla_Web.Models.DTO;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using VillaService;
 
 namespace MagicVilla_Web.Controllers
 {
     public class VillaNumberController : Controller
     {
-        private readonly IVillaNumberService _service;
-        private readonly IVillaService _villaService;
-        private readonly IMapper _mapper;
-        public VillaNumberController(IVillaNumberService service, IVillaService villaService, IMapper mapper)
+        private readonly VillaServiceClient _service;
+        public VillaNumberController(VillaServiceClient service)
         {
             _service = service;
-            _villaService = villaService;
-            _mapper = mapper;
         }
 
         public async Task<IActionResult> Index()
         {
             List<VillaNumberDTO> villas = new();
 
-            var response = await _service.GetAllAsync<APIResponse<List<VillaNumberDTO>>>();
+            var response = await _service.GetVillaNumbersAsync().ConfigureAwait(false);
             if (response != null && response.Result != null && response.IsSuccess)
             {
-                villas = response.Result;
+                villas = response.Result.ToList();
             }
             return View(villas);
         }
         public async Task<IActionResult> ViewCreate(VillaNumberDTO model)
         {
-            var createModel = new VillaNumberModifyDTO();
-            var response = await _villaService.GetAllAsync<APIResponse<List<VillaDTO>>>();
+            var createModel = new Models.DTO.VillaNumberModifyDTO();
+            var response = await _service.GetVillaListAsync().ConfigureAwait(false);
             if (response != null && response.IsSuccess)
             {
                 var villas = response.Result;
@@ -58,14 +52,14 @@ namespace MagicVilla_Web.Controllers
                     CreatedDateTime = string.Empty,
                     UpdatedDateTime = string.Empty
                 };
-                var response = await _service.CreateAsync<APIResponse<VillaNumberDTO>>(createModel);
+                var response = await _service.CreateVillaNumberAsync(createModel).ConfigureAwait(false);
                 if (response != null && response.IsSuccess)
                 {
                     TempData["success"] = "VillaNumber created successfully.";
                     return Redirect("/VillaNumber");
                 }
             }
-            var response2 = await _villaService.GetAllAsync<APIResponse<List<VillaDTO>>>();
+            var response2 = await _service.GetVillaListAsync().ConfigureAwait(false);
             if (response2 != null && response2.IsSuccess)
             {
                 var villas = response2.Result;
@@ -81,31 +75,31 @@ namespace MagicVilla_Web.Controllers
         public async Task<IActionResult> Details(string Id)
         {
             VillaNumberDTO villas = new();
-            var response = await _service.GetAsync<APIResponse<VillaNumberDTO>>(Id);
+            var response = await _service.GetVillaNumberByIdAsync(Id).ConfigureAwait(false);
             if (response != null && response.IsSuccess)
             {
                 villas = response.Result;
             }
             return View(villas);
         }
-        public async Task<IActionResult> Delete(string Id)
-        {
-            VillaNumberDTO villas = new();
-            var response = await _service.DeleteAsync<APIResponse<VillaNumberDTO>>(Id);
-            if (response != null && response.IsSuccess)
-            {
-                TempData["success"] = "VillaNumber deleted successfully.";
-                villas = response.Result;
-                return Redirect("/VillaNumber");
-            }
-            TempData["error"] = "Error encountered.";
-            return View(villas);
-        }
+        //public async Task<IActionResult> Delete(string Id)
+        //{
+        //    VillaNumberDTO villas = new();
+        //    var response = await _service.DeleteVillaNumberAsync(Id).ConfigureAwait(false);
+        //    if (response != null && response.IsSuccess)
+        //    {
+        //        TempData["success"] = "VillaNumber deleted successfully.";
+        //        villas = response.Result;
+        //        return Redirect("/VillaNumber");
+        //    }
+        //    TempData["error"] = "Error encountered.";
+        //    return View(villas);
+        //}
         public async Task<IActionResult> ViewUpdate(VillaNumberDTO model)
         {
             VillaNumberModifyDTO updateModel = null;
 
-            var response = await _service.GetAsync<APIResponse<VillaNumberDTO>>(model.Id);
+            var response = await _service.GetVillaNumberByIdAsync(model.Id).ConfigureAwait(false);
             if (response != null && response.IsSuccess)
             {
                 model = response.Result;
@@ -116,7 +110,7 @@ namespace MagicVilla_Web.Controllers
                     VillaId = model.VillaId,
                     SpecialDetails = model.SpecialDetails,
                 };
-                var response2 = await _villaService.GetAllAsync<APIResponse<List<VillaDTO>>>();
+                var response2 = await _service.GetVillaListAsync().ConfigureAwait(false);
                 if (response2 != null && response2.IsSuccess)
                 {
                     var villas = response2.Result;
@@ -146,14 +140,14 @@ namespace MagicVilla_Web.Controllers
                     CreatedDateTime = string.Empty,
                     UpdatedDateTime = string.Empty
                 };
-                var response = await _service.UpdateAsync<APIResponse<VillaNumberDTO>>(updateModel);
+                var response = await _service.UpdateVillaNumberAsync(updateModel.Id, updateModel).ConfigureAwait(false);
                 if (response != null && response.IsSuccess)
                 {
                     TempData["success"] = "VillaNumber updated successfully.";
                     return Redirect("/VillaNumber");
                 }
             }
-            var response2 = await _villaService.GetAllAsync<APIResponse<List<VillaDTO>>>();
+            var response2 = await _service.GetVillaListAsync().ConfigureAwait(false);
             if (response2 != null && response2.IsSuccess)
             {
                 var villas = response2.Result;
