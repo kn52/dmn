@@ -147,6 +147,8 @@ namespace MagicVilla_Web.Controllers
                     return Redirect("/VillaNumber");
                 }
             }
+
+
             var response2 = await _service.GetVillaListAsync().ConfigureAwait(false);
             if (response2 != null && response2.IsSuccess)
             {
