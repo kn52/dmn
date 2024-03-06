@@ -1,12 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using VillaService;
+using MagicVillaServiceJ;
 
 namespace MagicVilla_Web.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly VillaServiceClient _service;
-        public HomeController(VillaServiceClient service)
+        private readonly MagicVillaServiceJClient _service;
+        public HomeController(MagicVillaServiceJClient service)
         {
             _service = service;
         }

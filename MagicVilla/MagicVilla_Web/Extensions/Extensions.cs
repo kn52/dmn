@@ -1,5 +1,5 @@
 ﻿using MagicVilla_Web.Mappers;
-using VillaService;
+using MagicVillaServiceJ;
 
 namespace MagicVilla_Web.Extensions
 {
@@ -9,14 +9,9 @@ namespace MagicVilla_Web.Extensions
         public static WebApplicationBuilder AddServiceConfigs(this WebApplicationBuilder builder)
         {
             builder.Services.AddControllersWithViews();
-            builder.Services.AddAutoMapper(typeof(MapperConfig));
-
 
             // Services
-            var baseURI = builder.Configuration["ServiceUrls:BaseUrl"];
-            builder.Services.AddHttpClient<VillaServiceClient>(o => o.BaseAddress = new Uri(baseURI));
-
-            builder.Services.AddScoped<VillaServiceClient>();
+            builder.Services.AddHttpClient<MagicVillaServiceJClient>(o => o.BaseAddress = new Uri(builder.Configuration.GetValue<string>("ServiceUrls:BaseUrl")));
 
             return builder;
         }

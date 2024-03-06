@@ -1,13 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using VillaService;
+﻿using MagicVillaServiceJ;
+using Microsoft.AspNetCore.Mvc;
+using MagicVillaServiceJ;
 
 namespace MagicVilla_Web.Controllers
 {
     public class UserController : Controller
     {
-        private readonly VillaServiceClient _sevices;
+        private readonly MagicVillaServiceJClient _sevices;
 
-        public UserController(VillaServiceClient sevices)
+        public UserController(MagicVillaServiceJClient sevices)
         {
             _sevices = sevices;
         }

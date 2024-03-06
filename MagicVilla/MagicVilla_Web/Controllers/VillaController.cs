@@ -1,13 +1,13 @@
 ﻿using MagicVilla_Web.Models.DTO;
+using MagicVillaServiceJ;
 using Microsoft.AspNetCore.Mvc;
-using VillaService;
 
 namespace MagicVilla_Web.Controllers
 {
     public class VillaController : Controller
     {
-        private readonly VillaServiceClient _service;
-        public VillaController(VillaServiceClient service)
+        private readonly MagicVillaServiceJClient _service;
+        public VillaController(MagicVillaServiceJClient service)
         {
             _service = service;
         }
