@@ -18,6 +18,7 @@ namespace MagicVillaAPI.Controllers
         }
         [HttpPost("IsValidUser")]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ApiResponse<bool>> IsValidUser(LoginRequestDTO loginRequestDTO)
@@ -46,6 +47,7 @@ namespace MagicVillaAPI.Controllers
         }
         [HttpPost("Login")]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ApiResponse<LoginResponseDTO>> Login(LoginRequestDTO loginRequestDTO)
@@ -74,6 +76,7 @@ namespace MagicVillaAPI.Controllers
         }
         [HttpPost("Register")]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ApiResponse<RegistrationRequestDTO>> Register(RegistrationRequestDTO entity)
