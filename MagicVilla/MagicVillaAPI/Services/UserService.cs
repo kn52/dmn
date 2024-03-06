@@ -2,7 +2,11 @@
 using MagicVillaAPI.Models.DTO;
 using MagicVillaAPI.Models.Responses;
 using MagicVillaAPI.Repositories;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
 using System.Net;
+using System.Security.Claims;
+using System.Text;
 
 namespace MagicVillaAPI.Services
 {
@@ -49,6 +53,22 @@ namespace MagicVillaAPI.Services
                 }
                 else
                 {
+                    var secret = "abc";
+                    var tokenhandler = new JwtSecurityTokenHandler();
+                    var encodesecret = Encoding.ASCII.GetBytes(secret);
+
+                    var tokendescription = new SecurityTokenDescriptor()
+                    {
+                        Subject = new ClaimsIdentity(new Claim[]
+                        {
+                            new Claim(ClaimTypes.Name, user.Id.ToString()),
+                            new Claim(ClaimTypes.Role, user.Role)
+                        }),
+                        Expires = DateTime.UtcNow.AddDays(7),
+                        SigningCredentials = new(new SymmetricSecurityKey(encodesecret), SecurityAlgorithms.HmacSha256Signature)
+                    };
+                    var createdToken = tokenhandler.CreateToken(tokendescription);
+                    token = tokenhandler.WriteToken(createdToken);
                     var resp = UserMapper.ConvertLocalUserToLoginResponse(user, token);
                     _result.Result = resp;
                 }
