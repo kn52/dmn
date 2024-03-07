@@ -1,4 +1,5 @@
 ﻿using MagicVillaAPI.Mappers;
+using MagicVillaAPI.Models.DAO;
 using MagicVillaAPI.Models.DTO;
 using MagicVillaAPI.Models.Responses;
 using MagicVillaAPI.Repositories;
@@ -11,13 +12,15 @@ namespace MagicVillaAPI.Services
     {
         private readonly IConfiguration _config;
         private readonly UserRepository _userRepository;
+        private readonly UserRoleRepository roleRepository;
         private readonly JwtTokenGeneration _securityToken;
-        
-        public UserService(IConfiguration config, UserRepository userRepository, JwtTokenGeneration securityToken)
+
+        public UserService(IConfiguration config, UserRepository userRepository, JwtTokenGeneration securityToken, UserRoleRepository roleRepository)
         {
             _config = config;
             _userRepository = userRepository;
             _securityToken = securityToken;
+            this.roleRepository = roleRepository;
         }
 
         public async Task<ApiResponse<List<RegistrationRequestDTO>>> GetValidUser()
@@ -115,7 +118,15 @@ namespace MagicVillaAPI.Services
                 var IsValidUser = false;
                 if (!IsValidUser)
                 {
+                    var role = await roleRepository.GetRoleById(entity.RoleId).ConfigureAwait(false);
                     var request = UserMapper.ConvertRegistrationToLocalUser(entity);
+                    request.RoleId = role.Id;
+                    request.Role = new UserRole()
+                    {
+                        Id = role.Id,
+                        Name = role.Name,
+                        CreatedBy = role.CreatedBy,
+                    };
                     var _success = await _userRepository.Register(request).ConfigureAwait(false);
                     if (!_success)
                     {
@@ -127,7 +138,7 @@ namespace MagicVillaAPI.Services
                     else
                     {
                         _result.Result = entity;
-                    } 
+                    }
                 }
             }
             catch (Exception ex)

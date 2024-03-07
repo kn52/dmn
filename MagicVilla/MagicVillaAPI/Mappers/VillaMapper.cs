@@ -10,7 +10,7 @@ namespace MagicVillaAPI.Mappers
         {
             return new Villa()
             {
-                Id = string.IsNullOrEmpty(_object.Id) ? new Guid() : new Guid(_object.Id),
+                Id = string.IsNullOrEmpty(_object.Id) ? Guid.Empty : new Guid(_object.Id),
                 Name = _object.Name,
                 Rate = _object.Rate,
                 Sqft = _object.Sqft,

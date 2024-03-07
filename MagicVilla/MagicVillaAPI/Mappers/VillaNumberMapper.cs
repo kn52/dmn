@@ -9,10 +9,10 @@ namespace MagicVillaAPI.Mappers
         {
             var v = new VillaNumber()
             {
-                Id = string.IsNullOrEmpty(_object.Id) ? new Guid() : new Guid(_object.Id),
+                Id = string.IsNullOrEmpty(_object.Id) ? Guid.Empty : new Guid(_object.Id),
                 VillaNo = Convert.ToInt32(_object.VillaNo),
                 SpecialDetails = _object.SpecialDetails,
-                VillaId = string.IsNullOrEmpty(_object.VillaId) ? new Guid() : new Guid(_object.VillaId),
+                VillaId = string.IsNullOrEmpty(_object.VillaId) ? Guid.Empty : new Guid(_object.VillaId),
                 Villa = _object.Villa,
             };
             

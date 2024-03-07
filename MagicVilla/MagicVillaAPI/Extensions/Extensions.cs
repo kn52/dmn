@@ -76,11 +76,13 @@ namespace MagicVillaAPI.Extensions
             builder.Services.AddSingleton<ILogging, Logging>();
             builder.Services.AddAutoMapper(typeof(MapperConfig));
             builder.Services.AddScoped<JwtTokenGeneration>();
+            builder.Services.AddScoped<MapperConfig>();
 
             //Services
             builder.Services.AddScoped<MagicVillaService>();
             builder.Services.AddScoped<VillaNumberService>();
             builder.Services.AddScoped<UserService>();
+            builder.Services.AddScoped<UserRoleService>();
             
 
             //Repositories
@@ -88,6 +90,7 @@ namespace MagicVillaAPI.Extensions
             builder.Services.AddScoped<MagicVillaRepository>();
             builder.Services.AddScoped<VillaNumberRepository>();
             builder.Services.AddScoped<UserRepository>();
+            builder.Services.AddScoped<UserRoleRepository>();
 
             return builder;
         }

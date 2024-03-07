@@ -1,4 +1,6 @@
-﻿namespace MagicVillaAPI.Models.DTO
+﻿using MagicVillaAPI.Models.DAO;
+
+namespace MagicVillaAPI.Models.DTO
 {
     public class RegistrationRequestDTO
     {
@@ -6,6 +8,7 @@
         public string? UserName { get; set; }
         public string? Name { get; set; }
         public string? Password { get; set; }
-        public string? Role { get; set; }
+        public string? RoleId { get; set; }
+        public string? RoleName { get; set; }
     }
 }

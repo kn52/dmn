@@ -5,13 +5,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MagicVillaAPI.Repositories
 {
-    public class UserRepository: GenericRepository<LocalUser>
+    public class UserRoleRepository : GenericRepository<UserRole>
     {
-        public UserRepository(CommonDBContext db) : base(db)
+        public UserRoleRepository(CommonDBContext db) : base(db)
         {
-            db.LocalUsers.Include(u => u.Role).ToList();
         }
-        public async Task<List<LocalUser>> GetValidUser()
+        public async Task<List<UserRole>> GetAllRoles()
         {
             try
             {
@@ -29,11 +28,11 @@ namespace MagicVillaAPI.Repositories
                 return null;
             }
         }
-        public async Task<LocalUser> GetUserById(string username, int id)
+        public async Task<UserRole> GetRoleById(string id)
         {
             try
             {
-                var query = await GetEntityByPropety(filter: u => u.UserName == username && u.Id == id);
+                var query = await GetEntityByPropety(filter: u => u.Id == new Guid(id));
                 if (query != null)
                 {
                     var _user = await query.FirstOrDefaultAsync();
@@ -47,48 +46,40 @@ namespace MagicVillaAPI.Repositories
                 return null;
             }
         }
-        public async Task<LocalUser> GetUserByUnAndPwd(string username, string password)
-        {
-            try
-            {
-                var query = await GetEntityByPropety(filter: u => u.UserName == username && u.Password == password);
-                if (query != null)
-                {
-                    var _user = await query.FirstOrDefaultAsync();
-                    return _user;
-                }
-                return null;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                return null;
-            }
-        }
-        public async Task<(LocalUser, string)> Login(string username, string password)
-        {
-            try
-            {
-                var query = await GetUserByUnAndPwd(username, password);
-                if (query != null)
-                {
-                    var user = query;
-                    var token = string.Empty;
-                    return (user, token);
-                }
-                return (null, string.Empty);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                return (null, string.Empty);
-            }
-        }
-        public async Task<bool> Register(LocalUser entity)
+        public async Task<UserRole> CreateRole(UserRole entity)
         {
             try
             {
                 await CreateEntity(entity);
+                return entity;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return null;
+            }
+        }
+        public async Task<UserRole> DeleteRole(string id)
+        {
+            var entity = await GetRoleById(id).ConfigureAwait(false);
+            try
+            {
+                if (entity != null) {
+                    await CreateEntity(entity);
+                }
+                return entity;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return null;
+            }
+        }
+        public async Task<bool> UpdateRole(string id, UserRole entity)
+        {
+            try
+            {
+                await UpdateEntity(id, entity);
                 return true;
             }
             catch (Exception ex)

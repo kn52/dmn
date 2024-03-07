@@ -4,18 +4,25 @@ using MagicVillaAPI.Models.DTO;
 
 namespace MagicVillaAPI.Mappers
 {
-    public class MapperConfig : Profile
+    public class MapperConfig
     {
-        public MapperConfig()
+        public UserRole ConvertUserRoleDtoToUserRole(UserRoleDTO user)
         {
-            CreateMap<Villa, VillaDTO>()
-                .ForMember(dest => dest.Id, act => act.MapFrom(src => src.Id.ToString()));
-            CreateMap<VillaDTO, Villa>()
-                .ForMember(dest => dest.Id, act => act.MapFrom(src => string.IsNullOrWhiteSpace(src.Id) ? (Guid?)null : Guid.Parse(src.Id)));
-            CreateMap<VillaNumber, VillaNumberDTO>()
-                .ForMember(dest => dest.Id, act => act.MapFrom(src => src.Id.ToString()));
-            CreateMap<VillaNumberDTO, VillaNumber>()
-                .ForMember(dest => dest.Id, act => act.MapFrom(src => string.IsNullOrWhiteSpace(src.Id) ? (Guid?)null : Guid.Parse(src.Id)));
+            return new UserRole()
+            {
+                Id = string.IsNullOrEmpty(user.Id) ? new Guid() : new Guid(user.Id),
+                Name = user.Name,
+                CreatedBy = user.CreatedBy
+            };
+        }
+        public UserRoleDTO ConvertUserRoleToUserRoleDto(UserRole user)
+        {
+            return new UserRoleDTO()
+            {
+                Id = user.Id != null ? user.Id.ToString() : string.Empty,
+                Name = user.Name,
+                CreatedBy = user.CreatedBy
+            };
         }
     }
 }

@@ -19,7 +19,7 @@ namespace MagicVillaAPI.Utilities.Jwt
                 Subject = new ClaimsIdentity(new Claim[]
                 {
                             new Claim(ClaimTypes.Name, user.Id.ToString()),
-                            new Claim(ClaimTypes.Role, user.Role)
+                            new Claim(ClaimTypes.Role, user.Role.Name)
                 }),
                 Expires = DateTime.UtcNow.AddDays(7),
                 SigningCredentials = new(new SymmetricSecurityKey(encodesecret), SecurityAlgorithms.HmacSha256Signature)

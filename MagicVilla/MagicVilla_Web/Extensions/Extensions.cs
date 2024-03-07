@@ -1,6 +1,7 @@
 ﻿using MagicVilla_Web.Mappers;
 using MagicVillaServiceJ;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.Extensions.DependencyInjection;
 using System.Configuration;
 
 namespace MagicVilla_Web.Extensions
@@ -18,7 +19,7 @@ namespace MagicVilla_Web.Extensions
                 o.BaseAddress = new Uri(builder.Configuration["ServiceUrls:BaseUrl"]);
             });
 
-            builder.Services.AddScoped<IHttpContextAccessor, HttpContextAccessor>();
+            builder.Services.AddHttpContextAccessor();
             builder.Services.AddDistributedMemoryCache();
             builder.Services.ConfigureApplicationCookie(o =>
             {
