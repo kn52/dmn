@@ -3,6 +3,7 @@ using MagicVillaAPI.Logger;
 using MagicVillaAPI.Models.DTO;
 using MagicVillaAPI.Models.Responses;
 using MagicVillaAPI.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
@@ -21,8 +22,12 @@ namespace MagicVillaAPI.Controllers
             _logging = logging;
             _villaNumberService = villaNumberService;
         }
-        [HttpGet("GetVillaNumbers", Name = "GetVillaNumbers")]
+        [HttpPost("GetVillaNumbers", Name = "GetVillaNumbers")]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Authorize]
         public async Task<ApiResponse<List<VillaNumberDTO>>> GetVillaNumbers()
         {
             var _response = new ApiResponse<List<VillaNumberDTO>>();
@@ -37,10 +42,13 @@ namespace MagicVillaAPI.Controllers
             _response.Result = _result;
             return _response;
         }
-        [HttpGet("GetVillaNumberById/id:string", Name = "GetVillaNumberById")]
+        
+        [HttpPost("GetVillaNumberById/id:string", Name = "GetVillaNumberById")]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Authorize]
         public async Task<ApiResponse<VillaNumberDTO>> GetVillaNumber(string id)
         {
             var _response = new ApiResponse<VillaNumberDTO>();
@@ -58,8 +66,10 @@ namespace MagicVillaAPI.Controllers
 
         [HttpPost("CreateVillaNumber", Name = "CreateVillaNumber")]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Authorize(Roles = "admin")]
         public async Task<ApiResponse<VillaNumberDTO>> CreateVillaNumber([FromBody] VillaNumberDTO villa)
         {
             var _response = new ApiResponse<VillaNumberDTO>();
@@ -83,10 +93,12 @@ namespace MagicVillaAPI.Controllers
             return _response;
         }
 
-        [HttpDelete("DeleteVillaNumber/id:string", Name = "DeleteVillaNumber")]
+        [HttpPost("DeleteVillaNumber/id:string", Name = "DeleteVillaNumber")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Authorize(Roles = "admin")]
         public async Task<ApiResponse<VillaNumberDTO>> DeleteVillaNumber(string id)
         {
             var _response = new ApiResponse<VillaNumberDTO>();
@@ -109,10 +121,12 @@ namespace MagicVillaAPI.Controllers
             return _response;
         }
 
-        [HttpPut("UpdateVillaNumber/id:string", Name = "UpdateVillaNumber")]
+        [HttpPost("UpdateVillaNumber/id:string", Name = "UpdateVillaNumber")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Authorize(Roles = "admin")]
         public async Task<ApiResponse<VillaNumberDTO>> UpdateVillaNumber(string id, [FromBody] VillaNumberDTO villaDto)
         {
             var _response = new ApiResponse<VillaNumberDTO>();
@@ -135,10 +149,12 @@ namespace MagicVillaAPI.Controllers
             return _response;
         }
 
-        [HttpPatch("UpdatePartialVillaNumber/id:string", Name = "UpdatePartialVillaNumber")]
+        [HttpPost("UpdatePartialVillaNumber/id:string", Name = "UpdatePartialVillaNumber")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Authorize(Roles = "admin")]
         public async Task<ApiResponse<VillaNumberDTO>> UpdatePartialVillaNumber(string id, [FromBody] JsonPatchDocument<VillaNumberDTO> patchVillaDto)
         {
             var _response = new ApiResponse<VillaNumberDTO>();

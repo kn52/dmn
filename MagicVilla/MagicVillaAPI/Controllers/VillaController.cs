@@ -3,6 +3,7 @@ using MagicVillaAPI.Logger;
 using MagicVillaAPI.Models.DTO;
 using MagicVillaAPI.Models.Responses;
 using MagicVillaAPI.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
@@ -22,8 +23,12 @@ namespace VillaAPI.Controllers
             _magicVillaService = magicVillaService;
         }
 
-        [HttpGet("GetVillaList", Name = "GetVillaList")]
+        [HttpPost("GetVillaList", Name = "GetVillaList")]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Authorize]
         public async Task<ApiResponse<List<VillaDTO>>> GetVillas()
         {
             var _response = new ApiResponse<List<VillaDTO>>();
@@ -38,10 +43,13 @@ namespace VillaAPI.Controllers
             _response.Result = _result;
             return _response;
         }
-        [HttpGet("GetVillaById/id:string", Name = "GetVillaById")]
+
+        [HttpPost("GetVillaById/id:string", Name = "GetVillaById")]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Authorize]
         public async Task<ApiResponse<VillaDTO>> GetVilla(string id)
         {
             var _response = new ApiResponse<VillaDTO>();
@@ -59,8 +67,10 @@ namespace VillaAPI.Controllers
 
         [HttpPost("CreateVilla", Name = "CreateVilla")]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Authorize(Roles = "admin")]
         public async Task<ApiResponse<VillaDTO>> CreateVilla([FromBody] VillaDTO villa)
         {
             var _response = new ApiResponse<VillaDTO>();
@@ -83,10 +93,12 @@ namespace VillaAPI.Controllers
             return _response;
         }
 
-        [HttpDelete("DeleteVilla/id:string", Name = "DeleteVilla")]
+        [HttpPost("DeleteVilla/id:string", Name = "DeleteVilla")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Authorize(Roles = "admin")]
         public async Task<ApiResponse<VillaDTO>> DeleteVilla(string id)
         {
             var _response = new ApiResponse<VillaDTO>();
@@ -109,10 +121,12 @@ namespace VillaAPI.Controllers
             return _response;
         }
 
-        [HttpPut("UpdateVilla/id:string", Name = "UpdateVilla")]
+        [HttpPost("UpdateVilla/id:string", Name = "UpdateVilla")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Authorize(Roles = "admin")]
         public async Task<ApiResponse<VillaDTO>> UpdateVilla(string id, [FromBody] VillaDTO villaDto)
         {
             var _response = new ApiResponse<VillaDTO>();
@@ -135,10 +149,12 @@ namespace VillaAPI.Controllers
             return _response;
         }
 
-        [HttpPatch("UpdatePartialVilla/id:string", Name = "UpdatePartialVilla")]
+        [HttpPost("UpdatePartialVilla/id:string", Name = "UpdatePartialVilla")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Authorize(Roles = "admin")]
         public async Task<ApiResponse<VillaDTO>> UpdatePartialVilla(string id, [FromBody] JsonPatchDocument<VillaDTO> patchVillaDto)
         {
             var _response = new ApiResponse<VillaDTO>();

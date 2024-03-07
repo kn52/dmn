@@ -1,13 +1,13 @@
 ﻿using MagicVilla_Web.Models.DTO;
+using MagicVillaServiceJ;
 using Microsoft.AspNetCore.Mvc;
-using VillaService;
 
 namespace MagicVilla_Web.Controllers
 {
     public class VillaController : Controller
     {
-        private readonly VillaServiceClient _service;
-        public VillaController(VillaServiceClient service)
+        private readonly MagicVillaServiceJClient _service;
+        public VillaController(MagicVillaServiceJClient service)
         {
             _service = service;
         }
@@ -61,19 +61,19 @@ namespace MagicVilla_Web.Controllers
             }
             return View(villas);
         }
-        //public async Task<IActionResult> Delete(string Id)
-        //{
-        //    VillaDTO villas = new();
-        //    var response = await _service.DeleteVillaAsync(Id).ConfigureAwait(false);
-        //    if (response != null && response.IsSuccess)
-        //    {
-        //        TempData["success"] = "Villa deleted successfully.";
-        //        villas = response.Result;
-        //        return Redirect("/Villa");
-        //    }
-        //    TempData["error"] = "Error encountered.";
-        //    return View(villas);
-        //}
+        public async Task<IActionResult> Delete(string Id)
+        {
+            VillaDTO villas = new();
+            var response = await _service.DeleteVillaAsync(Id).ConfigureAwait(false);
+            if (response != null && response.IsSuccess)
+            {
+                TempData["success"] = "Villa deleted successfully.";
+                villas = response.Result;
+                return Redirect("/Villa");
+            }
+            TempData["error"] = "Error encountered.";
+            return View(villas);
+        }
         public async Task<IActionResult> ViewUpdate(VillaDTO model)
         {
             VillaModifyDTO updateModel = null;
