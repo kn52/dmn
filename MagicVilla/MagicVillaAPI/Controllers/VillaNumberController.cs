@@ -3,6 +3,7 @@ using MagicVillaAPI.Logger;
 using MagicVillaAPI.Models.DTO;
 using MagicVillaAPI.Models.Responses;
 using MagicVillaAPI.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
@@ -26,6 +27,7 @@ namespace MagicVillaAPI.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Authorize]
         public async Task<ApiResponse<List<VillaNumberDTO>>> GetVillaNumbers()
         {
             var _response = new ApiResponse<List<VillaNumberDTO>>();
@@ -46,6 +48,7 @@ namespace MagicVillaAPI.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Authorize]
         public async Task<ApiResponse<VillaNumberDTO>> GetVillaNumber(string id)
         {
             var _response = new ApiResponse<VillaNumberDTO>();
@@ -66,6 +69,7 @@ namespace MagicVillaAPI.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Authorize(Roles = "admin")]
         public async Task<ApiResponse<VillaNumberDTO>> CreateVillaNumber([FromBody] VillaNumberDTO villa)
         {
             var _response = new ApiResponse<VillaNumberDTO>();
@@ -94,6 +98,7 @@ namespace MagicVillaAPI.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Authorize(Roles = "admin")]
         public async Task<ApiResponse<VillaNumberDTO>> DeleteVillaNumber(string id)
         {
             var _response = new ApiResponse<VillaNumberDTO>();
@@ -121,6 +126,7 @@ namespace MagicVillaAPI.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Authorize(Roles = "admin")]
         public async Task<ApiResponse<VillaNumberDTO>> UpdateVillaNumber(string id, [FromBody] VillaNumberDTO villaDto)
         {
             var _response = new ApiResponse<VillaNumberDTO>();
@@ -148,6 +154,7 @@ namespace MagicVillaAPI.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Authorize(Roles = "admin")]
         public async Task<ApiResponse<VillaNumberDTO>> UpdatePartialVillaNumber(string id, [FromBody] JsonPatchDocument<VillaNumberDTO> patchVillaDto)
         {
             var _response = new ApiResponse<VillaNumberDTO>();

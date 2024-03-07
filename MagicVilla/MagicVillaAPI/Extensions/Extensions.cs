@@ -2,9 +2,13 @@
 using MagicVillaAPI.Logger;
 using MagicVillaAPI.Mappers;
 using MagicVillaAPI.Repositories;
-using Microsoft.Extensions.Options;
 using MagicVillaAPI.Services;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using Microsoft.OpenApi.Models;
+using MagicVillaAPI.Utilities.Jwt;
 
 namespace MagicVillaAPI.Extensions
 {
@@ -24,15 +28,60 @@ namespace MagicVillaAPI.Extensions
             .AddXmlDataContractSerializerFormatters();
             builder.Services.AddEndpointsApiExplorer();
 
-            builder.Services.AddSwaggerGen();
+            builder.Services.AddAuthentication(x =>
+            {
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+                .AddJwtBearer(y =>
+                {
+                    y.RequireHttpsMetadata = true;
+                    y.SaveToken = true;
+                    y.TokenValidationParameters = new TokenValidationParameters()
+                    {
+                        ValidateIssuer = false,
+                        ValidateAudience = false,
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(builder.Configuration["SecretKey"]))
+                    };
+                });
+
+            builder.Services.AddSwaggerGen(options =>
+            {
+                options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
+                {
+                    Description = "JWT token",
+                    Name = "Authorization",
+                    In = ParameterLocation.Header,
+                    Scheme = "Bearer"
+                });
+                options.AddSecurityRequirement(new OpenApiSecurityRequirement()
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "Bearer"
+                            },
+                            Scheme = "oauth2",
+                            Name = "Bearer",
+                            In = ParameterLocation.Header
+                        },
+                        new List<string>()
+                    }
+                });
+            });
             builder.Services.AddSingleton<ILogging, Logging>();
             builder.Services.AddAutoMapper(typeof(MapperConfig));
-
+            builder.Services.AddScoped<JwtTokenGeneration>();
 
             //Services
             builder.Services.AddScoped<MagicVillaService>();
             builder.Services.AddScoped<VillaNumberService>();
             builder.Services.AddScoped<UserService>();
+            
 
             //Repositories
             //builder.Services.AddScoped<MagicVillaAPI.Repositories.Generic.IGenericRepository, MagicVillaAPI.Repositories.Generic.GenericRepository>();

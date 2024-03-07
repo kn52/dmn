@@ -2,22 +2,24 @@
 using MagicVillaAPI.Models.DTO;
 using MagicVillaAPI.Models.Responses;
 using MagicVillaAPI.Repositories;
-using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
+using MagicVillaAPI.Utilities.Jwt;
 using System.Net;
-using System.Security.Claims;
-using System.Text;
 
 namespace MagicVillaAPI.Services
 {
     public class UserService
     {
+        private readonly IConfiguration _config;
         private readonly UserRepository _userRepository;
-
-        public UserService(UserRepository userRepository)
+        private readonly JwtTokenGeneration _securityToken;
+        
+        public UserService(IConfiguration config, UserRepository userRepository, JwtTokenGeneration securityToken)
         {
+            _config = config;
             _userRepository = userRepository;
+            _securityToken = securityToken;
         }
+
         public async Task<ApiResponse<List<RegistrationRequestDTO>>> GetValidUser()
         {
             var _result = new ApiResponse<List<RegistrationRequestDTO>>();
@@ -42,7 +44,7 @@ namespace MagicVillaAPI.Services
                 Console.WriteLine(ex.Message);
                 _result.IsSuccess = false;
                 _result.StatusCode = HttpStatusCode.BadRequest;
-                _result.Message = "Something went wrong.";
+                _result.Message = ex.Message;
                 _result.Result = null;
             }
             return _result;
@@ -70,7 +72,7 @@ namespace MagicVillaAPI.Services
                 Console.WriteLine(ex.Message);
                 _result.IsSuccess = false;
                 _result.StatusCode = HttpStatusCode.BadRequest;
-                _result.Message = "Something went wrong";
+                _result.Message = ex.Message;
                 _result.Result = null;
             }
             return _result;
@@ -90,22 +92,7 @@ namespace MagicVillaAPI.Services
                 }
                 else
                 {
-                    var secret = "abc";
-                    var tokenhandler = new JwtSecurityTokenHandler();
-                    var encodesecret = Encoding.ASCII.GetBytes(secret);
-
-                    var tokendescription = new SecurityTokenDescriptor()
-                    {
-                        Subject = new ClaimsIdentity(new Claim[]
-                        {
-                            new Claim(ClaimTypes.Name, user.Id.ToString()),
-                            new Claim(ClaimTypes.Role, user.Role)
-                        }),
-                        Expires = DateTime.UtcNow.AddDays(7),
-                        SigningCredentials = new(new SymmetricSecurityKey(encodesecret), SecurityAlgorithms.HmacSha256Signature)
-                    };
-                    var createdToken = tokenhandler.CreateToken(tokendescription);
-                    token = tokenhandler.WriteToken(createdToken);
+                    token = await _securityToken.GenerateToken(user, _config["SecretKey"]).ConfigureAwait(false);
                     var resp = UserMapper.ConvertLocalUserToLoginResponse(user, token);
                     _result.Result = resp;
                 }
@@ -115,7 +102,7 @@ namespace MagicVillaAPI.Services
                 Console.WriteLine(ex.Message);
                 _result.IsSuccess = false;
                 _result.StatusCode = HttpStatusCode.BadRequest;
-                _result.Message = "Something went wrong.";
+                _result.Message = ex.Message;
                 _result.Result = null;
             }
             return _result;
@@ -148,7 +135,7 @@ namespace MagicVillaAPI.Services
                 Console.WriteLine(ex.Message);
                 _result.IsSuccess = false;
                 _result.StatusCode = HttpStatusCode.BadRequest;
-                _result.Message = "Something went wrong.";
+                _result.Message = ex.Message;
                 _result.Result = entity;
             }
             return _result;

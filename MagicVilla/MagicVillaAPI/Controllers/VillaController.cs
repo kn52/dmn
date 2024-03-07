@@ -3,6 +3,7 @@ using MagicVillaAPI.Logger;
 using MagicVillaAPI.Models.DTO;
 using MagicVillaAPI.Models.Responses;
 using MagicVillaAPI.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
@@ -27,6 +28,7 @@ namespace VillaAPI.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Authorize]
         public async Task<ApiResponse<List<VillaDTO>>> GetVillas()
         {
             var _response = new ApiResponse<List<VillaDTO>>();
@@ -47,6 +49,7 @@ namespace VillaAPI.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Authorize]
         public async Task<ApiResponse<VillaDTO>> GetVilla(string id)
         {
             var _response = new ApiResponse<VillaDTO>();
@@ -67,6 +70,7 @@ namespace VillaAPI.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Authorize(Roles = "admin")]
         public async Task<ApiResponse<VillaDTO>> CreateVilla([FromBody] VillaDTO villa)
         {
             var _response = new ApiResponse<VillaDTO>();
@@ -94,6 +98,7 @@ namespace VillaAPI.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Authorize(Roles = "admin")]
         public async Task<ApiResponse<VillaDTO>> DeleteVilla(string id)
         {
             var _response = new ApiResponse<VillaDTO>();
@@ -121,6 +126,7 @@ namespace VillaAPI.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Authorize(Roles = "admin")]
         public async Task<ApiResponse<VillaDTO>> UpdateVilla(string id, [FromBody] VillaDTO villaDto)
         {
             var _response = new ApiResponse<VillaDTO>();
@@ -148,6 +154,7 @@ namespace VillaAPI.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Authorize(Roles = "admin")]
         public async Task<ApiResponse<VillaDTO>> UpdatePartialVilla(string id, [FromBody] JsonPatchDocument<VillaDTO> patchVillaDto)
         {
             var _response = new ApiResponse<VillaDTO>();

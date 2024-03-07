@@ -1,6 +1,8 @@
 ﻿using MagicVillaServiceJ;
 using Microsoft.AspNetCore.Mvc;
 using MagicVillaServiceJ;
+using System.Text.Json;
+using MagicVilla_Uitility;
 
 namespace MagicVilla_Web.Controllers
 {
@@ -38,7 +40,11 @@ namespace MagicVilla_Web.Controllers
         {
             try
             {
-
+                var response = await _sevices.LoginAsync(loginRequestDTO).ConfigureAwait(false);
+                if (response != null && response.Result != null)
+                {
+                    HttpContext.Session.SetString(Constants.JWT, JsonSerializer.Serialize(response.Result));
+                }
             }
             catch (Exception ex)
             {
@@ -69,6 +75,11 @@ namespace MagicVilla_Web.Controllers
                 Console.WriteLine(ex.Message);
             }
             return View("Register", registrationRequestDTO);
+        }
+        public async Task<IActionResult> Logout()
+        {
+            HttpContext.Session.Clear();
+            return View("Villa", "Index");
         }
     }
 }

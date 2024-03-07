@@ -1,5 +1,6 @@
 ﻿using MagicVilla_Web.Mappers;
 using MagicVillaServiceJ;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using System.Configuration;
 
 namespace MagicVilla_Web.Extensions
@@ -15,6 +16,27 @@ namespace MagicVilla_Web.Extensions
             builder.Services.AddHttpClient<MagicVillaServiceJClient>(o =>
             {
                 o.BaseAddress = new Uri(builder.Configuration["ServiceUrls:BaseUrl"]);
+            });
+
+            builder.Services.AddScoped<IHttpContextAccessor, HttpContextAccessor>();
+            builder.Services.AddDistributedMemoryCache();
+            builder.Services.ConfigureApplicationCookie(o =>
+            {
+                o.Cookie.HttpOnly = true;
+                o.ExpireTimeSpan = TimeSpan.FromMinutes(60);
+                o.LoginPath = "/User/Login";
+                o.SlidingExpiration = true;
+                //o.Cookie.Domain = builder.Configuration.GetValue<string>("Domains:PoppinDomain");
+                //o.Cookie.Name = ".AspNet.SharedCookie";
+                //o.Cookie.Path = "/";
+                //o.AccessDeniedPath = "/AccessDenied";
+
+            });
+            builder.Services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(10);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
             });
 
             return builder;
@@ -34,6 +56,8 @@ namespace MagicVilla_Web.Extensions
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseRouting();
+            app.UseSession();
+            app.UseAuthentication();
             app.UseAuthorization();
             app.MapControllerRoute(
                 name: "default",
