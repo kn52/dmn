@@ -19,6 +19,7 @@ namespace MagicVillaAPI.Mappers
         {
             return new RegistrationRequestDTO()
             {
+                Id = _object.Id,
                 Name = _object.Name,
                 UserName = _object.UserName,
                 Password = _object.Password,

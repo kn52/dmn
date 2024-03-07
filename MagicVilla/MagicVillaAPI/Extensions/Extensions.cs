@@ -2,7 +2,7 @@
 using MagicVillaAPI.Logger;
 using MagicVillaAPI.Mappers;
 using MagicVillaAPI.Repositories;
-using MagicVillaAPI.Repositories.Generic;
+using Microsoft.Extensions.Options;
 using MagicVillaAPI.Services;
 using Microsoft.EntityFrameworkCore;
 

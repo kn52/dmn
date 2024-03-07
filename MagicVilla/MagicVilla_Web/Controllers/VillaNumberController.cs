@@ -81,19 +81,19 @@ namespace MagicVilla_Web.Controllers
             }
             return View(villas);
         }
-        //public async Task<IActionResult> Delete(string Id)
-        //{
-        //    VillaNumberDTO villas = new();
-        //    var response = await _service.DeleteVillaNumberAsync(Id).ConfigureAwait(false);
-        //    if (response != null && response.IsSuccess)
-        //    {
-        //        TempData["success"] = "VillaNumber deleted successfully.";
-        //        villas = response.Result;
-        //        return Redirect("/VillaNumber");
-        //    }
-        //    TempData["error"] = "Error encountered.";
-        //    return View(villas);
-        //}
+        public async Task<IActionResult> Delete(string Id)
+        {
+            VillaNumberDTO villas = new();
+            var response = await _service.DeleteVillaNumberAsync(Id).ConfigureAwait(false);
+            if (response != null && response.IsSuccess)
+            {
+                TempData["success"] = "VillaNumber deleted successfully.";
+                villas = response.Result;
+                return Redirect("/VillaNumber");
+            }
+            TempData["error"] = "Error encountered.";
+            return View(villas);
+        }
         public async Task<IActionResult> ViewUpdate(VillaNumberDTO model)
         {
             VillaNumberModifyDTO updateModel = null;

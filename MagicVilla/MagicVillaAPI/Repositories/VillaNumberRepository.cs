@@ -10,7 +10,7 @@ namespace MagicVillaAPI.Repositories
     {
         public VillaNumberRepository(CommonDBContext db) : base(db)
         {
-            //_db.VillaNumbers.Include(u => u.Villa).ToList();
+            _db.VillaNumbers.Include(u => u.Villa).ToList();
         }
         public async Task<List<VillaNumber>> GetAll(string? includeProperties = "Villa")
         {

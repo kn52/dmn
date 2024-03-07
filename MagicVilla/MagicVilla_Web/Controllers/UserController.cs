@@ -13,9 +13,22 @@ namespace MagicVilla_Web.Controllers
             _sevices = sevices;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            List<RegistrationRequestDTO> users = new List<RegistrationRequestDTO>();
+            try
+            {
+                var response = await _sevices.GetAllUsersAsync().ConfigureAwait(false);
+                if (response != null && response.Result != null)
+                {
+                    users = response.Result.ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            return View("Index", users);
         }
         public async Task<IActionResult> ViewLogin(LoginRequestDTO loginRequestDTO)
         {

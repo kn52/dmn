@@ -18,23 +18,60 @@ namespace MagicVillaAPI.Services
         {
             _userRepository = userRepository;
         }
-        public async Task<ApiResponse<bool>> IsValidUser(LoginRequestDTO loginRequestDTO)
+        public async Task<ApiResponse<List<RegistrationRequestDTO>>> GetValidUser()
         {
-            var _result = new ApiResponse<bool>();
+            var _result = new ApiResponse<List<RegistrationRequestDTO>>();
             try
             {
-                var user = await _userRepository.IsValidUser(loginRequestDTO.UserName, loginRequestDTO.Password).ConfigureAwait(false);
-                if (user == null)
+                var users = await _userRepository.GetValidUser().ConfigureAwait(false);
+                if (users == null)
                 {
                     _result.IsSuccess = false;
                     _result.StatusCode = HttpStatusCode.BadRequest;
-                    _result.Message = "Invalid User.";
-                    _result.Result = false;
+                    _result.Message = "Something went wrong.";
+                    _result.Result = null;
+                }
+                else
+                {
+                    var userlist = users.Select(user => UserMapper.ConvertLocalUserToRegistration(user)).ToList();
+                    _result.Result = userlist;
                 }
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+                _result.IsSuccess = false;
+                _result.StatusCode = HttpStatusCode.BadRequest;
+                _result.Message = "Something went wrong.";
+                _result.Result = null;
+            }
+            return _result;
+        }
+        public async Task<ApiResponse<RegistrationRequestDTO>> GetUserById(string username, int id)
+        {
+            var _result = new ApiResponse<RegistrationRequestDTO>();
+            try
+            {
+                var user = await _userRepository.GetUserById(username, id).ConfigureAwait(false);
+                if (user == null)
+                {
+                    _result.IsSuccess = false;
+                    _result.StatusCode = HttpStatusCode.BadRequest;
+                    _result.Message = "Invalid User.";
+                    _result.Result = null;
+                }
+                else
+                {
+                    _result.Result = UserMapper.ConvertLocalUserToRegistration(user);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                _result.IsSuccess = false;
+                _result.StatusCode = HttpStatusCode.BadRequest;
+                _result.Message = "Something went wrong";
+                _result.Result = null;
             }
             return _result;
         }
@@ -48,7 +85,7 @@ namespace MagicVillaAPI.Services
                 {
                     _result.IsSuccess = false;
                     _result.StatusCode = HttpStatusCode.BadRequest;
-                    _result.Message = "Something went wrong.";
+                    _result.Message = "Invalid User.";
                     _result.Result = null;
                 }
                 else

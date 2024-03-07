@@ -10,8 +10,8 @@
 		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="7.0.12" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
 		<PackageReference Include="NSwag.ApiDescription.Client" Version="13.15.8">
-		  <PrivateAssets>all</PrivateAssets>
-		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
 	</ItemGroup>
 
@@ -23,6 +23,8 @@
 		<OpenApiReference Include="Services/Json/VillaService.json" CodeGenerator="NSwagCSharp" Namespace="MagicVillaServiceJ">
 			<ClassName>MagicVillaServiceJClient</ClassName>
 			<OutputPath>MagicVillaServiceJClient.cs</OutputPath>
+			<Options>/UseBaseUrl:false  /DateType:System.DateTime /AdditionalNamespaceUsages:ApiEMagicVilla_Web.Models.Exceptions  /DateTimeType:System.DateTime /OperationGenerationMode:SingleClientFromOperationId</Options>
 		</OpenApiReference>
 	</ItemGroup>
+
 </Project>

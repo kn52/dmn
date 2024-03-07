@@ -1,5 +1,6 @@
 ﻿using MagicVilla_Web.Mappers;
 using MagicVillaServiceJ;
+using System.Configuration;
 
 namespace MagicVilla_Web.Extensions
 {
@@ -11,7 +12,10 @@ namespace MagicVilla_Web.Extensions
             builder.Services.AddControllersWithViews();
 
             // Services
-            builder.Services.AddHttpClient<MagicVillaServiceJClient>(o => o.BaseAddress = new Uri(builder.Configuration.GetValue<string>("ServiceUrls:BaseUrl")));
+            builder.Services.AddHttpClient<MagicVillaServiceJClient>(o =>
+            {
+                o.BaseAddress = new Uri(builder.Configuration["ServiceUrls:BaseUrl"]);
+            });
 
             return builder;
         }

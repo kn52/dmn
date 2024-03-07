@@ -16,35 +16,60 @@ namespace MagicVillaAPI.Controllers
         {
             _userService = userService;
         }
-        [HttpPost("IsValidUser")]
+        [HttpPost("GetAllUsers")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ApiResponse<bool>> IsValidUser(LoginRequestDTO loginRequestDTO)
+        public async Task<ApiResponse<List<RegistrationRequestDTO>>> GetAllUsers()
         {
-            var response = new ApiResponse<bool>();
+            var response = new ApiResponse<List<RegistrationRequestDTO>>();
             try
             {
-                if (string.IsNullOrEmpty(loginRequestDTO.UserName) || string.IsNullOrEmpty(loginRequestDTO.Password))
-                {
-                    response.IsSuccess = false;
-                    response.StatusCode = HttpStatusCode.BadRequest;
-                    response.Message = "Invalid request.";
-                    response.Result = false;
-                }
-                response = await _userService.IsValidUser(loginRequestDTO).ConfigureAwait(false);
+                
+                response = await _userService.GetValidUser().ConfigureAwait(false);
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
                 response.IsSuccess = false;
                 response.StatusCode = HttpStatusCode.BadRequest;
-                response.Message = "Invalid User.";
-                response.Result = false;
+                response.Message = "Something went wrong.";
+                response.Result = null;
             }
             return response;
         }
+
+        [HttpPost("GetUserById")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ApiResponse<RegistrationRequestDTO>> GetUserById(string username, int id)
+        {
+            var response = new ApiResponse<RegistrationRequestDTO>();
+            try
+            {
+                if (string.IsNullOrEmpty(username) || id == 0)
+                {
+                    response.IsSuccess = false;
+                    response.StatusCode = HttpStatusCode.BadRequest;
+                    response.Message = "Invalid request.";
+                    response.Result = null;
+                }
+                response = await _userService.GetUserById(username, id).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                response.IsSuccess = false;
+                response.StatusCode = HttpStatusCode.BadRequest;
+                response.Message = "Something went wrong";
+                response.Result = null;
+            }
+            return response;
+        }
+
         [HttpPost("Login")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
