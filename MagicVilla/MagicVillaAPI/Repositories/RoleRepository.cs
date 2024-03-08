@@ -5,9 +5,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MagicVillaAPI.Repositories
 {
-    public class UserRoleRepository : GenericRepository<UserRole>
+    public class RoleRepository : GenericRepository<UserRole>
     {
-        public UserRoleRepository(CommonDBContext db) : base(db)
+        public RoleRepository(CommonDBContext db) : base(db)
         {
         }
         public async Task<List<UserRole>> GetAllRoles()
@@ -65,7 +65,7 @@ namespace MagicVillaAPI.Repositories
             try
             {
                 if (entity != null) {
-                    await CreateEntity(entity);
+                    await DeleteEntity(entity);
                 }
                 return entity;
             }

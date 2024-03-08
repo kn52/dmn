@@ -11,10 +11,10 @@ namespace MagicVillaAPI.Controllers
     
     public class RoleController : ControllerBase
     {
-        private readonly UserRoleService userRoleService;
-        public RoleController(UserRoleService userRoleService)
+        private readonly RoleService roleService;
+        public RoleController(RoleService roleService)
         {
-            this.userRoleService = userRoleService;
+            this.roleService = roleService;
         }
 
         [HttpPost("GetAllRoles")]
@@ -27,7 +27,7 @@ namespace MagicVillaAPI.Controllers
             var response = new ApiResponse<List<UserRoleDTO>>();
             try
             {
-                response = await userRoleService.GetAllRoles().ConfigureAwait(false);
+                response = await roleService.GetAllRoles().ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -57,7 +57,7 @@ namespace MagicVillaAPI.Controllers
                     response.Message = "Invalid request.";
                     response.Result = null;
                 }
-                response = await userRoleService.GetRoleById(id).ConfigureAwait(false);
+                response = await roleService.GetRoleById(id).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -87,7 +87,7 @@ namespace MagicVillaAPI.Controllers
                     response.Message = "Invalid request.";
                     response.Result = null;
                 }
-                response = await userRoleService.CreateRole(entity).ConfigureAwait(false);
+                response = await roleService.CreateRole(entity).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -116,7 +116,7 @@ namespace MagicVillaAPI.Controllers
                     response.Message = "Invalid request.";
                     response.Result = null;
                 }
-                response = await userRoleService.UpdateRole(entity).ConfigureAwait(false);
+                response = await roleService.UpdateRole(entity).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -145,7 +145,7 @@ namespace MagicVillaAPI.Controllers
                     response.Message = "Invalid request.";
                     response.Result = null;
                 }
-                response = await userRoleService.DeleteRole(Id).ConfigureAwait(false);
+                response = await roleService.DeleteRole(Id).ConfigureAwait(false);
             }
             catch (Exception ex)
             {

@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace MagicVillaAPI.Migrations
 {
     /// <inheritdoc />
-    public partial class userroles : Migration
+    public partial class roles : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

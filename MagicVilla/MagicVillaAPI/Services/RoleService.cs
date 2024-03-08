@@ -6,14 +6,14 @@ using System.Net;
 
 namespace MagicVillaAPI.Services
 {
-    public class UserRoleService
+    public class RoleService
     {
-        private readonly UserRoleRepository userRoleRepository;
+        private readonly RoleRepository roleRepository;
         private readonly MapperConfig mapperConfig;
 
-        public UserRoleService(UserRoleRepository userRoleRepository, MapperConfig mapperConfig)
+        public RoleService(RoleRepository roleRepository, MapperConfig mapperConfig)
         {
-            this.userRoleRepository = userRoleRepository;
+            this.roleRepository = roleRepository;
             this.mapperConfig = mapperConfig;
         }
 
@@ -22,7 +22,7 @@ namespace MagicVillaAPI.Services
             var _result = new ApiResponse<List<UserRoleDTO>>();
             try
             {
-                var users = await userRoleRepository.GetAllRoles().ConfigureAwait(false);
+                var users = await roleRepository.GetAllRoles().ConfigureAwait(false);
                 if (users == null)
                 {
                     _result.IsSuccess = false;
@@ -51,7 +51,7 @@ namespace MagicVillaAPI.Services
             var _result = new ApiResponse<UserRoleDTO>();
             try
             {
-                var user = await userRoleRepository.GetRoleById(id).ConfigureAwait(false);
+                var user = await roleRepository.GetRoleById(id).ConfigureAwait(false);
                 if (user == null)
                 {
                     _result.IsSuccess = false;
@@ -81,7 +81,7 @@ namespace MagicVillaAPI.Services
             {
                 var request = mapperConfig.ConvertUserRoleDtoToUserRole(userRoleDTO);
                 request.Id = Guid.NewGuid();
-                var user = await userRoleRepository.CreateRole(request).ConfigureAwait(false);
+                var user = await roleRepository.CreateRole(request).ConfigureAwait(false);
                 if (user == null)
                 {
                     _result.IsSuccess = false;
@@ -110,7 +110,7 @@ namespace MagicVillaAPI.Services
             var _result = new ApiResponse<UserRoleDTO>();
             try
             {
-                var user = await userRoleRepository.DeleteRole(id).ConfigureAwait(false);
+                var user = await roleRepository.DeleteRole(id).ConfigureAwait(false);
                 if (user == null)
                 {
                     _result.IsSuccess = false;
@@ -139,7 +139,7 @@ namespace MagicVillaAPI.Services
             try
             {
                 var request = mapperConfig.ConvertUserRoleDtoToUserRole(userRoleDTO);
-                var user = await userRoleRepository.UpdateRole(request.Id.ToString(), request).ConfigureAwait(false);
+                var user = await roleRepository.UpdateRole(request.Id.ToString(), request).ConfigureAwait(false);
                 if (user == null)
                 {
                     _result.IsSuccess = false;

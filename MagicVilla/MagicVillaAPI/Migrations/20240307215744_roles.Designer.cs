@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MagicVillaAPI.Migrations
 {
     [DbContext(typeof(CommonDBContext))]
-    [Migration("20240307201030_userroles")]
-    partial class userroles
+    [Migration("20240307215744_roles")]
+    partial class roles
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

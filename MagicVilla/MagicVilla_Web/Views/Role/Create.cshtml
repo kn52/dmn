@@ -1,0 +1,66 @@
+﻿@model MagicVillaServiceJ.UserRoleDTO
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<div class="container p-4 border">
+    <div class="row">
+        <div class="col text-end pt-1">
+            <h3 class="text-primary">Create Role</h3>
+        </div>
+    </div>
+    <hr class="mt-0" />
+    <div class="row">
+        <div class="col">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <form asp-action="Create">
+                <div class="row pb-3 d-none">
+                    <div class="col-2">
+                        <label asp-for="Id" class="control-label"></label>
+                    </div>
+                    <div class="col-10">
+                        <input asp-for="Id" class="form-control" />
+                        <span asp-validation-for="Id" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="row pb-3">
+                    <div class="col-2">
+                        <label asp-for="Name" class="control-label"></label>
+                    </div>
+                    <div class="col-10 pb-3">
+                        <input asp-for="Name" class="form-control" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="row pb-3">
+                    <div class="col-2">
+                        <label asp-for="CreatedBy" class="control-label"></label>
+
+                    </div>
+                    <div class="col-10">
+                        <input asp-for="CreatedBy" class="form-control" />
+                        <span asp-validation-for="CreatedBy" class="text-danger"></span>
+
+                    </div>
+                </div>
+                <div class="row pb-3">
+                    <div class="col-5 offset-2">
+                        @Html.ActionLink("Back", "Index", new { controller = "Role" }, new { @class = "btn btn-primary form-control" })
+                    </div>
+                    <div class="col-5">
+                        <input type="submit" value="Create" class="btn btn-success form-control" />
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

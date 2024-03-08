@@ -12,10 +12,10 @@ namespace MagicVillaAPI.Services
     {
         private readonly IConfiguration _config;
         private readonly UserRepository _userRepository;
-        private readonly UserRoleRepository roleRepository;
+        private readonly RoleRepository roleRepository;
         private readonly JwtTokenGeneration _securityToken;
 
-        public UserService(IConfiguration config, UserRepository userRepository, JwtTokenGeneration securityToken, UserRoleRepository roleRepository)
+        public UserService(IConfiguration config, UserRepository userRepository, JwtTokenGeneration securityToken, RoleRepository roleRepository)
         {
             _config = config;
             _userRepository = userRepository;

@@ -1,4 +1,5 @@
-﻿using MagicVilla_Web.Mappers;
+﻿using MagicVilla_Web.HttpExtensions;
+using MagicVilla_Web.Mappers;
 using MagicVillaServiceJ;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.Extensions.DependencyInjection;
@@ -21,12 +22,14 @@ namespace MagicVilla_Web.Extensions
 
             builder.Services.AddHttpContextAccessor();
             builder.Services.AddDistributedMemoryCache();
-            builder.Services.ConfigureApplicationCookie(o =>
+            builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(o =>
             {
                 o.Cookie.HttpOnly = true;
                 o.ExpireTimeSpan = TimeSpan.FromMinutes(60);
                 o.LoginPath = "/User/Login";
                 o.SlidingExpiration = true;
+                o.AccessDeniedPath = "/User/AccessDenied";
                 //o.Cookie.Domain = builder.Configuration.GetValue<string>("Domains:PoppinDomain");
                 //o.Cookie.Name = ".AspNet.SharedCookie";
                 //o.Cookie.Path = "/";
@@ -39,6 +42,8 @@ namespace MagicVilla_Web.Extensions
                 options.Cookie.HttpOnly = true;
                 options.Cookie.IsEssential = true;
             });
+
+            builder.Services.AddScoped<HttpManager>();
 
             return builder;
         }

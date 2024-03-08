@@ -1,18 +1,24 @@
 ﻿using MagicVillaServiceJ;
 using Microsoft.AspNetCore.Mvc;
-using MagicVillaServiceJ;
 using System.Text.Json;
 using MagicVilla_Uitility;
+using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication;
+using MagicVilla_Web.HttpExtensions;
 
 namespace MagicVilla_Web.Controllers
 {
     public class UserController : Controller
     {
         private readonly MagicVillaServiceJClient _sevices;
+        private readonly HttpManager httpManager;
 
-        public UserController(MagicVillaServiceJClient sevices)
+        public UserController(MagicVillaServiceJClient sevices, HttpManager httpManager)
         {
             _sevices = sevices;
+            this.httpManager = httpManager;
         }
 
         public async Task<IActionResult> Index()
@@ -43,7 +49,39 @@ namespace MagicVilla_Web.Controllers
                 var response = await _sevices.LoginAsync(loginRequestDTO).ConfigureAwait(false);
                 if (response != null && response.Result != null)
                 {
-                    HttpContext.Session.SetString(Constants.JWT, JsonSerializer.Serialize(response.Result));
+                    var _resp = response.Result;
+                    var UserDetails = _resp;
+                    var claims = new List<Claim>
+                    {
+                        new Claim(ClaimTypes.Name, _resp.User.Id.ToString()),
+                        new Claim(ClaimTypes.Role, _resp.User.Role.Name)
+                    };
+                    //foreach (var item in result.ResponseData?.Roles.Claims)
+                    //{
+                    //    claims.Add(new Claim(item.ClaimType, item.ClaimValue));
+                    //}
+
+                    var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                    var claimprincipal = new ClaimsPrincipal(claimsIdentity);
+
+                    HttpContext.Session.SetString(Constants.JWT, response.Result.Token);
+                    HttpContext.Session.SetString(Constants.USER, JsonSerializer.Serialize(response.Result.User));
+                    await HttpContext.Session.CommitAsync().ConfigureAwait(false);
+                    var authProperties = new AuthenticationProperties
+                    {
+                        ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(120),
+                        IsPersistent = true,
+                    };
+                    await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
+                         claimprincipal,
+                        authProperties).ConfigureAwait(true);
+
+                    Response.Cookies.Append(
+                        CookieRequestCultureProvider.DefaultCookieName,
+                        CookieRequestCultureProvider.MakeCookieValue(new RequestCulture("ENG")),
+                        new CookieOptions { Expires = DateTimeOffset.UtcNow.AddMonths(1) }
+                    );
+                    return Redirect("/Villa/Index");
                 }
             }
             catch (Exception ex)
@@ -63,7 +101,7 @@ namespace MagicVilla_Web.Controllers
                 var response = await _sevices.RegisterAsync(registrationRequestDTO).ConfigureAwait(false);
                 if (response != null && response.Result != null)
                 {
-                    TempData["success"] = "Villa updated successfully.";
+                    TempData["success"] = "User updated successfully.";
                 }
                 else
                 {
@@ -78,8 +116,20 @@ namespace MagicVilla_Web.Controllers
         }
         public async Task<IActionResult> Logout()
         {
+            if (HttpContext.Request.Cookies.Count > 0)
+            {
+                var siteCookies = HttpContext.Request.Cookies.Where(c => c.Key.Contains(".AspNetCore.") || c.Key.Contains("Microsoft.Authentication"));
+                foreach (var cookie in siteCookies)
+                {
+                    Response.Cookies.Delete(cookie.Key);
+                }
+            }
+            //kill session
             HttpContext.Session.Clear();
-            return View("Villa", "Index");
+            // kills the login cookie 
+            await HttpContext.SignOutAsync(
+                CookieAuthenticationDefaults.AuthenticationScheme).ConfigureAwait(false);
+            return Redirect("/Role/Login");
         }
     }
 }

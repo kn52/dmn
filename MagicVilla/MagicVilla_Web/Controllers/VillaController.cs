@@ -1,4 +1,6 @@
-﻿using MagicVilla_Web.Models.DTO;
+﻿using MagicVilla_Uitility;
+using MagicVilla_Web.HttpExtensions;
+using MagicVilla_Web.Models.DTO;
 using MagicVillaServiceJ;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,14 +9,23 @@ namespace MagicVilla_Web.Controllers
     public class VillaController : Controller
     {
         private readonly MagicVillaServiceJClient _service;
-        public VillaController(MagicVillaServiceJClient service)
+        private readonly HttpManager httpManager;
+
+        public VillaController(MagicVillaServiceJClient service, HttpManager httpManager)
         {
             _service = service;
+            this.httpManager = httpManager;
         }
 
         public async Task<IActionResult> Index()
         {
+            if (HttpContext.Session.GetString(Constants.JWT) == null)
+            {
+                return Redirect("/User/ViewLogin");
+            }
             List<VillaDTO> villas = new();
+            var token = await httpManager.GetSessionDetailsByKey(Constants.JWT).ConfigureAwait(false);
+            _service.AddToken(token);
 
             var response = await _service.GetVillaListAsync().ConfigureAwait(false);
             if (response != null && response.Result != null && response.IsSuccess)
@@ -42,6 +53,9 @@ namespace MagicVilla_Web.Controllers
                 CreatedDateTime = string.Empty,
                 UpdatedDateTime = string.Empty
             };
+            var token = await httpManager.GetSessionDetailsByKey(Constants.JWT).ConfigureAwait(false);
+            _service.AddToken(token);
+
             var response = await _service.CreateVillaAsync(craeteModel).ConfigureAwait(false);
             if (response != null && response.IsSuccess)
             {
@@ -54,6 +68,9 @@ namespace MagicVilla_Web.Controllers
         public async Task<IActionResult> Details(string Id)
         {
             VillaDTO villas = new();
+            var token = await httpManager.GetSessionDetailsByKey(Constants.JWT).ConfigureAwait(false);
+            _service.AddToken(token);
+            
             var response = await _service.GetVillaByIdAsync(Id).ConfigureAwait(false);
             if (response != null && response.IsSuccess)
             {
@@ -64,6 +81,9 @@ namespace MagicVilla_Web.Controllers
         public async Task<IActionResult> Delete(string Id)
         {
             VillaDTO villas = new();
+            var token = await httpManager.GetSessionDetailsByKey(Constants.JWT).ConfigureAwait(false);
+            _service.AddToken(token);
+
             var response = await _service.DeleteVillaAsync(Id).ConfigureAwait(false);
             if (response != null && response.IsSuccess)
             {
@@ -77,6 +97,9 @@ namespace MagicVilla_Web.Controllers
         public async Task<IActionResult> ViewUpdate(VillaDTO model)
         {
             VillaModifyDTO updateModel = null;
+            var token = await httpManager.GetSessionDetailsByKey(Constants.JWT).ConfigureAwait(false);
+            _service.AddToken(token);
+
             var response = await _service.GetVillaByIdAsync(model.Id).ConfigureAwait(false);
             if (response != null && response.IsSuccess)
             {
@@ -112,6 +135,9 @@ namespace MagicVilla_Web.Controllers
                 CreatedDateTime = string.Empty,
                 UpdatedDateTime = string.Empty
             };
+            var token = await httpManager.GetSessionDetailsByKey(Constants.JWT).ConfigureAwait(false);
+            _service.AddToken(token);
+
             var response = await _service.UpdateVillaAsync(updateModel.Id, updateModel).ConfigureAwait(false);
             if (response != null && response.IsSuccess)
             {

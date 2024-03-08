@@ -1,5 +1,6 @@
 ﻿@using MagicVilla_Uitility
-@inject Microsoft.AspNetCore.Http.HttpContextAccessor httpAcc;
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor httpAcc;
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,24 +23,6 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        @{
-                            var _s = httpAcc.HttpContext.Session;
-                            if (_s.GetString(Constants.JWT) != null && _s.GetString(Constants.JWT).ToString().Length > 0)
-                            {
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Logout">Logout</a>
-                                </li>
-                            }
-                            else {
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="ViewLogin">Login</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="ViewRegister">Register</a>
-                                </li>
-                            }
-                        }
-
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
@@ -49,6 +32,27 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="VillaNumber" asp-action="Index">VillaNumber</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Role" asp-action="Index">Roles</a>
+                        </li>
+                        @{
+                            var _s = httpAcc.HttpContext.Session;
+                            if (_s.GetString(Constants.JWT) != null && _s.GetString(Constants.JWT).ToString().Length > 0)
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Logout">Logout</a>
+                                </li>
+                            }
+                            else
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="ViewLogin">Login</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="ViewRegister">Register</a>
+                                </li>
+                            }
+                        }
                     </ul>
                 </div>
             </div>

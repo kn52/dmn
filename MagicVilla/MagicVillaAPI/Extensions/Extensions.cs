@@ -9,6 +9,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.OpenApi.Models;
 using MagicVillaAPI.Utilities.Jwt;
+using Microsoft.AspNetCore.Identity;
 
 namespace MagicVillaAPI.Extensions
 {
@@ -27,6 +28,10 @@ namespace MagicVillaAPI.Extensions
             .AddNewtonsoftJson()
             .AddXmlDataContractSerializerFormatters();
             builder.Services.AddEndpointsApiExplorer();
+
+            builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+                .AddEntityFrameworkStores<CommonDBContext>();
+
 
             builder.Services.AddAuthentication(x =>
             {
@@ -82,7 +87,7 @@ namespace MagicVillaAPI.Extensions
             builder.Services.AddScoped<MagicVillaService>();
             builder.Services.AddScoped<VillaNumberService>();
             builder.Services.AddScoped<UserService>();
-            builder.Services.AddScoped<UserRoleService>();
+            builder.Services.AddScoped<RoleService>();
             
 
             //Repositories
@@ -90,7 +95,7 @@ namespace MagicVillaAPI.Extensions
             builder.Services.AddScoped<MagicVillaRepository>();
             builder.Services.AddScoped<VillaNumberRepository>();
             builder.Services.AddScoped<UserRepository>();
-            builder.Services.AddScoped<UserRoleRepository>();
+            builder.Services.AddScoped<RoleRepository>();
 
             return builder;
         }
