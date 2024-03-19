@@ -2,3 +2,8 @@
 // for details on configuring this project to bundle and minify static web assets.
 
 // Write your JavaScript code.
+$(document).ready(function () {
+    $('#multi_drop_select').multiselect({
+        includeSelectAllOption: true
+    });
+})
