@@ -33,7 +33,4 @@ public class MinNumberOfSquares {
 		dp[n] = 1 + ans;		
 		return dp[n];
 	}
-
-	
-
 }

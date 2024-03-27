@@ -3,7 +3,7 @@ package Day64;
 import java.util.Arrays;
 import java.util.*;
 
-public class FibonaciiNumber {
+public class FibonaciNumber {
 
 	static Scanner scanner = new Scanner(System.in);
 	static int n = scanner.nextInt();
