@@ -8,6 +8,8 @@ public class NDigitNumbers {
 		// TODO Auto-generated method stub
 		int A = 2;
 		int B = 4;
+		
+		solve(A, B, 0);
 
 	}
 	

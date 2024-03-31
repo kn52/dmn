@@ -16,9 +16,8 @@ public class MinNumberOfSquares {
 		System.out.println(ans);
 
 	}
-
+	
 	public static int calc(int n) {
-
 		if (n == 0) {
 			return 0;
 		}
@@ -33,5 +32,4 @@ public class MinNumberOfSquares {
 		dp[n] = 1 + ans;		
 		return dp[n];
 	}
-
 }
