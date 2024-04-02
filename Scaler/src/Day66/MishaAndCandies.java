@@ -7,62 +7,21 @@ public class MishaAndCandies {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		//int[] A = new int[] { 3, 2, 3 };
-		int[] A = new int[] { 4, 7, 7, 2 };
+		int[] A = new int[] { 7, 4, 7, 2 };
 		int B = 4;
 		int ans = new MishaAndCandies().solve(A, B);
 
 	}
-
-	class Pair {
-		int index;
-		int candies;
-
-		public Pair(int i, int c) {
-			index = i;
-			candies = c;
-		}
-	};
-
-	Comparator<Pair> SortbyCandies = new Comparator<Pair> 
-	{ 
-	    public int compare(Pair a, Pair b) 
-	    { 
-	    	return a.candies - b.candies; 
-	    } 
-	};
-	
-	Comparator<Pair> SortbyIndex = new Comparator<Pair>
-	{ 
-	    public int compare(Pair a, Pair b) 
-	    { 
-	    	if (a.candies == b.candies) {
-	    		return 0;
-	    	}
-	    	return a.index - b.index;
-	    } 
-	};
 	
 	public int solve(int[] A, int B) {
 		int N = A.length;
 		int ans;
 		List<Pair> pq = new ArrayList<>();
-		Comparator<Pair> SortbyCandies = new Comparator<Pair> 
-		{ 
-			@Override
-		    public int  ompare(Pair a, Pair b) 
-		    { 
-		    	return a.candies - b.candies; 
-		    } 
-		};
-		
-		
-		
 		
 		for (int i = 0; i < N; i++) {
 			pq.add(new Pair(i, A[i]));
 		}
-		Collections.sort(pq, new SortbyCandies());
-		Collections.sort(pq, new SortbyIndex());
+		Collections.sort(pq, new SortCandies());
 		
 		ans= 0;
 		while (!pq.isEmpty()) {
@@ -92,5 +51,23 @@ public class MishaAndCandies {
 		return ans;
 	}
 	
+	class SortCandies implements Comparator<Pair> {
+		@Override
+		public int compare(Pair o1, Pair o2) {
+			if (o1.candies == o2.candies) {
+				return o1.index - o2.index;
+			}
+			return o1.candies - o2.candies;
+		}
+	}
 	
+	class Pair {
+		int index;
+		int candies;
+
+		public Pair(int i, int c) {
+			index = i;
+			candies = c;
+		}
+	};
 }
