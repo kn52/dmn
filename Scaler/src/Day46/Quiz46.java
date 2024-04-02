@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 
-public class Quiz {
+public class Quiz46 {
 	public static void main(String[] args) {
 		System.out.println("Hello world");
 		ArrayList<Integer> a = new ArrayList<Integer>(Arrays.asList(16,6, 18, 17,13,6,18,16,6,15,15,18,16,13,16,16,6,18,15,15 )); 

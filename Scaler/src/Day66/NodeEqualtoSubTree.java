@@ -1,5 +1,12 @@
 package Day66;
 
+/*Given the root of a binary tree, return the number of nodes where the value of the node is equal to the average of the values in its subtree.
+
+Note:
+
+1. The average of n elements is the sum of the n elements divided by n and rounded down to the nearest integer.
+2. A subtree of root is a tree consisting of root and all of its descendants.
+*/
 public class NodeEqualtoSubTree {
 	int ans;
 	

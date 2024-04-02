@@ -1,15 +1,29 @@
 package Day66;
 
+/*Misha loves to eat candies. She has given N boxes candies
+
+She decides to every time she will choose minimum no of candies box, eat half of the candies, 
+and put remaining in the other box having minimum no of candies.
+
+Misha does not like the box if it has number of candies greater than B so she don't eat that box. 
+Can you find how many candies she will eat
+
+
+1. if a box has odd number of candies she will eat floor(odd/2)
+2. the same box will never choose again*/
+
+
 import java.util.*;
 
 public class MishaAndCandies {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		//int[] A = new int[] { 3, 2, 3 };
+		
 		int[] A = new int[] { 7, 4, 7, 2 };
 		int B = 4;
 		int ans = new MishaAndCandies().solve(A, B);
+		
+		System .out.print(ans);
 
 	}
 	

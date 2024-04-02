@@ -1,12 +1,13 @@
 package Day66;
 
-import java.util.*;
-
 /*Ram has given array A of size N. He has to perform N operations on the array. In the operations
 1. Select minimum (suppose A) and maximum (suppose C) of array and find the average of both the numbers (AVG = (B + C)/2);
 2. Replace the minimum value B to B + Avg
 3. Replace the minimum value C to B - Avg
 */
+
+import java.util.*;
+
 
 public class InATrouble {
 
