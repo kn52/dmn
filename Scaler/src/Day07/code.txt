@@ -1,0 +1,167 @@
+Q1. Prefix Sum Formula
+prefSum[i] = prefSum[i - 1] + A[i]
+
+Q2. Time Complexity of Prefix Sum
+O(N)
+
+Q3. Range Sum Query
+class Solution {
+    public List<long> rangeSum(List<int> A, List<List<int>> B) {
+        int n = A.Count;
+        int m = B.Count;
+        List<long> C = new long[m].ToList();
+        List<long> _psumA = new long[n].ToList();
+        
+        _psumA[0] = A[0];
+
+        for (int i = 1; i < n; i++)
+        {
+            _psumA[i] += _psumA[i - 1] + A[i];
+        }
+        for (int i = 0; i < m; i++)
+        {
+                long _subtract = B[i][0] > 0 ? _psumA[B[i][0] - 1] : 0;
+                int _end = B[i][1];
+                long _sum = _psumA[_end] -  _subtract;
+                C[i] = _sum;
+        }
+        return C;
+    }
+}
+
+
+Q4. Special Index
+class Solution {
+    public int solve(List<int> A) {
+        int N = A.Count;
+        int count = 0;
+        List<int> _evenPrefix = new List<int>();
+
+        for (int i = 0; i < N; i++) {
+            _evenPrefix.Add(0);
+        }
+        _evenPrefix[0] = A[0];
+        for (int i = 1; i < N; i++)
+        {
+            if (i % 2 == 0)
+            {
+                _evenPrefix[i] = _evenPrefix[i - 1] + A[i];
+            }
+            else
+            {
+                _evenPrefix[i] = _evenPrefix[i - 1];
+            }
+        }
+
+
+        List<int> _oddPrefix = new List<int>();
+
+        for (int i = 0; i < N; i++)
+        {
+            _oddPrefix.Add(0);
+        }
+        _oddPrefix[0] = 0;
+        for (int i = 1; i < N; i++)
+        {
+            if (i % 2 == 0)
+            {
+                _oddPrefix[i] = _oddPrefix[i - 1];
+            }
+            else
+            {
+                _oddPrefix[i] = _oddPrefix[i - 1] + A[i];
+            }
+        }
+
+        for (int i = 0; i < N; i++)
+        {
+            int _evenSum = 0;
+            if (i == 0)
+            {
+                _evenSum = _oddPrefix[N - 1];
+            }
+            else
+            {
+                _evenSum = _evenPrefix[i - 1] + (_oddPrefix[N - 1] - _oddPrefix[i]);
+            }
+            int _oddSum = 0;
+            if (i == 0)
+            {
+                _oddSum = _evenPrefix[N - 1];
+            }
+            else
+            {
+                _oddSum = _oddPrefix[i - 1] + (_evenPrefix[N - 1] - _evenPrefix[i]);
+            }
+            if (_evenSum == _oddSum)
+            {
+                count++;
+            }
+        }
+        return count;
+    }
+}
+
+Q5. Prefix Sum - I
+Given the prefix sum of an array, prefSum = [-2, 4, 1, 5, 2]
+
+What is the sum of the original array from index 0 to 2 (0-based) ?
+=>1
+
+Q6. Prefix Sum - II
+Given the prefix sum of an array, prefSum = [-2, 4, 1, 5, 2]
+
+What is the sum of the original array from index 2 to 4 (0-based) ?
+=>-2
+
+Q1. Prefix Sum - III
+Given the prefix sum of an array, prefSum = [-2, 4, 1, 5, 2]
+
+What is the sum of the original array from index 1 to 2 (0-based) ?
+=>3
+
+
+Q2. Equilibrium index of an array
+class Solution {
+    public int solve(List<int> A) {
+        int n = A.Count;
+        int _index = -1;
+        List<int> _preFix = new List<int>();
+        for (int i = 0; i < n; i++) {
+            if (i == 0) {
+                _preFix.Add(A[0]);
+            } 
+            else {
+                int _sum = _preFix[i - 1] + A[i];
+                _preFix.Add(_sum);
+            }
+        }
+        for (int i = 0; i < n; i++) {
+            int lowersum = i == 0 ? 0 : _preFix[i - 1];
+            int highersum = _preFix[n-1]  - _preFix[i];
+            if (lowersum == highersum) {
+                _index = i;
+            }
+        }
+        return _index;
+    }
+}
+
+Q3. In-place Prefix Sum
+class Solution {
+    public List<int> solve(List<int> A) {
+        List<int> B = new List<int>();
+        for (int i = 0; i < A.Count; i++) {
+            if (i == 0) {
+                B.Add(A[i]);
+            } 
+            else {
+                int sum = B[i - 1] + A[i];
+                B.Add(sum);
+            }
+        }
+        return B;
+    }
+}
+
+

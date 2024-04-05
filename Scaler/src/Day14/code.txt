@@ -1,0 +1,119 @@
+Q1. Toggle Case
+class Solution {
+    public string solve(string A) {
+        string B = string.Empty;
+        
+
+        for (int i = 0; i < A.Length; i++)
+        {
+            if (A[i] >= 'A' && A[i] <= 'Z')
+            {
+                B += (char)((A[i] - 0) + 32);
+            }
+            if (A[i] >= 'a' && A[i] <= 'z')
+            {
+                B += (char)((A[i] - 0) - 32);
+            }
+        }
+        return B;
+    }
+}
+
+Q2. Simple Reverse
+class Solution {
+    public string solve(string A) {
+        char[] charArr = A.ToCharArray();
+        int start = 0;
+        int end = charArr.Length - 1;
+        while (start < end) {
+            var temp = charArr[start];
+            charArr[start] = charArr[end];
+            charArr[end] = temp;
+            start++;
+            end--;
+        }
+        return new String(charArr);
+    }
+}
+
+
+Q3. Reverse the String
+class Solution {
+    public string solve(string A) {
+        var B = string.Empty;
+        int start = 0;
+        string newstring = A.Trim(); 
+        
+        var arr = newstring.Split(" ");
+        int _start = 0;
+        int _end = arr.Length - 1;
+        while (_start < _end)
+        {
+            var temp = arr[_start];
+            arr[_start] = arr[_end];
+            arr[_end] = temp;
+            _end--;
+            _start++;
+        }
+
+        B = string.Join(" ", arr);
+        return B;
+    }
+}
+
+Q4. Longest Palindromic Substring
+class Solution {
+    public string longestPalindrome(string A) {
+        int N = A.Length;
+        int ans = 0;
+        int _start = -1;
+        int _end = -1;
+        for (int i = 0; i < N; i++) {
+            int start = i;
+            int end = i;
+            while(start > -1 && end < N && A[start] == A[end]) {
+                start--;
+                end++;
+            }
+            if ((end - start - 1) > ans) {
+                _start = start;
+                _end = end;
+            }
+            ans = Math.Max(ans, (end - start - 1));
+        }
+        for (int i = 0; i < N - 1; i++) {
+            int start = i;
+            int end = i + 1;
+            while(start > -1 && end < N && A[start] == A[end]) {
+                start--;
+                end++;
+            }
+            if ((end - start - 1) > ans) {
+                _start = start;
+                _end = end;
+            }
+            ans = Math.Max(ans, (end - start - 1));
+        }
+        return A.Substring((_start + 1), (_end - _start - 1));
+    }
+}
+
+
+Q5. String operations
+class Solution {
+    public string solve(string A) {
+        var formed = string.Empty;
+        for (int i = 0; i < A.Length; i++) {
+            var c = A[i];
+            int _ascii = c - 0;
+            if (A[i] == 'a' || A[i] == 'i' || A[i] == 'e' || A[i] == 'o' || A[i] == 'u') {
+                c = '#';
+            }
+            if (_ascii > 96 && _ascii < 123) {
+                formed += c;
+            }
+        }
+        formed += formed;
+        return formed;
+    }
+}

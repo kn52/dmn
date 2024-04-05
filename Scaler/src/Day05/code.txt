@@ -1,0 +1,124 @@
+1. What is the time complexity of the following code snippet
+
+for(int i = 1 ; i <= n ; i+=2){
+
+print(i);
+
+}
+
+=> O(n)
+
+What is the time complexity of the following code snippet
+
+void solve(int N, int M){
+
+for(int i = 1 ; i <= N ; i++){
+
+if(N % i == 0)
+
+print(i);
+
+}
+
+for(int i = 1 ; i <= M ; i++){
+
+if(M % i == 0)
+
+print(i);
+
+}
+}
+=>O(N+M)
+
+3. What is the time complexity of the following code snippet
+
+int func(int n){
+
+int s = 0;
+
+for(int i = 1 ; i <= 100 ; i++){
+
+s = s + i;
+
+}
+
+return s;
+
+}
+=>O(1)
+
+4. What is the time complexity of the following code snippet
+
+for(int i = 0 ; i < n ; i++){
+
+for(int j = 0 ; j <= i ; j++){
+
+print(i+j);
+
+}
+
+}
+=>O(n^2)
+
+5. What is the time complexity of the following code snippet
+
+for(int i = 1 ; i <= n ; i*=2){
+
+for(int j = 1 ; j <= n ; j++){
+
+print(i + j);
+
+}
+
+}
+=>O(nlogn)
+
+
+6. What is the time complexity of following code:
+ 
+int a = 0, i = N; 
+while (i > 0) { 
+    a += i; 
+    i /= 2; 
+}
+=>O(logN)
+
+7. What is the time complexity of the following code snippet
+
+for(int i = 1 ; i <= 100 ; i*=2){
+
+for(int j = 1 ; j <= n ; j++){
+
+print(i + j);
+
+}
+
+}
+=>O(n)	
+
+
+
+8. What is the time complexity of the following code snippet
+
+int func(int n){
+
+int s = 0;
+
+for(int i = 0 ; i < n ; i = i * 2){
+
+s = s + i;
+
+}
+
+return s;
+
+}
+=>O(logn)
+
+9. What is the Time Complexity of following snippet ?
+int count = 0 
+while N> 0
+	count++
+	N/=3
+=>O(log(N)) {Base 3}
+9. 

@@ -1,0 +1,231 @@
+Q1. Merge Overlapping Intervals
+using System.Collections.Generic;
+
+public class Interval {
+      public int start;
+      public int end;
+      public Interval() { start = 0; end = 0; }
+      public Interval(int s, int e) { start = s; end = e; }
+}
+ 
+class Solution {
+    public List<Interval> merge(List<Interval> intervals) {
+        List<Interval> list = new List<Interval>();
+       
+        int listcount = 0;
+        intervals.Sort((a, b) => {
+            if (a.start == b.start) {
+                return a.end.CompareTo(b.end); 
+            }
+                return a.start.CompareTo(b.start);
+        });
+         list.Add(intervals[0]);
+        for (int i = 1; i < intervals.Count; i++) {
+            if (list[listcount].end < intervals[i].start)  
+            {
+                list.Add(intervals[i]);
+                listcount++;
+            }
+            if (list[listcount].end < intervals[i].end) {
+                list[listcount].start = intervals[i].start < intervals[listcount].start ? intervals[i].start : intervals[listcount].start;
+                list[listcount].end = intervals[i].end > intervals[listcount].end ? intervals[i].end : intervals[listcount].end;
+            }            
+        }
+        return list;
+    }
+}
+
+Q2. Merge Intervals
+using System;
+using System.Collections.Generic;
+// first argumnet is list of intervals in which A[i][0] denotes start time and A[i][1] denotes end time of 'i' interval.
+// second argument denotes start time of merge interval and 
+// third argument denotes end time of merge interval
+// must condition (B<C) 
+// You  have to return list of intervals 
+class Solution {
+    public List<List<int>> solve(List<List<int>> A, int B, int C) {
+        
+        int N = A.Count;
+        if (N == 0) {
+            return new List<List<int>> {
+                new List<int>() { B, C }
+            };
+        }
+        
+        
+        var list = new List<List<int>>();
+        var _tempstart = A[0][0];
+        var _tempend = A[0][1];
+        var check = false;
+        int index = -1;
+        var _run = true;
+
+        if (check == false && C < A[0][0])
+        {
+            check = true;
+            list.Add(new List<int>() { B, C });
+            index = 0;
+            _run = false;
+        }
+        if (_run) 
+        {
+            for (int i = 0; i < N; i++)
+            {
+                int tempstart = A[i][0];
+                int tempend = A[i][1];
+
+                if (check == false)
+                {
+                    if (B > tempend)
+                    {
+                        list.Add(new List<int>() { tempstart, tempend });
+                    }
+                    else if (C < tempstart)
+                    {
+                        check = true;
+                        list.Add(new List<int>() { B, C });
+                        index = i;
+                        break;
+                    }
+                    else
+                    {
+                        check = true;
+                        _tempstart = B < tempstart ? B : tempstart;
+                        _tempend = C > tempend ? C : tempend;
+                        if (i == N - 1)
+                        {
+                            list.Add(new List<int>() { _tempstart, _tempend });
+                            break;
+                        }
+                    }
+                }
+                else
+                {
+                    if (tempstart > _tempend)
+                    {
+                        list.Add(new List<int>() { _tempstart, _tempend });
+                        index = i;
+                        break;
+                    }
+                    else
+                    {
+                        if (tempend > _tempend)
+                        {
+                            _tempend = tempend;
+                        }
+                        if (i == N - 1)
+                        {
+                            list.Add(new List<int>() { _tempstart, _tempend });
+                            break;
+                        }
+                    }
+                    
+                }
+                
+            }
+        }
+
+
+        if (index != -1)
+        {
+            for (int k = index; k < N; k++)
+            {
+                list.Add(new List<int>() { A[k][0], A[k][1] });
+            }
+        }
+
+        if (B > A[N - 1][1])
+        {
+            list.Add(new List<int>() { B, C });
+        }
+        return list;
+    }
+}
+
+Q3. First Missing Integer
+class Solution {
+    public int firstMissingPositive(List<int> A) {
+        int N = A.Count;
+        int number = 0;
+        if (N == 1 && A[0] == 1) {
+            return 2;
+        }
+        if (N == 1 && A[0] > 1) {
+            return 1;
+        }
+
+        for (int i = 0; i < N; i++)
+        {
+            if (A[i] < 1)
+            {
+                A[i] = N + 2;
+            }
+        }
+
+        for (int i = 0; i < N; i++)
+        {
+            int index = A[i] < 0 ? -1 * A[i] - 1 : A[i] - 1;
+            if (index < N && A[index] > 0)
+            {
+                A[index] = (-1) * A[index];
+            }
+        }
+
+        for (int i = 0; i < N; i++)
+        {
+            if (A[i] > 0)
+            {
+                number = i + 1;
+                break;
+            }
+        }
+        if (number == 0) {
+            number = -1 * A[N - 1] + 1;
+        }
+        return number;
+    }
+}
+
+Q1. Next Permutation
+class Solution {
+    public List<int> reverseArr(List<int> A,int i,int j){
+        int N= A.Count;
+        while(i<j){
+          int temp = A[i];
+          A[i]=A[j];
+          A[j]=temp;
+          i++;
+          j--;
+        }
+        return A;
+    }
+    public List<int> nextPermutation(List<int> A) {
+        int N=A.Count;
+        int i=N-2;
+        while(i>=0&&A[i]>=A[i+1]){
+            i--;
+        }
+        if(i>=0){
+            int j=N-1;
+            while(j>i&&A[j]<=A[i]){
+                j--;
+            }
+            int temp = A[i];
+            A[i]=A[j];
+            A[j]=temp;
+        }
+        reverseArr(A,i+1,N-1);
+        return A;
+    }
+}
+
+Q2. Number of Digit One
+class Solution {
+    public int solve(int A) {
+        int ans = 0;
+        for(int i=1; i<=A; i=i*10)
+            ans += (A / (i * 10)) * i + Math.Min(Math.Max(((A % (i * 10)) - i) + 1, 0), i);
+        return ans;
+    }
+}

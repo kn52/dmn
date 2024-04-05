@@ -1,0 +1,118 @@
+Q1. Simple Recursion
+Q2. Output - 7
+
+Q3. Find Fibonacci - II
+class Solution {
+    public int findAthFibonacci(int A) {
+        int n = A;
+        if (n <= 1) {
+            return n;
+        }
+        else {
+            return findAthFibonacci(n - 1) + findAthFibonacci(n - 2);
+        }
+    }
+}
+
+Q4. Find Factorial!
+class Solution {
+    public int solve(int A) {
+        int n = A;
+        if (n == 1) {
+            return 1;
+        }
+        else {
+            return n * solve(n - 1);
+        }
+
+    }
+}
+
+Q5. Check Palindrome
+class Solution {
+    int palindromeCheck(string str, int start, int end) {
+        if (start >= end) {
+            return 1; 
+        }
+        if (str[start] != str[end]) 
+        {
+            return 0;
+        }
+        return palindromeCheck(str, (start + 1), (end - 1));
+    }
+
+    public int solve(string A) {
+        return palindromeCheck(A, 0, (A.Length - 1));
+    }
+}
+
+Q6. Print 1 to A function
+class Solution {
+    string print(string str, int index, int end)
+    {
+        if (index > end)
+        {
+            return str;
+        }
+        else
+        {
+            if (index == 1)
+            {
+                str = string.Format("{0} ", index);
+            }
+            else
+            {
+                str = string.Format("{0}{1} ", str, index);
+            }
+        }
+        return print(str, index + 1, end);
+    }
+    public void solve(int A) {
+        var str = print(string.Empty, 1, A);
+        Console.WriteLine(str);
+    }
+}
+
+
+Q1. Sum of Digits!
+class Solution {
+    int _sum(int n, int sum = 0)
+    {
+        if (n / 10 == 0)
+        {
+            return n % 10;
+        }
+        return sum + n % 10 + _sum(n/10, sum);
+    }  
+    public int solve(int A) {
+        return _sum(A);
+    }
+}
+
+Q2. Print A to 1 function
+class Solution {
+    string print(string str, int index, int end)
+    {
+        if (index == 0)
+        {
+            return str;
+        }
+        else
+        {
+            if (index == end)
+            {
+                str = string.Format("{0} ", index);
+            }
+            else
+            {
+                str = string.Format("{0}{1} ", str, index);
+            }
+        }
+        return print(str, index - 1, end);
+    }
+
+    public void solve(int A) {
+        var str = print(string.Empty, A, A);
+        Console.WriteLine(str);
+    }
+}

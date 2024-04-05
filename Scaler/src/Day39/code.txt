@@ -1,0 +1,83 @@
+Q3. Count Sort
+public class Solution {
+    public ArrayList<Integer> solve(ArrayList<Integer> A) {
+        Collections.sort(A, new SortArrayCom());
+        return A;
+    }
+}
+
+class SortArrayCom implements Comparator<Integer> {
+    public int compare(Integer a, Integer b) {
+        int _fa = factors(a);
+        int _fb = factors(b);
+        if (_fa == _fb) return a - b;
+        return _fa - _fb;
+    }
+    public int factors(Integer N) {
+         int count=0;
+        for(int i=1;i*i<=N; i++){
+            if(N%i==0){
+                if(i==N/i){
+                    count++;
+                }
+                else{
+                    count= count+2;
+                }
+            }
+        }
+        return count;
+    }
+}
+
+
+Q2. Largest Number
+public class Solution {
+
+    public String largestNumber(ArrayList<Integer> A) {
+        Collections.sort(A, new largeSort());
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < A.size(); i++)
+        {
+            sb.append(Integer.toString(A.get(i)));
+        }
+        if(A.get(0) == 0)
+        {
+            return "0";
+        }
+        return sb.toString();
+    }
+}
+
+class largeSort implements Comparator<Integer> {
+    public int compare(Integer a, Integer b) {
+        String x =String.valueOf(a)+String.valueOf(b);
+        String y =String.valueOf(b)+String.valueOf(a);
+        return y.compareTo(x);
+    }
+}
+
+
+Q3. B Closest Points to Origin
+public class Solution {
+    public ArrayList<ArrayList<Integer>> solve(ArrayList<ArrayList<Integer>> A, int B) {
+        Collections.sort(A, new Distance() );
+        ArrayList<ArrayList<Integer>> ans=new ArrayList<>();
+        for(int i=0;i<B;i++){
+            ArrayList<Integer> row=new ArrayList<>();
+            row.add(A.get(i).get(0));
+            row.add(A.get(i).get(1));
+
+            ans.add(row);
+        }
+        return ans;
+    }
+}
+
+class Distance implements Comparator<ArrayList<Integer>> {
+    public int compare(ArrayList<Integer> a, ArrayList<Integer> b) {
+        int x = a.get(0) * a.get(0) + a.get(1)*a.get(1);
+        int y = b.get(0) * b.get(0) + b.get(1)*b.get(1);
+        if (x == y) return a.get(0) - b.get(0);
+        return x - y;
+    }
+}

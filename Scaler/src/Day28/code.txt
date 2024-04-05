@@ -1,0 +1,75 @@
+Q1. Pair Sum divisible by M
+class Solution {
+    public int solve(List<int> A, int B) {
+
+        int n = A.Count;
+            int mod = 1000000007;
+            Dictionary<int, int> mp = new Dictionary<int, int>();
+            int ans = 0;
+            for (int i = 0; i < n; i++)
+            {
+                int aModB = A[i] % B;
+                int complement = (B - aModB) % B;
+                ans = (ans + (mp.ContainsKey(complement) ? mp[complement] : 0)) % mod;
+                if (mp.ContainsKey(aModB))
+                {
+                    mp[aModB]++;
+                }
+                else
+                {
+                    mp.Add(aModB, 1);
+                }
+            }
+        return (int)ans;
+    }
+}
+
+Q2. Greatest Common Divisor
+class Solution {
+    public int gcd(int A, int B) {
+        if (B == 0) return A;
+
+        return gcd(B, A%B);
+    }
+}
+
+Q3. Delete one
+class Solution {
+    int gcd(int A, int B) {
+        if (B == 0) return A;
+        if (A == 0) return B;
+        return gcd(B, A%B);
+    }
+
+    int findGCD(List<int> A,int N) {
+        int ans = 0;
+        for (int i = 0; i < N; i++) {
+            ans = gcd(ans, A[i]);
+        }
+        return ans;
+    }
+
+    public int solve(List<int> A) {
+        int N  = A.Count;
+        var pfgcd = new int[N].ToList<int>();
+        var sfgcd = new int[N].ToList<int>();
+        pfgcd[0] = A[0];
+        for (int i = 1; i < N; i++) {
+            pfgcd[i] = gcd(pfgcd[i - 1], A[i]);
+        }
+        sfgcd[N - 1] = A[N - 1];
+        for (int i = N - 2; i >= 0; i--) {
+            sfgcd[i] = gcd(sfgcd[i + 1], A[i]);
+        }
+        int ans = 0;
+        for (int i = 1; i < N - 1; i++) {
+            int _left = pfgcd[i - 1];
+            int _right = (sfgcd[i + 1]);
+            int _gcd = gcd(_left, _right);
+            ans = Math.Max(ans, _gcd);
+        }
+        ans = Math.Max(ans, sfgcd[1]);
+        ans = Math.Max(ans, pfgcd[N - 2]);
+        return ans;
+    }
+}

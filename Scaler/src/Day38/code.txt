@@ -1,0 +1,124 @@
+Q1. Merge Two Sorted Arrays
+public class Solution {
+    // DO NOT MODIFY THE ARGUMENTS WITH "final" PREFIX. IT IS READ ONLY
+    public int[] solve(final int[] A, final int[] B) {
+        int n = A.length;
+        int m = B.length;
+        int[] C = new int[n + m];
+        int p1 = 0, p2 = 0, p3 = 0;
+        while(p1 < n && p2 < m){
+            if(A[p1] < B[p2]){
+                C[p3] = A[p1];
+                p1++; p3++;
+            }
+            else{
+                C[p3] = B[p2];
+                p2++; p3++;
+            }
+        }
+        while(p1 < n){
+            C[p3] = A[p1];
+            p1++; p3++;
+        }
+        while(p2 < m){
+            C[p3] = B[p2];
+            p2++; p3++;
+        }
+     return C;  
+    }
+}
+
+
+Q2. Inversion count in an array
+public class Solution {
+     long count = 0;
+    long mod = 1000000000 + 7;
+
+    private void mergeSortedSubarrays(ArrayList<Integer> A, int low, int mid, int hi){
+        int i = low;
+        int j = mid+1;
+        int k = 0;
+        int[] ans = new int[hi-low+1];
+        while(i <= mid && j <= hi){
+            if(A.get(i) > A.get(j)){
+                ans[k] = A.get(j);
+                count = (count + mid-i+1)%mod;
+                j++;
+            }else{
+                ans[k] = A.get(i);
+                i++;
+            }
+            k++;
+        }
+
+        while(i <= mid){
+            ans[k] = A.get(i);
+            i++;
+            k++;
+        }
+
+        while(j <= hi){
+            ans[k] = A.get(j);
+            j++;
+            k++;
+        }
+
+        for(int l = 0; l < ans.length; l++){
+            A.set(low+l, ans[l]);
+        }
+
+    }
+    private void mergeSort(ArrayList<Integer> A, int low, int hi){
+        if(low == hi) return;
+        int mid = (low+hi)/2;
+        mergeSort(A, low, mid);
+        mergeSort(A, mid+1, hi);
+        mergeSortedSubarrays(A, low, mid, hi);
+    }
+
+    public int solve(ArrayList<Integer> A) {
+        mergeSort(A, 0, A.size()-1);
+        return (int) count;
+    
+    }  
+}
+
+
+Q3. Count Sort
+public class Solution {
+    public int[] solve(int[] A) {
+        int n = A.length;
+        int min =A[0]; 
+        int max =A[0]; 
+        for(int i=0;i<n;i++)
+        {
+        if(A[i]>max)
+        {
+        max = A[i];
+        }
+        if(A[i]<min)
+        {
+        min = A[i];
+        }
+        }
+        int freq_size = max-min+1; 
+        int freq [] = new int[freq_size];
+        for(int i=0;i<n;i++)
+        {
+        int val = A[i];
+        freq[val-min]++;
+        }
+        int [] ans = new int[n];
+        int ind=0; 
+        for(int i=0;i<freq.length;i++)
+        {
+        int val = i+min; 
+        for(int j=1;j<=freq[i];j++)
+        {
+        ans[ind]=val;
+        ind++;
+        }
+        }
+        return ans;
+    }
+}

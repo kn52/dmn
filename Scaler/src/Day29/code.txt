@@ -1,0 +1,93 @@
+Q1. Compute nCr % m
+class Solution {
+    public int solve(int A, int B, int C) {
+        int [,]ans = new int[A + 1,B + 1];
+        for (int i = 0; i < ans.GetLength(0); i++)
+        {
+            for (int j = 0; j < ans.GetLength(1); j++)
+            {
+                if (i == j || i == 0 || j == 0) 
+                    ans[i, j] = 1;
+                else 
+                    ans[i, j] = ((ans[i - 1, j - 1] % C) + (ans[i - 1, j] % C)) % C;
+            }
+        }
+        return ans[A,B];
+    }
+}
+
+Q2. Sorted Permutation Rank
+class Solution {
+    int getCharRank(string A, char target)
+    {
+        string sorted = new string(A);
+        char[] chars = sorted.ToCharArray();
+        Array.Sort(chars);
+        sorted = new string(chars);
+
+        int i = 0;
+        for (i = 0; i < sorted.Length; i++)
+        {
+            if (sorted[i] == target) return i;
+        }
+        return -1;
+    }
+    int fact(int A)
+    {
+        if (A == 1 || A == 0) return 1;
+        return (A * fact(A - 1) % 1000003) % 1000003;
+    }
+    public int findRank(string A) {
+        int Rank = 1;
+        int n = A.Length;
+        for (int i = 0; i < n; i++)
+        {
+            Rank = Rank + (getCharRank(A.Substring(i), A[i]) * fact(n - i - 1)) % 1000003;
+            Rank = Rank % 1000003;
+        }
+        return Rank;
+    }
+}
+
+
+Q3. Excel Column Title
+class Solution {
+    public string convertToTitle(int A) {
+        var ans = string.Empty;
+        int n = A;
+        while (n > 0) {
+            n -= 1;
+            int rem = n % 26;
+            char _char = (char)('A' + rem);
+            ans = _char + ans;
+            n = n / 26;
+        }
+        return ans;
+    }
+}
+
+
+Q4. Pascal Triangle
+class Solution {
+    public List<List<int>> solve(int A) {
+        int n = A;
+        var ans = new List<List<int>>();
+        for (int i = 0; i < n; i++)
+        {
+            ans.Add(new int[n].ToList<int>());
+        }
+        for (int i = 0; i < n; i++) 
+        {
+            for (int j = 0; j < i + 1; j++)
+            {
+                if (i == j || j == 0) {
+                    ans[i][j] = 1;
+                }
+                else {
+                    ans[i][j] = ans[i - 1][j] + ans[i - 1][j - 1];
+                }
+            }
+        }
+        return ans;
+    }
+}

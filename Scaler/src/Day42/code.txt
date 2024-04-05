@@ -1,0 +1,86 @@
+Q1. Aggressive cows
+public class Solution {
+    public static boolean isPossible(int[] A , int B , int dist){
+        int i = 0;
+        int cowPlaced = 1;
+        for(int j = 0; j < A.length; j++){
+            if(A[j] - A[i] >= dist){
+                cowPlaced++;
+                i = j;
+            }
+            if(cowPlaced == B){
+                return true;
+            }
+        }
+        return false;
+    }
+    public int solve(int[] A, int B) {
+        Arrays.sort(A);
+        int n = A.length;
+        int lo = 1;
+        int hi = A[n-1] - A[0];
+        int ans = 0;
+        while(lo <= hi){
+            int mid = (lo + hi) / 2;
+            if(isPossible(A,B,mid) == true){
+                ans = mid;
+                lo = mid + 1;
+            }
+            else{
+                hi = mid - 1;
+            }
+        }
+        return ans;
+    }
+}
+
+Q2. Painter's Partition Problem
+public class Solution {
+    public boolean minPainter(int[] arr, int T, long x_time, int P) {
+        int painter = 1;
+        long timeLeft = x_time;
+        int n = arr.length;
+       
+        for (int i = 0; i < n; i++) {
+            if (arr[i] * (long) T > x_time) {
+                return false;
+            }
+
+            if (arr[i] * (long) T <= timeLeft) {
+                timeLeft -= arr[i] * (long) T;
+            } else {
+                painter++;
+                timeLeft = x_time - arr[i] * (long) T;
+            }
+        }
+
+        return painter <= P;
+    }
+    public int paint(int A, int B, int[] C) {
+        long sum = 0;
+        int max = 0;
+
+        for (int i = 0; i < C.length; i++) {
+            sum += C[i];
+            max = Math.max(max, C[i]);
+        }
+
+        long low = max * B;
+        long high = sum * B;
+        long res = -1;
+
+        while (low <= high) {
+            long mid = (low + high) / 2;
+
+            if (minPainter(C, B, mid, A)) {
+                res = mid % 10000003;
+                high = mid - 1;
+            } else {
+                low = mid + 1;
+            }
+        }
+
+        return (int) (res % 10000003);
+    }
+}
+

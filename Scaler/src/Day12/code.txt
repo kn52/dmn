@@ -1,0 +1,52 @@
+Q1. Binary Addition
+Given two binary numbers A = 1001011 and B = 11001001. What is their sum?
+=>100010100
+
+
+Q2. Binary to Decimal - III
+Which of the following is the correct conversion of 10101101(base 2) to decimal?
+=>173
+
+
+Q3. Decimal to Binary - MCQ
+Which of the following is a correct conversion of 76 (base 10) to binary?
+=>1001100
+
+Q4. Bit Operations
+Given a = 1010011 and b = 1001001, their OR, XOR and AND are -
+=>OR = 1011011 , XOR = 0011010 , AND = 1000001
+
+Q5. Bit Operations - 1
+If a&1 = 1, then a is?
+=>odd
+
+Q6. Bit Operations - 5
+=>a&a = a , a|a = a , a^a = 0
+
+Q7. Add Binary Strings
+class Solution {
+    public string addBinary(string A, string B) {
+        int N = A.Length;
+        int M = B.Length;
+
+        int i = N - 1;
+        int j = M - 1;
+        int carry = 0;
+        var str = "";
+        while (i > -1 || j > -1 || carry == 1) {
+            carry += i > -1 ? A[i] - '0' : 0;
+            carry += j > -1 ? B[i] - '0' : 0;
+            str = (char)(carry % 2 + '0') + str; 
+            carry /= 2;
+        }
+        return str;
+    }
+}
+
+Q1. Bit Operations - 2
+Given a=10, what will be the 0-th bit in a|1 ?
+=>1
+
+Q2. Bit Operations - 3
+What happens to the 0-th bit in a when we perform a = a^1 ?
+=>It gets toggled

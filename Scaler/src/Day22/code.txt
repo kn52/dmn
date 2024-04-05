@@ -1,0 +1,150 @@
+Q1. Single Number
+class Solution {
+    public int singleNumber(List<int> A) {
+        int N = A.Count;
+        if (N == 0) {
+            return 0;
+        }
+        if (N == 1) {
+            return A[0];
+        }
+        int number = A[0];
+        for (int i = 1; i < A.Count; i++) {
+            number ^= A[i];
+        }
+        return number; 
+    }
+}
+
+Q2. Single Number II
+class Solution {
+    public int singleNumber(List<int> A) {
+        int ans = 0;
+        for (int i = 0; i < 32; i++)
+        {
+            int count = 0;
+            for (int j = 0; j < A.Count; j++)
+            {
+                if ((A[j] >> i & 1) == 1)
+                {
+                    count++;
+                }
+            }
+            if (count % 3 != 0)
+            {
+                ans += (1 << i);
+            }
+        }
+        return ans;
+    }
+}
+
+
+Q3. Single Number III
+class Solution {
+    public List<int> solve(List<int> A) {
+        int N = A.Count;
+        int _a = 0;
+        int _b = 0;
+        int pos = -1;
+        int xr = 0;
+        for (int i = 0; i < N; i++) {
+            xr ^= A[i];
+        }
+        xr = xr & -xr;
+        {
+            for (int i = 0; i < N; i++)
+            {
+                if ((A[i] & xr) > 0)
+                {
+                    _a ^= A[i];
+                }
+                else
+                {
+                    _b ^= A[i];
+                }
+            }
+        }
+
+
+        if (_a > _b)
+        {
+            return new List<int>() { _b, _a };
+        }
+            return new List<int>() { _a, _b };
+    }
+}
+
+Q4. Find Two Missing Numbers
+class Solution {
+    public List<int> solve(List<int> A) {
+        int N = A.Count;
+        int _a = 0;
+        int _b = 0;
+        int xr = A[0];
+        for (int i = 1; i < N; i++) {
+            xr ^= A[i];
+        }
+        for (int i = 1; i <= N + 2; i++) {
+            xr ^= i;
+        }
+        xr = xr & ~(xr - 1);
+            for (int i = 0; i < N; i++)
+            {
+                if ((A[i] & xr) > 0)
+                {
+                    _a ^= A[i];
+                }
+                else
+                {
+                    _b ^= A[i];
+                }
+            }
+        for (int i = 1; i <= N + 2; i++)
+            {
+                if ((i & xr) > 0)
+                {
+                    _a ^= i;
+                }
+                else
+                {
+                    _b ^= i;
+                }
+            }
+        if (_a > _b) {
+            return new List<int>() { _b, _a };
+        }
+        return new List<int>() { _a, _b };
+    }
+}
+
+
+Q5. Maximum AND Pair
+class Solution {
+    public int solve(List<int> A) {
+        int ans = 0;
+        int n = A.Count;
+        List<int> arr = new List<int>();
+        for (int i = 30; i >= 0; i--)
+        {
+            var temp = 0;
+            for (int j = 0; j < n; j++)
+            {
+                if ((A[j] & (1 << i)) == (1 << i))
+                    temp++;
+            }
+            if (temp >= 2)
+            {
+                ans = ans | (1 << i);
+
+                for (int j = 0; j < n; j++)
+                {
+                    if ((A[j] & (1 << i)) != (1 << i))
+                        A[j] = 0;
+
+                }
+            }
+        }
+        return ans;
+    }
+}
