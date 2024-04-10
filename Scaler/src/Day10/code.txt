@@ -1,0 +1,194 @@
+Q1. Column Sum
+class Solution {
+    public List<int> solve(List<List<int>> A) {
+        int ROW = A.Count;
+        List<int> sum = new List<int>();
+        if (ROW > 0) {
+            int COL = A[0].Count;
+            for (int j = 0; j < COL; j++) {
+                int calcsum = 0;
+                for (int i = 0; i < ROW; i++) {
+                    calcsum += A[i][j];
+                }
+                sum.Add(calcsum);
+            }
+        }
+        return sum;
+    }
+}
+
+Q2. Main Diagonal Sum
+class Solution {
+    public int solve(List<List<int>> A) {
+        int ROW = A.Count;
+        int COL = A.Count;
+        int i = 0;
+        int j = 0;
+        int sum = 0;
+        while (i < ROW && j < COL) {
+            sum += A[i][j];
+            i++;
+            j++;
+        }
+        return sum;
+    }
+}
+
+Q3. Anti Diagonals
+class Solution {
+    public List<List<int>> diagonal(List<List<int>> A) {
+        int ROW = A.Count;
+        int COL = A.Count;
+        List<List<int>> diagonal = new List<List<int>>();
+        for (int j = 0; j < COL; j++)
+        {
+            int index = 0;
+            int m = 0;
+            int n = j;
+            List<int> list = new int[COL].ToList();
+            while (m < j + 1 && n > -1)
+            {
+                if (index < list.Count)
+                {
+                    list[index] = A[m][n];
+                }
+                m++;
+                n--;
+                index++;
+            }
+            diagonal.Add(list);
+        }
+
+        for (int i = 1; i < ROW; i++)
+        {
+            int index = 0;
+            int m = i;
+            int n = COL - 1;
+            List<int> list = new int[COL].ToList();
+            while (m < ROW && n > -1)
+            {
+                if (index < list.Count) 
+                {
+                    list[index] = A[m][n];
+                }
+                m++;
+                n--;
+                index++;
+            }
+            diagonal.Add(list);
+        }
+        return diagonal;
+    }
+}
+
+
+Q4. Matrix Transpose
+class Solution {
+    public List<List<int>> solve(List<List<int>> A) {
+        int ROW = A.Count;
+        int COL = A[0].Count;
+        List<List<int>> T = new List<List<int>>();
+        for (int j = 0; j < COL; j++)
+        {
+            List<int> list = new int[ROW].ToList();
+            for (int i = 0; i < ROW; i++)
+            {
+                list[i] = A[i][j];
+            }
+            T.Add(list);
+        } 
+        return T; 
+    }
+}
+
+Q5. Rotate Matrix
+class Solution {
+    public void rotate(List<List<int>> a) {
+        int N=a.Count;
+        int M = a[0].Count;
+        for(int i=0;i<N;i++) {
+            for(int j=0;j<i;j++) {
+               int temp = a[i][j];
+               a[i][j]= a[j][i];
+               a[j][i] = temp;
+            }
+        }
+        for (int i = 0; i < M; i++)   {
+            int r=0,c=N-1;
+            while(r<c) {
+                int temp = a[i][r];
+                a[i][r] = a[i][c];
+                a[i][c] = temp;
+                r++;c--;
+            }
+        }  
+    }
+}
+
+Q1. Matrix Scalar Product
+class Solution {
+    public List<List<int>> solve(List<List<int>> A, int B) {
+        int R = A.Count;
+        int C = A[0].Count;
+        for (int i = 0; i < R; i++) 
+        {
+            for (int j = 0; j < C; j++) 
+            {
+                A[i][j] = A[i][j] * B;
+            }
+        }
+        return A; 
+    }
+}
+
+Q2. Add the matrices
+class Solution {
+    public List<List<int>> solve(List<List<int>> A, List<List<int>> B) {
+        int R = A.Count;
+        int C = A[0].Count;
+        List<List<int>> K = new List<List<int>>();
+        for (int i = 0; i < R; i++) 
+        {
+            var list = new int[C].ToList();
+            for (int j = 0; j < C; j++) 
+            {
+                list[j] = A[i][j] + B[i][j];
+            }
+            K.Add(list);
+        }
+        return K;
+    }
+}
+
+Q3. Row Sum
+class Solution {
+    public List<int> solve(List<List<int>> A) {
+        int R = A.Count;
+        int C = A[0].Count;
+        List<int> K = new List<int>();
+        for (int i = 0; i < R; i++) 
+        {
+            int sum = 0;
+            for (int j = 0; j < C; j++) 
+            {
+                sum += A[i][j];
+            }
+            K.Add(sum);
+        }
+        return K;
+    }
+}
+
+Q4. Minor Diagonal Sum
+class Solution {
+    public int solve(List<List<int>> A) {
+        int R = A.Count;
+        int C = A[0].Count;
+        int sum = 0;
+        for (int i = 0; i < R; i++)
+        {
+            sum += A[i][C - 1 - i];
+        }
+        return sum;
+    }
+}

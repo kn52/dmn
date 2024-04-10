@@ -1,0 +1,202 @@
+Q1. Maximum Subarray Easy
+class Solution {
+    public int maxSubarray(int A, int B, List<int> C) {
+        int N = A;
+        int max_cal = int.MinValue;
+        for (int i = 0; i < N; i++)
+        {
+            int sum = 0;
+            for (int j = i; j < N; j++) {
+                sum += C[j];
+                if (sum < (B + 1) && sum > max_cal) {
+                    max_cal = sum;
+                }
+            }   
+        }
+        if (max_cal == int.MinValue) {
+            return 0;
+        }
+        return max_cal;
+    }
+}
+
+Q2. Sum of All Subarrays
+class Solution {
+    public long subarraySum(List<int> A) {
+        int N =A.Count;
+        long sum = 0;
+        for (int i =0; i < N; i++)
+        {
+            sum += (long) A[i] *  (i + 1) * (N - i); 
+        }
+        return sum;
+    }
+}
+
+
+Q3. Subarray with given sum and length
+class Solution {
+    public int solve(List<int> A, int B, int C) {
+        int N = A.Count;
+        int M = B;
+        int exist = 0;
+        List<int> pfsum = new List<int>();
+        if (M <= N && M > 0)
+        {
+            for (int i = 0; i < N; i++)
+            {
+                if (i == 0)
+                {
+                    pfsum.Add(A[i]);
+                }
+                else
+                {
+                    pfsum.Add((pfsum[i - 1] + A[i]));
+                }
+            }
+            if (pfsum[M - 1] == C)
+            {
+                exist = 1;
+            }
+            else
+            {
+                int _end = M;
+                int _start = 1;
+                while (_end < N)
+                {
+                    int _sum = 0;
+                    if (_start == 0)
+                    {
+                        _sum = pfsum[_end];
+                    }
+                    else
+                    {
+                        _sum = pfsum[_end] - pfsum[_start - 1];
+                    }
+                    if (_sum == C)
+                    {
+                        exist = 1;
+                        break;
+                    }
+                    _end++;
+                    _start++;
+                }
+            }
+        }
+        return exist;
+    }
+}
+
+
+Q1. Good Subarrays Easy
+class Solution {
+    public int solve(List<int> A, int B) {
+        int N = A.Count;
+        int count = 0;
+        for (int i = 0; i < N; i++)
+        {
+            int sum = 0;
+            for (int j = i; j < N; j++)
+            {   
+                sum += A[j];
+                if ((sum < B && (j - i + 1) % 2 == 0) || (sum > B && (j - i + 1) % 2 != 0)) {
+                    count++;
+                }   
+            }   
+        }
+        return count;
+    }
+}
+
+Q2. Counting Subarrays Easy
+class Solution {
+    public int solve(List<int> A, int B) {
+        int N = A.Count;
+        int count = 0;
+        for (int i = 0; i < N; i++)
+        {
+            int sum = 0;
+            for (int j = i; j < N; j++)
+            {   
+                sum += A[j];
+                if (sum < B) {
+                    count++;
+                }   
+            }   
+        }
+        return count;
+    }
+}
+
+
+Q3. Minimum Swaps
+class Solution {
+    public int solve(List<int> A, int B) {
+        int N = A.Count;
+        int windowsize = 0;
+
+        for (int i = 0; i < N; i++)
+        {
+            if (A[i] <= B)
+            {
+                windowsize++;
+            }
+        }
+        int swap = 0, ans = int.MaxValue;
+
+        for (int i = 0; i < windowsize; i++)
+        {
+            if (A[i] > B)
+            {
+                swap++;
+            }
+        }
+
+        ans = ans > swap ? swap : ans;
+
+        for (int i = windowsize; i < N; i++)
+        {
+            if (A[i - windowsize] <= B && A[i] > B)
+            {    
+                swap++;
+            }
+            else if (A[i - windowsize] > B && A[i] <= B) 
+            {
+                swap--;
+            }
+            ans = ans > swap ? swap : ans;
+        }
+
+        return ans;
+    }
+}
+
+
+Q4. Subarray with least average
+class Solution {
+    public int solve(List<int> A, int B) {
+        int N = A.Count;
+        int wcount = B;
+        int _index = 0;
+        double sum = 0;
+        double avgsum = 0;
+        double wsum = 0;
+        for (int i = 0; i < wcount; i++) {
+            sum += A[i];
+        }
+        avgsum = sum/B;
+        wsum = sum;
+        int k = 1;
+        while (wcount < N) {
+            sum = wsum + A[wcount] - A[k - 1];
+            wsum = sum;
+            if (sum / B < avgsum) {
+                _index = k;
+                avgsum = sum / B;
+            }
+            wcount++;
+            k++;
+        }
+        return _index;
+    }
+}

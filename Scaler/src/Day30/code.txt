@@ -1,0 +1,104 @@
+Q1. Find All Primes
+class Solution {
+    public List<int> solve(int A) {
+        int[] arr = new int[A+1];
+        List<int> ans = new List<int>();
+        int n = arr.Length;
+
+        for(int i=2; i<n; i++){
+            arr[i] = 1;
+        }
+
+        for(int i=2; i*i < n; i++){
+            if(arr[i]==1){
+                for(int j= i*i; j<n; j+=i){
+                    arr[j]=0;
+                }
+            }
+        }
+
+        for(int i=0; i<n; i++){
+            if(arr[i]==1){
+                ans.Add(i);
+            }
+        }
+        return ans;
+    }
+}
+
+Q2. Count of divisors
+class Solution {
+    int getSpflist(int n)
+    {
+        if (n % 2 == 0) 
+            return 2; 
+ 
+        for (int i = 3; i * i <= n; i += 2) 
+        { 
+            if (n % i == 0) 
+                return i; 
+        }
+        return n;
+    }
+    void divisors(int number, ref List<int> ans)
+    {
+        int factor = 1;
+
+        while (number != 1)
+        {
+            int _p = getSpflist(number);
+            int power = 0;
+            while (number % _p == 0)
+            {
+                number = number / _p;
+                power++;
+            }
+            factor *= (power + 1);
+        }
+        ans.Add(factor);
+    }
+    public List<int> solve(List<int> A) {
+        int N = A.Count;
+        var ans = new List<int>();
+        for (int i = 0; i < N; i++)
+        {
+            divisors(A[i], ref ans);
+        }
+        return ans;
+    }
+}
+
+Q3. Sorted Permutation Rank
+class Solution {
+
+    int getCharRank(string A, char target)
+    {
+        string sorted = new string(A);
+        char[] chars = sorted.ToCharArray();
+        Array.Sort(chars);
+        sorted = new string(chars);
+
+        int i = 0;
+        for (i = 0; i < sorted.Length; i++)
+        {
+            if (sorted[i] == target) return i;
+        }
+        return -1;
+    }
+    int fact(int A)
+    {
+        if (A == 1 || A == 0) return 1;
+        return (A * fact(A - 1) % 1000003) % 1000003;
+    }
+    public int findRank(string A)
+    {
+        int Rank = 1;
+        int n = A.Length;
+        for (int i = 0; i < n; i++)
+        {
+            Rank = Rank + (getCharRank(A.Substring(i), A[i]) * fact(n - i - 1)) % 1000003;
+            Rank = Rank % 1000003;
+        }
+        return Rank;
+    }
+}

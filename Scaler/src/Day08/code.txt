@@ -1,0 +1,187 @@
+Q2. Closest MinMax
+class Solution {
+    public int solve(List<int> A) {
+        int N = A.Count;
+        int max = int.MinValue;
+        int min = int.MaxValue;
+        int ans = 0;
+        int min_i = -1;
+        int max_i = -1;
+        for (int i = 0; i < N; i++) 
+        {
+            if (min > A[i]) {
+                min = A[i];
+            }
+            if (max < A[i]) {
+                max = A[i];
+            }
+        }
+        for (int i = 0; i < N; i++) 
+        {
+            if (A[i] == min) {
+                min_i = i;
+            }
+            if (A[i] == max) 
+            {
+                max_i = i;
+            }
+            if (min_i == -1 || max_i == -1) {
+                continue;
+            }
+            else 
+            {
+                int diff = (max_i - min_i) < 0 ? (-1) * (max_i - min_i) : max_i - min_i;
+                if (ans == 0 && diff > ans)
+                {   
+                    ans = diff;
+                }
+                if (diff < ans) {
+                    ans = diff;
+                }
+            }
+        }
+        return (ans + 1);
+    }
+}
+
+Q3. Special Subsequences "AG"
+class Solution {
+    public int solve(string A) {
+        long countA = 0;
+        long countPair = 0;
+
+        for (int i = 0; i < A.Length; i++)
+        {
+            char c = A[i];
+            if (c == 'A')
+            {
+                countA++;
+            }
+            if (c == 'G' && countA != 0)
+            {
+                countPair = (long) countPair + countA;
+            }
+        }
+        return (int) countPair % 1000000007;
+    }
+}
+
+Q4. Total Number of Subarrays
+=>231
+
+Q5. Subarray in given range
+class Solution {
+    public List<int> solve(List<int> A, int B, int C) {
+        int N = A.Count;
+        List<int> K = new List<int>();
+        if (B >= 0 && C <= N) {
+            for (int i = B; i < C + 1; i++) {
+                K.Add(A[i]);
+            }
+        }
+        return K;
+    }
+}
+
+Q6. Generate all subarrays
+class Solution {
+    public List<List<int>> solve(List<int> A) {
+        int N = A.Count;
+        
+        List<List<int>> B = new List<List<int>>();
+        for (int i = 0; i < N; i++) {
+            for (int j = i; j < N; j++) {
+                List<int> C = new List<int>();
+                for( int k=i; k<=j; k++) {
+                    C.Add(A[k]);
+                }
+                B.Add(C);
+            }
+        }
+        return B;
+    }
+}
+
+Q1. Best Time to Buy and Sell Stocks I
+class Solution {
+    public int maxProfit(List<int> A) {
+        int N = A.Count;
+        int _max = 0;
+        int maxProfit = 0;
+        for (int i = N - 2; i >= 0; i--)
+        {
+            if (_max == 0) {
+                _max = A[N - 1];
+            }
+            if (A[i] > _max) {
+                _max = A[i]; 
+            }
+            int profit = _max - A[i];
+                if (profit > maxProfit)
+                {
+                    maxProfit = profit;
+                }
+        }
+    return maxProfit;
+    }
+}
+
+Q2. Count Subarrays starting with 'a'
+Given a string A = "amazon", find the number of subarrays starting with the character 'a'.
+=>10
+
+Q3. Pick from both sides!
+class Solution {
+    public int solve(List<int> A, int B) {
+        int K = B;
+        int n = A.Count;
+        int size = n;
+
+        int curr_points = 0;
+        int max_points = 0;
+
+        for (int i = 0; i < K; i++) {
+            curr_points += A[i];
+        }
+
+        max_points = curr_points;
+
+        int j = size - 1;
+
+        for (int i = K - 1; i >= 0; i--)
+        {
+            curr_points = curr_points + A[j] - A[i];
+            max_points = Math.Max(curr_points, max_points);
+            j--;
+        }
+        return max_points;
+    }
+}
+
+
+Q4. Leaders in an array
+class Solution {
+    public List<int> solve(List<int> A) {
+        int N = A.Count;
+        List<int> B = new List<int>();
+        B.Add(A[N - 1]);
+        for(int i = N - 2; i > -1; i--){
+            var _bool = false;
+            if (A[i] > A[i + 1]) {
+                _bool = true;
+                for (int k = i + 1; k < N; k++) {
+                    if (A[k] > A[i])
+                    {
+                        _bool = false;
+                        break;
+                    }
+                }
+            }
+            if (_bool) {
+                B.Add(A[i]);
+            }
+        }
+        return B;
+    }
+}
+

@@ -1,0 +1,118 @@
+Q1. Check Pair Sum
+class Solution {
+    public int solve(int A, List<int> B) {
+        int n = B.Count;
+
+        HashSet<int> _set = new HashSet<int>();
+       
+        for(int i = 0; i < n; i++) {
+            int eq = A - B[i];
+            if(_set.Contains(eq)) {
+                return 1;
+            }
+            else {
+                _set.Add(B[i]);
+            }
+        }
+
+        return 0;
+    }
+    
+}
+
+Q2. Count Pair Difference
+public class Solution {
+    public int solve(int[] A, int B) {
+int N = A.length;
+        HashMap<Integer, Integer> hm = new HashMap<>();
+        int count  = 0;
+            for(int i = 0; i < N; i++){
+                if(hm.containsKey(A[i] - B)){
+                    count = count + hm.get(A[i] - B);
+                }
+                if(hm.containsKey(A[i] + B)){
+                    count = count + hm.get(A[i]  +B);
+                }
+                if(hm.containsKey(A[i])){
+                    int val = hm.get(A[i]);
+                    hm.put(A[i], val + 1);
+                }
+                else{
+                    hm.put(A[i], 1);
+                }
+            }
+        return count % 1000000007;
+    }
+}
+
+
+Q3. Subarray Sum Equals K
+public class Solution {
+    public int solve(int[] A, int B) {
+        int n = A.length;
+int psum = 0;
+int count = 0;
+HashMap<Integer , Integer> map = new HashMap<>();
+map.put(0, 1);
+for(int i = 0; i < n; i++){
+psum = psum + A[i];
+int sum2 = psum - B;
+if(map.containsKey(sum2)){
+count += map.get(sum2);
+}
+if(map.containsKey(psum)){
+map.put(psum, map.get(psum) + 1);
+}
+else{
+map.put(psum , 1);
+}
+}
+return count;
+    }
+}
+
+
+Q4. Distinct Numbers in Window
+public class Solution {
+    public ArrayList<Integer> dNums(ArrayList<Integer> A, int B) {
+        HashMap<Integer,Integer> dMap= new HashMap<>();
+        ArrayList<Integer> ans =new ArrayList<>();
+
+        //first HashMap
+        for(int i=0;i<B;i++){
+            int currVal = A.get(i);
+            if(dMap.containsKey(currVal)){
+                int freq = dMap.get(currVal);
+                dMap.put(currVal,++freq);
+            }else{
+                dMap.put(currVal,1);
+            }
+        }
+        ans.add(dMap.keySet().size());
+        //moving the window
+        int s=1;
+        int e=B;
+
+        while(e<A.size()){
+            //removing prev ele
+            int val = dMap.get(A.get(s-1));
+            if(val==1){
+                dMap.remove(A.get(s-1));
+            }else{
+                dMap.put(A.get(s-1),--val);
+            }
+            //adding new ele
+            if(dMap.containsKey(A.get(e))){
+              int val2 = dMap.get(A.get(e));
+                dMap.put(A.get(e),++val2);
+            }else{
+                 dMap.put(A.get(e),1);
+            }
+            ans.add(dMap.keySet().size());
+            s++;
+            e++;
+         
+        }
+        return ans;
+    }
+}

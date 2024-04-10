@@ -1,0 +1,155 @@
+Q1. Generate all Parentheses II
+class Solution {
+    void generate(int N, int open, int close, string str, ref List<string> ans) {
+        if (str.Length == 2 * N) {
+            ans.Add(str);
+            return;
+        }
+        if (open < N) {
+            generate(N, open + 1, close, str + "(", ref ans);
+        }
+        if (close < open) {
+            generate(N, open, close + 1, str + ")", ref ans);
+        }
+    }
+    public List<string> generateParenthesis(int A) {
+        List<string> ans = new List<string>();
+        generate(A, 0, 0, string.Empty, ref ans);
+        return ans;
+    }
+}
+
+
+Q2. Permutations
+class Solution {
+    void generatePermute(int N, List<int> _input, List<int> _ch, HashSet<int> _hs, ref List<List<int>> ans) {
+        if (_hs.Count == N)
+        {
+            ans.Add(_ch.ToList());
+            return;
+        }
+
+        for (int i = 0; i < N; i++)
+        {
+            if (!_hs.Contains(_input[i]))
+            {
+                _hs.Add(_input[i]);
+                _ch.Add(_input[i]);
+
+                generatePermute(N, _input, _ch, _hs, ref ans);
+
+                _ch.Remove(_input[i]);
+                _hs.Remove(_input[i]);
+            }
+        }
+    } 
+    public List<List<int>> permute(List<int> A) {
+        var input = A;
+        var ch = new List<int>();
+        var hs = new HashSet<int>();
+        var ans = new List<List<int>>();
+        generatePermute(input.Count, input, ch, hs, ref ans);
+        return ans;
+    }
+}
+
+
+Q3. Subset
+class Solution {
+    void findSubSets(int position, int inputLength, List<int> choices, List<int> inputList, ref List<List<int>> result)
+    {
+        if (position == inputLength)
+        {
+            List<int> items = new List<int>();
+            foreach (var item in choices)
+            {
+                items.Add(item);
+            }
+            result.Add(items);
+            return;
+        }
+
+        choices.Add(inputList[position]);
+        findSubSets(position + 1, inputLength, choices, inputList, ref result);
+
+        choices.RemoveAt(choices.Count() - 1);
+        findSubSets(position + 1, inputLength, choices, inputList, ref result);
+    }
+    public List<List<int>> subsets(List<int> A) {
+        var inputList = A;
+        var result = new List<List<int>>();
+        A.Sort();
+
+        findSubSets(0, inputList.Count, new List<int>(), inputList, ref result);
+
+        result.Sort((o1, o2) => {
+            int n = Math.Min(o1.Count, o2.Count);
+            for (int i = 0; i < n; i++)
+            {
+                if (o1[i] == o2[i])
+                {
+                    continue;
+                }
+                else
+                {
+                    return o1[i].CompareTo(o2[i]);
+                }
+            }
+            return o1.Count.CompareTo(o2.Count);
+        });
+        return result;
+    }
+}
+
+Q1. All Unique Permutations
+class Solution {
+    void FindCombination(List<int> choices, Dictionary<int, int> hmap, ref List<List<int>> result)
+    {
+        int totalfrequency = hmap.Sum(x => x.Value);
+        if (totalfrequency == 0)
+        {
+            result.Add(choices.ToList());
+            return;
+        }
+
+        List<int> keys = hmap.Keys.ToList();
+        foreach (var key in keys)
+        {
+            if (hmap[key] > 0)
+            {
+                choices.Add(key);
+                hmap[key]--;
+
+                FindCombination(choices, hmap, ref result);
+
+                choices.RemoveAt(choices.Count - 1);
+                hmap[key]++;
+            }
+        }
+    }
+    public List<List<int>> permute(List<int> A) {
+        var input = A;
+        var len = A.Count;
+        List<int> choices = new List<int>();
+        List<List<int>> result = new List<List<int>>();
+        Dictionary<int, int> hmap = new Dictionary<int, int>();
+
+        foreach (int item in A)
+        {
+            if (hmap.ContainsKey(item))
+            {
+                hmap[item]++;
+            }
+            else
+            {
+                hmap.Add(item, 1);
+            }
+        }
+        var hmaplen = hmap.Count;
+
+        FindCombination(choices, hmap, ref result);
+
+        return result;
+    }
+}
+

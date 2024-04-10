@@ -1,0 +1,173 @@
+1. Code Factor - 2
+==========================================================================
+
+class Solution {
+    public int solve(int A) {
+        int count = 0;
+        for (int i = 1; i <= Math.Sqrt(A); i++) {
+            if (A%i == 0) {
+                if (i*i == A)
+                count += 1;
+                else 
+                count += 2;
+            }
+        }
+        return count;
+    }
+}
+==========================================================================
+
+2. is Prime
+==========================================================================
+class Solution {
+    public int solve(int A) {
+        int _isprime = 1;
+        if (A == 1) {
+            return 0;
+        }
+        for (int i = 2; i <= A/2; i++) {
+            if (A%i == 0) {
+                _isprime = 0;
+                break;
+            }
+        }
+        return _isprime;
+    }
+}
+==========================================================================
+
+
+Q1. Find Perfect Numbers
+class Solution {
+    public int solve(int A) {
+        int n = A;
+        int sum = 1;
+        for (int i = 2; i * i <= n; i++)
+        {
+            if (n % i == 0)
+            {
+                if (i * i != n)
+                {
+                    sum += i + n / i;
+                }
+                else
+                {
+                    sum += i;
+                }
+            }
+        }
+        if (sum == A && n != 1) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+}
+
+
+Q2. Count of primes
+class Solution {
+    public int solve(int A) {
+        int count = 0;
+        for (int i = 2; i <= A; i++) {
+            int num = i;
+            bool _prime = true;
+            for (int j = 2; j < num; j++) {
+                if (num % j == 0) {
+                    _prime = false;
+                }
+            }
+            if (_prime) {
+                count++;
+            }
+        }
+        return count;
+    }
+}
+
+Q3. Number of elements in a range
+How many elements are there between [135, 246] (inclusive of them) ?
+
+=>112
+
+
+1. Find the number of times below code runs where N is a perfect square
+
+for i -> 1 to N
+
+if(i * i == N)
+
+return i
+
+=>sqrt(N)
+
+
+
+Q4. Sum of N natural numbers
+
+=>(n*(n+1))/2
+
+Q5. Find Number of Iterations - 3
+
+int func(int n){
+    int s = 0;
+    for(int i = 1 ; i <= 100 ; i++){ 
+        s = s + i;
+    }
+    return s;
+}
+=>100
+
+
+Q6. Find Number of Iterations - i
+int ans = 0;
+for (int i = 0; i < n; i++)
+{
+    ans += i * i;
+}
+=>n
+
+Q7. Find Number of Iterations - 7
+for (int i = 0; i < n; i++) {
+    for (int j = 0; j <= i; j++) {
+        print(i + j);
+    }
+}
+=>n*(n+1) / 2
+
+Q3. Number of elements in a range
+How many elements are there between [135, 246] (inclusive of them) ?
+=>112
+
+Q4. Find Number of Iterations - 2
+void solve(int N, int M)
+{
+    int count = 0;
+    for (int i = 1; i <= N; i++)
+    {
+
+        if (N % i == 0)
+            count++;
+    }
+
+    for (int i = 1; i <= M; i++)
+    {
+
+        if (M % i == 0)
+            count++;
+    }
+    print count;
+}
+=>N + M
+
+Q5. Find Number of Iterations - 9
+for (int i = 1; i <= n; i++)
+{
+    for (int j = 1; j <= 3 ^ i; j++)
+    {
+        print(i + j);
+    }
+}
+=>3 + 9 + 27 + .... + 3^n times.
+
+

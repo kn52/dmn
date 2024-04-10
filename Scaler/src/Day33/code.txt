@@ -1,0 +1,181 @@
+Q1. Frequency of element query
+class Solution {
+    public List<int> solve(List<int> A, List<int> B) {
+        Dictionary<string, int> dict = new Dictionary<string, int>();
+        for(int i = 0; i < A.Count; i++) {
+            if (dict.ContainsKey(A[i].ToString())) {
+                dict[A[i].ToString()]+=1;
+            }
+            else {
+                dict.Add(A[i].ToString(), 1);
+            }
+        }
+        var ans = new List<int>();
+        for(int i = 0; i < B.Count; i++) {
+            if (dict.ContainsKey(B[i].ToString())) {
+                ans.Add(dict[B[i].ToString()]);
+            }
+            else {
+                ans.Add(0);
+            }
+        }
+        return ans;
+    }
+}
+
+
+Q2. Count distinct elements
+class Solution {
+    public int solve(List<int> A) {
+        HashSet<int> ans = new HashSet<int>();
+        for (int i = 0; i < A.Count; i++) {
+            ans.Add(A[i]);
+        }
+        return ans.Count;
+    }
+}
+
+
+Q3. First Repeating element
+class Solution {
+    public int solve(List<int> A) {
+        Dictionary<string, int> dict = new Dictionary<string, int>();
+        for(int i = 0; i < A.Count; i++) {
+            if (dict.ContainsKey(A[i].ToString())) {
+                dict[A[i].ToString()]+=1;
+            }
+            else {
+                dict.Add(A[i].ToString(), 1);
+            }
+        }
+        int ans = -1;
+        foreach(var item in dict)
+        {
+            if (item.Value > 1) {
+                ans = Convert.ToInt32(item.Key);
+                break;
+            }
+        }
+        return ans;
+    }
+}
+
+
+Q4. Sub-array with 0 sum
+public class Solution {
+  // Do not write code to include libraries, main() function or accept any input from the console.
+  // Initialization code is already written and hidden from you. Do not write code for it again.
+  public int solve(int[] A) {
+      // Just write your code below to complete the function. Required input is available to you as the function arguments.
+      // Do not print the result or any output. Just return the result via this function.
+      int N = A.length;
+      long sum = 0;
+        HashSet<Long> hs = new HashSet<>();
+        hs.add(sum);
+            for(int i = 0; i < N; i++){
+                sum = sum + A[i];
+                if(hs.contains(sum)){
+                    return 1;
+                }
+                else{
+                    hs.add(sum);
+                }
+            }
+            return 0;
+  }
+}
+
+
+
+
+Q1. Count unique elements
+class Solution {
+    public int solve(List<int> A) {
+        Dictionary<string, int> dict = new Dictionary<string, int>();
+        for(int i = 0; i < A.Count; i++) {
+            if (dict.ContainsKey(A[i].ToString())) {
+                dict[A[i].ToString()]+=1;
+            }
+            else {
+                dict.Add(A[i].ToString(), 1);
+            }
+        }
+        int ans = 0;
+        foreach (var item in dict)
+        {
+            if (item.Value == 1) {
+                ans++;
+            }
+        }
+        return ans;
+    }
+}
+
+
+Q2. Count Subarray Zero Sum
+// Do not write code to include libraries, main() function or accept any input from the console.
+// Initialization code is already written and hidden from you. Do not write code for it again.
+class Solution {
+    int subArrayZero(List<int> A) {
+        
+        List<int> pfsum = new List<int>();
+        pfsum.Add(A[0]);
+        for(int i = 1; i < A.Count; i++) {
+            int sum = pfsum[i  - 1] + A[i];
+            pfsum.Add(sum);
+        }
+        int re = 0;
+        Dictionary<string, int> dict = new Dictionary<string, int>();
+        dict.Add("0", 1);
+            for(int i = 0; i < pfsum.Count; i++) {
+                if (dict.ContainsKey(pfsum[i].ToString())) {
+                    re += dict[pfsum[i].ToString()];
+                    dict[pfsum[i].ToString()]++;
+                }
+                else {
+                    dict.Add(pfsum[i].ToString(), 1);
+                }
+            }
+        return re;
+    }
+    public int solve(List<int> A) {
+        return subArrayZero(A);
+    }
+}
+
+
+
+Q3. Common Elements
+public class Solution {
+  // Do not write code to include libraries, main() function or accept any input from the console.
+  // Initialization code is already written and hidden from you. Do not write code for it again.
+  public int[] solve(int[] A, int[] B) {
+      // Just write your code below to complete the function. Required input is available to you as the function arguments.
+      // Do not print the result or any output. Just return the result via this function.
+      HashMap<Integer,Integer> hmA = new HashMap<>();
+        HashMap<Integer,Integer> hmB = new HashMap<>();
+        int[] resultArray = new int[Math.min(A.length,B.length)];
+        int index=0;
+
+        for (int num: A){
+            hmA.put(num,hmA.getOrDefault(num,0)+1);
+        }
+        for (int num: B){
+            hmB.put(num,hmB.getOrDefault(num,0)+1);
+        }
+        for (int num: hmA.keySet()) {
+            if (hmB.containsKey(num)){
+                int occurrencesInA = hmA.get(num);
+                int occurrencesInB = hmB.get(num);
+                int commonOccurrences = Math.min(occurrencesInA,occurrencesInB);
+
+                for (int i=0;i<commonOccurrences;i++){
+                    resultArray[index++]=num;
+
+                }
+            }
+        }
+        resultArray = Arrays.copyOf(resultArray,index);
+        return resultArray;
+  }
+}

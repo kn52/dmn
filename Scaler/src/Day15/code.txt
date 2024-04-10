@@ -1,0 +1,87 @@
+Q1. Length of longest consecutive ones
+class Solution {
+    public int solve(string A) {
+        char[] chars = A.ToCharArray();
+        int max = 0;
+        int numsCount = 0;
+        for (int i = 0; i < chars.Length; i++)
+        {
+            if (chars[i] == '1')
+            {
+                numsCount++;
+            }
+        }
+
+        if (numsCount == chars.Length)
+        {
+            return chars.Length;
+        }
+        if (numsCount == 0)
+        {
+            return max;
+        }
+
+        for (int i = 0; i < chars.Length; i++)
+        {
+            int left = 0, right = 0, index = i - 1;
+            if (chars[i] == '0'){
+            while (index >= 0 && chars[index] == '1'){
+                left++;
+                index--;
+            }
+            index = i + 1;
+            while (index < chars.Length && chars[index] == '1'){
+                right++;
+                index++;
+            }
+            int count = 0;
+            if (numsCount == (left + right))
+            {
+                count = left + right;
+            }
+            else
+            {
+                count = left + 1 + right;
+            }
+            if (count > max)
+            {
+                max = count;
+            }
+        }
+        
+        }
+        return max;
+    }
+}
+
+
+Q2. Major Elements
+class Solution {
+    public int majorityElement(List<int> A) {
+        int N = A.Count;
+        if (N==1) {
+            return A[0];
+        }
+        if (N==0) {
+            return 0;
+        }
+        A.Sort();
+        int maxcountelement = -1;
+        int currentcount=1;
+        for(int i=1;i<N;i++){
+            if(A[i]==A[i-1]) 
+            {
+                currentcount++;
+            }
+            else 
+            { 
+                currentcount=1;
+            }
+            if(currentcount>N/2)  { 
+                maxcountelement = A[i];
+            }
+        }
+        
+        return maxcountelement;
+    }
+}

@@ -1,0 +1,81 @@
+Q1. Kth Symbol - Hard
+class Solution {
+    public int solve(int A, long B) {
+        if(B==0){
+            return 0;
+        }
+        int num=solve(A-1,B/2);
+        if(B%2==0){
+            return num;
+        }
+        else{
+            return (1-num);
+        }
+    }
+}
+
+
+Q2. Tower of Hanoi
+class Solution {
+    List<List<int>> Hanoi(List<List<int>> ans, int n, int a, int b, int c)
+    {
+        if (n == 0)
+        {
+            return ans;
+        }
+        Hanoi(ans, n - 1, a, c, b);
+        List<int> newList = new List<int> { n, a, c };
+        ans.Add(newList);
+        return Hanoi(ans, n - 1, b, a, c);
+    }
+    public List<List<int>> towerOfHanoi(int A) {
+        List<List<int>> ans = new List<List<int>>();
+        ans = Hanoi(ans, A, 1, 2, 3);
+        return ans;
+    }
+}
+
+
+Q1. Kth Symbol - Easy
+class Solution {
+    public int solve(int A, int B) {
+        if(B==0){
+            return 0;
+        }
+        int num=solve(A-1,B/2);
+        if(B%2==0){
+            return num;
+        }
+        else{
+            return (1-num);
+        }
+    }
+}
+
+
+Q2. Is magic?
+class Solution {
+    long _numberSum(long _number, long _sum)
+    {
+        if (_number == 0)
+        {
+            return 0;
+        }
+        _sum = _numberSum(_number / 10, _sum) + _number % 10;
+        return _sum;
+    }
+    public int solve(int A) {
+        var ans = string.Empty;
+        long result = A;
+        while (ans.Length != 1) 
+        {
+           result = _numberSum(result, 0);
+           ans = Convert.ToString(result);
+        }
+        if (ans == "1") 
+        {
+            return 1;
+        }
+        return 0;
+    }
+}

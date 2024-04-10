@@ -1,0 +1,163 @@
+Q1. Good Pair
+class Solution {
+    public int solve(List<int> A, int B) {
+        int count = 0;
+        for(int i = 0; i < A.Count; i++) {
+            for(int j = i + 1; j < A.Count; j++) {
+                if (A[i] + A[j] == B) {
+                    count = 1;
+                    break;
+                }
+            }
+            if (count == 1) {
+                break;
+            }
+        }
+        return count;
+    }
+}
+
+Q2. Reverse in a range
+class Solution {
+    public List<int> solve(List<int> A, int B, int C) {
+        int i = B;
+        int j = C;
+        while(i < j) {
+            int t1 = A[i];
+            int t2 = A[j];
+            A[i] =  t2;
+            A[j] = t1;
+            i++;
+            j--;
+        }
+        return A;
+    }
+}
+
+Q3. Array Rotation
+class Solution {
+    public List<int> solve(List<int> A, int B) {
+        int _rotate = B % A.Count;
+        int _index = A.Count - _rotate;
+        List<int> _rA = new List<int>();
+        for (int i = _index; i < A.Count; i++) {
+            _rA.Add(A[i]);
+        }
+        for (int i = 0; i < _index; i++) {
+            _rA.Add(A[i]);
+        }
+        return _rA;
+    }
+}
+
+Q4. Time Complexity - Arrays
+=>O(N)
+
+
+Q5. Max Min of an Array
+class Solution {
+    public int solve(List<int> A) {
+        int _min = A[0];
+        int _max = A[0];
+        for (int i =0; i < A.Count; i++) {
+            if (A[i] < _min) {
+                _min = A[i];
+            }
+            if (A[i] > _max) {
+                _max = A[i];
+            }
+        }
+        return (_min + _max);
+    }
+}
+
+
+Q1. Linear Search - Multiple Occurences
+class Solution {
+    public int solve(List<int> A, int B) {
+        int _occurence = 0;
+        foreach (var item in A) {
+            if (item == B) {
+                _occurence += 1;
+            }
+        }
+        return _occurence;
+    }
+}
+
+
+Q2. Second Largest
+class Solution {
+    public int solve(List<int> A) {
+        int _secondLarget = -1;
+        if (A.Count > 1) {
+            int _second = A[0];
+            int _first = A[1];
+            if (A[0] > A[1]) {
+                _first = A[0];
+                _second = A[1];
+            }
+            if (A[0] < A[1]) {
+                _first = A[1];
+                _second = A[0];
+            }
+            
+
+            for (int i = 2; i < A.Count; i++) {
+                if (_first == _second && A[i] < _second)
+                {
+                    _second = A[i];
+                }
+                if (A[i] > _first) {
+                    _second = _first;
+                    _first = A[i];
+                }
+                if (A[i] < _first && A[i] > _second) {
+                    _second = A[i];
+                }
+            }
+            if (_first != _second) {
+                _secondLarget = _second;
+            }
+        }
+        return _secondLarget;
+    }
+}
+
+
+Q3. Time to equality
+class Solution {
+    public int solve(List<int> A) {
+        int _max = A[0];
+        for (int i = 1; i < A.Count; i++) {
+            if (A[i] > _max) {
+                _max = A[i];
+            }
+        }
+        int _sum  = 0;
+        for (int i = 0; i < A.Count; i++) {
+            int _add = _max - A[i];
+            _sum += _add;
+        }
+        return _sum;
+    }
+}
+
+Q5. Count of elements
+class Solution {
+    public int solve(List<int> A) {
+        int _max = A[0];
+        int count = 0;
+        for (int i = 1; i< A.Count; i++) {
+            if (A[i] > _max) {
+                _max = A[i];
+            }
+        }
+        for (int i = 0; i < A.Count; i++) {
+            if (A[i] < _max) {
+                count++;
+            }
+        }
+        return count;
+    }
+}
