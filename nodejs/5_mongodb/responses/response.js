@@ -7,6 +7,6 @@ class Response {
 }
 
 
-mmodule.exports = {
+module.exports = {
     "resposnes": Response
 }

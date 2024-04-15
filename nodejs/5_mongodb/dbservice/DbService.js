@@ -11,10 +11,10 @@ async function createCollection(collectionName) {
     const database = client.db(dbName);
     await database.createCollection(collectionName);
     console.log(`Collection '${collectionName}' created successfully.`);
-    return resposnes(200, "Created Successfully", null);
+    return new resposnes(200, "Created Successfully", null);
   } catch (error) {
     console.error("Error creating collection:", error);
-    return resposnes(400, "Something went wrong", null);
+    return new resposnes(400, "Something went wrong", null);
   } finally {
     await client.close();
   }
@@ -29,10 +29,10 @@ async function saveData(dataToSave, collectionName) {
     const collection = database.collection(collectionName);
     const result = await collection.insertOne(dataToSave);
     console.log(`Data saved successfully with _id: ${result.insertedId}`);
-    return resposnes(200, "Created Successfully", result.insertedId);
+    return new resposnes(200, "Created Successfully", result.insertedId);
   } catch (error) {
     console.error("Error saving data:", error);
-    return resposnes(400, "Something went wrong", null);
+    return new resposnes(400, "Something went wrong", null);
   } finally {
     await client.close();
   }
@@ -51,10 +51,10 @@ async function updateData(dataToSave, collectionName) {
     };
     const result = await collection.updateOne(filter, updateOperation);
     console.log(`Data updated successfully with _id: ${result.insertedId}`);
-    return resposnes(200, "Updated Successfully", result.insertedId);
+    return new resposnes(200, "Updated Successfully", result.insertedId);
   } catch (error) {
     console.error("Error saving data:", error);
-    return resposnes(400, "Something went wrong", null);
+    return new resposnes(400, "Something went wrong", null);
   } finally {
     await client.close();
   }
@@ -72,10 +72,10 @@ async function getData(_query, collectionName) {
 
     console.log("Data retrieved successfully:");
     console.log(data);
-    return resposnes(200, "Retrieved Successfully", data);
+    return new resposnes(200, "Retrieved Successfully", data);
   } catch (error) {
     console.error("Error retrieving data:", error);
-    return resposnes(400, "Something went wrong", null);
+    return new resposnes(400, "Something went wrong", null);
   } finally {
     await client.close();
   }
@@ -91,10 +91,10 @@ async function deleteData(ID, collectionName) {
     const deletionCriteria = { _id: new ObjectID(ID) };
     const result = await collection.deleteOne(deletionCriteria);
     console.log(`Deleted ${result.deletedCount} document(s)`);
-    return resposnes(200, "Created Successfully", null);
+    return new resposnes(200, "Created Successfully", null);
   } catch (error) {
     console.error("Error deleting data:", error);
-    return resposnes(400, "Something went wrong", null);
+    return new resposnes(400, "Something went wrong", null);
   } finally {
     await client.close();
   }
