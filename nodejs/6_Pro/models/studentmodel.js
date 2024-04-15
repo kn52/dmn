@@ -7,6 +7,14 @@ const studentSchema = new mongoose.Schema({
   phoneNumber: { type: String, required: true, minlength: 10, maxlength: 15 },
 });
 
+studentSchema.set('toObject', {
+  transform: function (doc, ret) {
+    ret.id = ret._id
+    delete ret._id
+    delete ret.__v
+  }
+})
+
 const Student = mongoose.model("Student", studentSchema);
 
 function validateData(student) {

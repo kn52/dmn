@@ -1,4 +1,9 @@
-﻿using MySqlConnector;
+﻿using MongoDB.Bson;
+using MongoDB.Driver;
+using MongoDB.Driver.Linq;
+using MySqlConnector;
+using System;
+using System.Linq;
 
 namespace ConsoleApp.Areas
 {
@@ -6,38 +11,57 @@ namespace ConsoleApp.Areas
     {
         public static void DBConnection()
         {
-            string cs = @"server=localhost;userid=root;password=num@7869#;database=ni";
-            MySqlConnection conn = null;
             try
             {
-                conn = new MySqlConnection(cs);
-                conn.Open();
+                Console.WriteLine("====================================================");
+                Console.WriteLine("Configuration Setting: 127.0.0.1:27017");
+                Console.WriteLine("====================================================");
+                string connectionString = "mongodb://127.0.0.1:27017";
+                string dbString = "testDB";
+                MongoClient client = null;
+                MongoServer server = null;
+                MongoDatabase database = null;
+                MongoCollection symbolcollection = null;
 
-                string stm = "SELECT * FROM ni.dbtest;";
-                MySqlCommand cmd = new MySqlCommand(stm, conn);
-                MySqlDataReader reader = cmd.ExecuteReader();
-                while (reader.Read())
+                client = new MongoClient(connectionString);
+                server = client.GetServer();
+                database = server.GetDatabase(dbString);
+                //database.DropCollection("Symbol");
+                symbolcollection = database.GetCollection<Symbol>("Symbol");
+                Console.WriteLine(symbolcollection.Count().ToString());
+                ObjectId id = new ObjectId();
+
+
+                //Symbol symbol = new Symbol();
+                //symbol.Name = "ani";
+                //symbolcollection.Insert(symbol);
+                //id = symbol.ID;
+
+                //symbol = new Symbol();
+                //symbol.Name = "aki";
+                //symbolcollection.Insert(symbol);
+                //id = symbol.ID;
+
+                List<Symbol> query = symbolcollection.AsQueryable<Symbol>().Select(sb => new Symbol()
                 {
-                    int id = reader["id"] != null ? Convert.ToInt32(reader["id"]) : 0;
-                    string name = reader["name"] != null ? reader["name"].ToString() : string.Empty;
+                    ID = sb.ID,
+                    Name = sb.Name,
+                }).ToList();
+                Console.WriteLine(query.ToString());
 
-                    Console.WriteLine($"ID: {id}, Name: {name}");
-                }
-
+                var s1ymbol = (Symbol)symbolcollection.AsQueryable<Symbol>().Where<Symbol>(sb => sb.Name == "ani");
+                Console.WriteLine(s1ymbol);
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Error: {0}", ex.ToString());
-            }
-            finally
-            {
-
-                if (conn != null)
-                {
-                    conn.Close();
-                }
-
+                Console.WriteLine(ex.Message);
             }
         }
+    }
+    public class Symbol
+    {
+        public string Name { get; set; }
+        public ObjectId ID { get; set; }
+        public ObjectId _id { get; set; }
     }
 }

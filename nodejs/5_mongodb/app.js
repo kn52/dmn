@@ -1,10 +1,14 @@
 const mongoose = require("mongoose");
+const  service   = require("./dbservice/DbService");
+
+const uri = 'mongodb://localhost:27017';
+const dbName = 'testDB';
 
 const dummy = [
   {
     name: "javascript",
     creator: "aashish",
-    tag: ['a', 'b'],
+    tag: ["a", "b"],
     isPublished: true,
     publishedDate: {
       $date: "2024-04-09T12:32:12.910Z",
@@ -15,7 +19,7 @@ const dummy = [
   {
     name: "Java",
     creator: "aashish",
-    tag: ['a', 'b'],
+    tag: ["a", "b"],
     isPublished: false,
     publishedDate: {
       $date: "2024-04-09T12:35:12.489Z",
@@ -26,7 +30,7 @@ const dummy = [
   {
     name: "Ruby",
     creator: "aki",
-    tag: ['a', 'b'],
+    tag: ["a", "b"],
     isPublished: false,
     rating: 3,
     publishedDate: {
@@ -37,7 +41,7 @@ const dummy = [
   {
     name: "Nextjs",
     creator: "akhil",
-    tag: ['a', 'b'],
+    tag: ["a", "b"],
     isPublished: false,
     rating: 3.5,
     publishedDate: {
@@ -48,7 +52,7 @@ const dummy = [
   {
     name: "Dotnet",
     creator: "akhil",
-    tag: ['a', 'b'],
+    tag: ["a", "b"],
     category: "Web",
     isPublished: false,
     rating: 3.5,
@@ -58,21 +62,13 @@ const dummy = [
   },
 ];
 
-mongoose.connect("mongodb://127.0.0.1/testDB")
-  .then(() => {
-    console.log("connected successfully");
-  })
-  .catch((err) => {
-    console.err("Connot cont to mongodb", err);
-  });
-
 const courseSchema = new mongoose.Schema({
   name: { type: String, required: true },
   tag: {
     type: Array,
     validate: {
       validator: function (tags) {
-        return tags.length > 1
+        return tags.length > 1;
       },
     },
   },
@@ -97,31 +93,30 @@ async function createCourse() {
     isPublished: false,
     rating: 3.5,
   });
-
   try {
-    const result = await course.save();
+    const result = await service.saveData(course, "Courses");
     console.log(result);
   } catch (e) {
-    for(var field in e.errors) {
-        console.log(e.errors[field]);
+    for (var field in e.errors) {
+      console.log(e.errors[field]);
     }
   }
 }
 
 async function updateCourse(id) {
-  let course = await Course.findById(id);
+  const query = { _id: new ObjectID(id) };
+  let course = await service.getData(query, "Courses");
 
   if (!course) {
     return;
   }
   course.creator = "aki";
-  const result = await course.save();
+  const result = await service.saveData(course, "Courses");
   console.log(result);
 }
 
 async function deleteCourse(id) {
-  const result = await Course.findByIdAndDelete(id);
-
+  const result = await service.deleteData(id, "Courses");
   console.log(result);
 }
 
@@ -133,61 +128,73 @@ async function deleteCourse(id) {
 // $not in
 
 async function getCourses() {
-  const courses = await Course.find({}).sort({ rating: 1 });
+  const query = {};
+  const courses = await service.getData(query, "Courses");
   console.log(courses);
 }
 
 async function getCoursesComparator() {
-  let courses = await Course.find({ rating: { $gt: 4 } });
+  let query = { rating: { $gt: 4 } };
+  let courses = await service.getData(query, "Courses");
   console.log("gt: ", courses);
-  courses = await Course.find({ rating: { $lt: 4 } });
+
+  query = { rating: { $lt: 4 } };
+  courses = await service.getData(query, "Courses");
   console.log("lt: ", courses);
-  courses = await Course.find({ rating: { $lte: 4 } });
+
+  query = { rating: { $lte: 4 } };
+  courses = awaitservice.getData(query, "Courses");
   console.log("lte: ", courses);
-  courses = await Course.find({ rating: { $gte: 4 } });
+
+  query = { rating: { $gte: 4 } };
+  courses = await service.getData(query, "Courses");
   console.log("gte: ", courses);
-  courses = await Course.find({ rating: { $in: [4] } });
+
+  query = { rating: { $in: [4] } };
+  courses = await service.getData(query, "Courses");
   console.log("in: ", courses);
-  courses = await Course.find({ rating: { $nin: [4] } });
+
+  query = { rating: { $nin: [4] } };
+  courses = await service.getData(query, "Courses");
   console.log("not in: ", courses);
 }
 
 async function getCoursesLogical() {
-  const courses = await Course.find({}).or([
-    { creator: "aashish" },
-    { creator: "akhil" },
-  ]);
+  const query = {};
+  const courses = await service.service
+    .getData(query, "Courses")
+    .or([{ creator: "aashish" }, { creator: "akhil" }]);
   console.log(courses);
 }
 
 async function createCoursebyOBJ(obj) {
-    const course = new Course({
-      name: obj.name,
-      creator: obj.creator,
-      tag: obj.tag,
-      category: obj.category,
-      isPublished: obj.isPublished,
-      rating: obj.rating,
-    });
-  
-    try {
-      const result = await course.save();
-      console.log(result);
-    } catch (e) {
-      console.log(e);
-    }
-}
+  const course = new Course({
+    name: obj.name,
+    creator: obj.creator,
+    tag: obj.tag,
+    category: obj.category,
+    isPublished: obj.isPublished,
+    rating: obj.rating,
+  });
 
+  try {
+    const result = await service.saveData(course, "Courses");
+    console.log(result);
+  } catch (e) {
+    console.log(e);
+  }
+}
 
 function createCourseBy() {
-    for (const obj of dummy) {
-        createCoursebyOBJ(obj)
-    }
+  for (const obj of dummy) {
+    createCoursebyOBJ(obj);
+  }
 }
+
 // createCourse();
 // createCourseBy();
 getCourses();
-getCoursesComparator();
-getCoursesLogical();
+// getCoursesComparator();
+// getCoursesLogical();
 // updateCourse('66153c7aa5864f145d9c2f44');
 // deleteCourse('661596519e318c2f7d9ce58f');

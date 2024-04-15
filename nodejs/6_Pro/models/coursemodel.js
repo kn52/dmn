@@ -22,6 +22,14 @@ const courseSchema = new mongoose.Schema({
   rating: { type: Number, required: true },
 });
 
+courseSchema.set('toObject', {
+  transform: function (doc, ret) {
+    ret.id = ret._id
+    delete ret._id
+    delete ret.__v
+  }
+})
+
 const Course = mongoose.model("Course", courseSchema);
 
 function validateData(student) {
