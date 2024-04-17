@@ -1,20 +1,46 @@
-const { MongoClient, ObjectID } = require("mongodb");
+const { MongoClient } = require("mongodb");
+const ObjectID = require("mongodb").ObjectId;
 const { resposnes } = require('../responses/response');
 
 const uri = "mongodb://127.0.0.1";
 const dbName = "testDB";
+
+
+async function checkCollectionExistence(collectionName) {
+  console.log("checkCollectionExistence");
+  const client = new MongoClient(uri);
+
+  try {
+      await client.connect();
+      const database = client.db(dbName);
+      const collections = await database.listCollections().toArray();
+      const collectionExists = collections.some(collection => collection.name === collectionName);
+
+      if (collectionExists) {
+          console.log(`Collection '${collectionName}' exists.`);
+      } else {
+          console.log(`Collection '${collectionName}' does not exist.`);
+      }
+      return collectionExists;
+  } catch (error) {
+      console.error('Error checking collection existence:', error);
+      return false;
+  } finally {
+      await client.close();
+  }
+}
 
 async function createCollection(collectionName) {
   const client = new MongoClient(uri);
   try {
     await client.connect();
     const database = client.db(dbName);
-    await database.createCollection(collectionName);
+    const result = await database.createCollection(collectionName);
     console.log(`Collection '${collectionName}' created successfully.`);
-    return new resposnes(200, "Created Successfully", null);
+    return new resposnes(200, "Created Successfully", result);
   } catch (error) {
     console.error("Error creating collection:", error);
-    return new resposnes(400, "Something went wrong", null);
+    return new resposnes(400, "Something went wrong", result);
   } finally {
     await client.close();
   }
@@ -38,14 +64,13 @@ async function saveData(dataToSave, collectionName) {
   }
 }
 
-async function updateData(dataToSave, collectionName) {
+async function updateData(filter, dataToSave, collectionName) {
   const client = new MongoClient(uri);
 
   try {
     await client.connect();
     const database = client.db(dbName);
     const collection = database.collection(collectionName);
-    const filter = { _id: new ObjectID(id) };
     const updateOperation = {
       $set: dataToSave,
     };
@@ -60,19 +85,18 @@ async function updateData(dataToSave, collectionName) {
   }
 }
 
-async function getData(_query, collectionName) {
+async function getData(query, collectionName) {
   const client = new MongoClient(uri);
 
   try {
     await client.connect();
     const database = client.db(dbName);
     const collection = database.collection(collectionName);
-    const query = _query;
     const data = await collection.find(query).toArray();
 
     console.log("Data retrieved successfully:");
     console.log(data);
-    return new resposnes(200, "Retrieved Successfully", data);
+    return new resposnes(200, "Success!", data);
   } catch (error) {
     console.error("Error retrieving data:", error);
     return new resposnes(400, "Something went wrong", null);
@@ -81,15 +105,14 @@ async function getData(_query, collectionName) {
   }
 }
 
-async function deleteData(ID, collectionName) {
+async function deleteData(query, collectionName) {
   const client = new MongoClient(uri);
 
   try {
     await client.connect();
     const database = client.db(dbName);
     const collection = database.collection(collectionName);
-    const deletionCriteria = { _id: new ObjectID(ID) };
-    const result = await collection.deleteOne(deletionCriteria);
+    const result = await collection.deleteOne(query);
     console.log(`Deleted ${result.deletedCount} document(s)`);
     return new resposnes(200, "Created Successfully", null);
   } catch (error) {
@@ -101,6 +124,7 @@ async function deleteData(ID, collectionName) {
 }
 
 module.exports = {
+  checkCollectionExistence: checkCollectionExistence,
   createCollection: createCollection,
   saveData: saveData,
   updateData: updateData,
