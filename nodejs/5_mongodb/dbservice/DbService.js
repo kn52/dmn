@@ -37,7 +37,7 @@ async function createCollection(collectionName) {
     const database = client.db(dbName);
     const result = await database.createCollection(collectionName);
     console.log(`Collection '${collectionName}' created successfully.`);
-    return new resposnes(200, "Created Successfully", result);
+    return new resposnes(200, "Created Successfully!", result);
   } catch (error) {
     console.error("Error creating collection:", error);
     return new resposnes(400, "Something went wrong", result);
@@ -55,7 +55,7 @@ async function saveData(dataToSave, collectionName) {
     const collection = database.collection(collectionName);
     const result = await collection.insertOne(dataToSave);
     console.log(`Data saved successfully with _id: ${result.insertedId}`);
-    return new resposnes(200, "Created Successfully", result.insertedId);
+    return new resposnes(200, "Success!", result.insertedId);
   } catch (error) {
     console.error("Error saving data:", error);
     return new resposnes(400, "Something went wrong", null);
@@ -76,7 +76,7 @@ async function updateData(filter, dataToSave, collectionName) {
     };
     const result = await collection.updateOne(filter, updateOperation);
     console.log(`Data updated successfully with _id: ${result.insertedId}`);
-    return new resposnes(200, "Updated Successfully", result.insertedId);
+    return new resposnes(200, "Success!", result.insertedId);
   } catch (error) {
     console.error("Error saving data:", error);
     return new resposnes(400, "Something went wrong", null);
@@ -114,7 +114,7 @@ async function deleteData(query, collectionName) {
     const collection = database.collection(collectionName);
     const result = await collection.deleteOne(query);
     console.log(`Deleted ${result.deletedCount} document(s)`);
-    return new resposnes(200, "Created Successfully", null);
+    return new resposnes(200, "Success!", null);
   } catch (error) {
     console.error("Error deleting data:", error);
     return new resposnes(400, "Something went wrong", null);

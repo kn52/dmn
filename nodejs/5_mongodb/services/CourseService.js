@@ -3,7 +3,7 @@ const { Course } = require("../model/CourseModel");
 const service = require("../dbservice/DbService");
 const express = require("express");
 
-const router = express.Router();
+const router = express.Router({caseSensitive: true});
 const baseurl = "/mongodb/courses";
 
 const dummy = [
