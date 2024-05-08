@@ -1,17 +1,35 @@
 
 GET http://localhost:3000/api/demo/hellomessage
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiYW5pIiwiaWF0IjoxNzE0NDc0NjU2fQ.hAhesgcrJyq6EZ9wQUsD8mgcjqqXmc_gR4mVh8e3bbU
 
 ###
-
 POST http://localhost:3000/api/demo/getposts
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiYW5pIiwiaWF0IjoxNzE0NDc0NjU2fQ.hAhesgcrJyq6EZ9wQUsD8mgcjqqXmc_gR4mVh8e3bbU
 
 {}
 
 ###
+POST http://localhost:3000/api/login/token
+Content-Type: application/json
 
+{
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiYW5pIiwiaWF0IjoxNzE0NDg1NTc3fQ.VgAS2d5tCV8VuB5Z0wrYdyyer7C4U_F-0pomD6N3P7I"
+}
+
+###
+POST http://localhost:3000/api/login/deletetoken
+Content-Type: application/json
+
+{
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiYW5pIiwiaWF0IjoxNzE0NDc0NjU2fQ.hAhesgcrJyq6EZ9wQUsD8mgcjqqXmc_gR4mVh8e3bbU"
+}
+
+###
 POST http://localhost:3000/api/login/userlogin
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiYW5pIiwiaWF0IjoxNzE0NDc0NjU2fQ.hAhesgcrJyq6EZ9wQUsD8mgcjqqXmc_gR4mVh8e3bbU
 
 {
     "username": "ani"
